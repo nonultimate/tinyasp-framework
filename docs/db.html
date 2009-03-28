@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> DB - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="cookie.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="file.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">$.DB</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Database manipulation class using ODBC.
+            </p>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">Array</span><a name="config" class="keyword">config</a>
+            </p>
+            <p class="description">
+              Database configuration.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span><a name="id" class="keyword">id</a>
+            </p>
+            <p class="description">
+              Current connection id.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="dsn" class="keyword">dsn</a>
+            </p>
+            <p class="description">
+              Data source string.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Array</span><a name="config" class="keyword">conn</a>
+            </p>
+            <p class="description">
+              Database connections.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="close" class="keyword">close</a>()
+            </p>
+            <p class="description">
+              Close the current database connection.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="closeAll" class="keyword">closeAll</a>()
+            </p>
+            <p class="description">
+              Close all the database connections in the list.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="execute" class="keyword">execute</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">String</span> cmdType [, <span class="type rightspan">String</span> params]])
+            </p>
+            <p class="description">
+              Execute SQL statement or procedure and return no result.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cmdText</span> The command text or procedure name.<br />
+              <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="makeInParam" class="keyword">makeInParam</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> type, <span class="type rightspan">String</span> size, <span class="type rightspan">String</span> value)
+            </p>
+            <p class="description">
+              Make input parameters.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The name of the parameter.<br />
+              <span class="param">type</span> The type of the parameter.<br />
+              <span class="param">size</span> The size of the parameter.<br />
+              <span class="param">value</span> The value of the parameter.<br />
+              <b>Return</b>
+              <span class="type leftspan">Array</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="makeOutParam" class="keyword">makeOutParam</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> type, <span class="type rightspan">String</span> size, <span class="type rightspan">String</span> value)
+            </p>
+            <p class="description">
+              Make output parameters.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The name of the parameter.<br />
+              <span class="param">type</span> The type of the parameter.<br />
+              <span class="param">size</span> The size of the parameter.<br />
+              <span class="param">value</span> The value of the parameter.<br />
+              <b>Return</b>
+              <span class="type leftspan">Array</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="open" class="keyword">open</a>([<span class="type rightspan">String</span> dsn])
+            </p>
+            <p class="description">
+              Open a database connection.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">dsn</span> [Optional]The data souce string.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="query" class="keyword">query</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">String</span> cmdType [, <span class="type rightspan">String</span> params]])
+            </p>
+            <p class="description">
+              Execute SQL statement or procedure and return data as recordset.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cmdText</span> The command text or procedure name.<br />
+              <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">Object</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setDefault" class="keyword">setDefault</a>(<span class="type rightspan">String</span> name)
+            </p>
+            <p class="description">
+              Set a default connection with the config name.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The database config name.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setDsn" class="keyword">setDsn</a>(<span class="type rightspan">Array</span> options)
+            </p>
+            <p class="description">
+              Set data source parameters.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">dsn</span> The data source strings.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="switchConnection" class="keyword">switchConnection</a>(<span class="type rightspan">Integer</span> i)
+            </p>
+            <p class="description">
+              Switch the database connection with the index of the connection list.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">i</span> The index of the connection list.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="cookie.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="file.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> Image - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="file.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mail.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">$.Image</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Image class for creating and handling images. Requrie XY.Graphics component.
+            </p>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">Object</span><a name="image">image</a>
+            </p>
+            <p class="description">
+              The instance of XYGraphics object.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span><a name="height">height</a>
+            </p>
+            <p class="description">
+              The height of the image.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span><a name="height">width</a>
+            </p>
+            <p class="description">
+              The width of the image.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="close">close</a>()
+            </p>
+            <p class="description">
+              Close the image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="create">create</a>(<span class="type rightspan">Integer</span> width , <span class="type rightspan">Integer</span> height [, <span class="type rightspan">Integer</span> bgcolor[, <span class="type rightspan">Boolean</span> transparent [, <span class="type rightspan">Integer</span> transcolor]]])
+            </p>
+            <p class="description">
+              Create an image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">width</span> The width of the image.<br />
+              <span class="param">height</span> The height of the image.<br />
+              <span class="param">bgcolor</span> [Optional]The background color.<br />
+              <span class="param">transparent</span> [Optional]Whether the image is transparent.<br />
+              <span class="param">transcolor</span> [Optional]The transparent color of the image.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="createCode">createCode</a>(<span class="type rightspan">String</span> code [, <span class="type rightspan">Integer</span> width [, <span class="type rightspan">Integer</span> height]])
+            </p>
+            <p class="description">
+              Create validation code image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">code</span> The validation code string.<br />
+              <span class="param">width</span> [Optional]The width of the image.<br />
+              <span class="param">height</span> [Optional]The height of the image.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="cut">cut</a>(<span class="type rightspan">Integer</span> left , <span class="type rightspan">Integer</span> top, <span class="type rightspan">Integer</span> right, <span class="type rightspan">Integer</span> bottom)
+            </p>
+            <p class="description">
+              Cut out the image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">left</span> The left offset.<br />
+              <span class="param">top</span> The top offset.<br />
+              <span class="param">right</span> The right offset.<br />
+              <span class="param">bottom</span> The bottom offset.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="drawCircle">drawCircle</a>(<span class="type rightspan">Integer</span> x, <span class="type rightspan">Integer</span> y, <span class="type rightspan">Integer</span> r)
+            </p>
+            <p class="description">
+              Draw circle.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">x</span> The center X offset.<br />
+              <span class="param">y</span> The center Y offset.<br />
+              <span class="param">r</span> The radius of the circle.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="drawEllipse">drawEllipse</a>(<span class="type rightspan">Integer</span> cx, <span class="type rightspan">Integer</span> cy, <span class="type rightspan">Integer</span> width, <span class="type rightspan">Integer</span> height)
+            </p>
+            <p class="description">
+              Draw ellipse.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cx</span> The center X offset.<br />
+              <span class="param">cy</span> The center Y offset.<br />
+              <span class="param">width</span> The long radius.<br />
+              <span class="param">height</span> The short radius.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="drawLine">drawLine</a>(<span class="type rightspan">Integer</span> x1, <span class="type rightspan">Integer</span> y1, <span class="type rightspan">Integer</span> x2, <span class="type rightspan">Integer</span> y2)
+            </p>
+            <p class="description">
+              Draw line.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">x1</span> The X offset of the start point.<br />
+              <span class="param">y1</span> The Y offset of the start point.<br />
+              <span class="param">x2</span> The X offset of the end point.<br />
+              <span class="param">y2</span> The Y offset of the end point.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="drawRectangle">drawRectangle</a>(<span class="type rightspan">Integer</span> left, <span class="type rightspan">Integer</span> top, <span class="type rightspan">Integer</span> right, <span class="type rightspan">Integer</span> bottom)
+            </p>
+            <p class="description">
+              Draw rectangle.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">left</span> The left offset.<br />
+              <span class="param">top</span> The top offset.<br />
+              <span class="param">right</span> The right offset.<br />
+              <span class="param">bottom</span> The bottom offset.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="drawText">drawText</a>(<span class="type rightspan">String</span> text, <span class="type rightspan">Integer</span> x, <span class="type rightspan">Integer</span> y [, <span class="type rightspan">Integer</span> alpha [, <span class="type rightspan">Integer</span> angle]])
+            </p>
+            <p class="description">
+              draw text.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">text</span> The text to draw.<br />
+              <span class="param">x</span> The left offset.<br />
+              <span class="param">y</span> The top offset.<br />
+              <span class="param">alpha</span> [Optional]Alpha of the text.<br />
+              <span class="param">angle</span> [Optional]The angle to rotate the text.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="open">open</a>(<span class="type rightspan">String</span> path)
+            </p>
+            <p class="description">
+              Open an image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The path of the image.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="output">output</a>([<span class="type rightspan">String</span> type])
+            </p>
+            <p class="description">
+              Output the image to the browser.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> [Optional]The image type, default is xyJPG.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="resize">resize</a>(<span class="type rightspan">Integer</span> width, <span class="type rightspan">Integer</span> height)
+            </p>
+            <p class="description">
+              Resize the size of the image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">width</span> The width to resize to.<br />
+              <span class="param">height</span> The height to resize to.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="save">save</a>([<span class="type rightspan">String</span> filename])
+            </p>
+            <p class="description">
+              Save the image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">filename</span> [Optional]The image filename.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setBrush">setBrush</a>(<span class="type rightspan">Integer</span> color [, <span class="type rightspan">Integer</span> style])
+            </p>
+            <p class="description">
+              Set the brush style.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">color</span> The color of the brush.<br />
+              <span class="param">style</span> [Optional]The style of the brush.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setFont">setFont</a>(<span class="type rightspan">String</span> font, <span class="type rightspan">Integer</span> size [, <span class="type rightspan">Integer</span> style [, <span class="type rightspan">Integer</span> color [, <span class="type rightspan">Integer</span> bgcolor]]])
+            </p>
+            <p class="description">
+              Set the font style.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">font</span> The font name.<br />
+              <span class="param">size</span> The size of the font.<br />
+              <span class="param">style</span> [Optional]The text style.<br />
+              <span class="param">color</span> [Optional]The text color.<br />
+              <span class="param">bgcolor</span> [Optional]The background color.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setPen">setPen</a>(<span class="type rightspan">String</span> color, <span class="type rightspan">Integer</span> size [, <span class="type rightspan">Integer</span> style]])
+            </p>
+            <p class="description">
+              Set the pen style.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">color</span> The color of the pen.<br />
+              <span class="param">size</span> [Optional]The size of the pen.<br />
+              <span class="param">style</span> [Optional]The style of the pen.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="zoom">zoom</a>(<span class="type rightspan">Integer</span> width, <span class="type rightspan">Integer</span> height)
+            </p>
+            <p class="description">
+              Zoom the image.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">width</span> The width to zoom to.<br />
+              <span class="param">height</span> The height to zoom to.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="file.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mail.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

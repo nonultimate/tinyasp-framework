@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> Net - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="mail.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="router.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">$.Net</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Handling HTTP and sockets. Net.Socket requires w3Socket component.
+            </p>
+            <br />
+            <div class="menu">$.Net.Http</div>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">Object</span><a name="req" class="keyword">req</a>
+            </p>
+            <p class="description">
+              XMLHTTP object.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="get" class="keyword">get</a>(<span class="type rightspan">String</span> url)
+            </p>
+            <p class="description">
+              Get the data in HTTP GET method.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">url</span> The URL to open<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="post" class="keyword">post</a>(<span class="type rightspan">String</span> url, <span class="type rightspan">String</span> data)
+            </p>
+            <p class="description">
+              Post the data in HTTP POST method.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">url</span> The URL to open.<br />
+              <span class="param">data</span> The data to send.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+            <div class="menu">$.Net.Socket</div>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">Object</span><a name="sock" class="keyword">sock</a>
+            </p>
+            <p class="description">
+              Socket object.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="close" class="keyword">close</a>()
+            </p>
+            <p class="description">
+              Close the socket.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="getBuffer" class="keyword">getBuffer</a>()
+            </p>
+            <p class="description">
+              Get the buffer string.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="open" class="keyword">open</a>(<span class="type rightspan">String</span> host, <span class="type rightspan">Integer</span> port [, <span class="type rightspan">Integer</span> timeout])
+            </p>
+            <p class="description">
+              Open the socket.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">url</span> The host to open.<br />
+              <span class="param">port</span> The port to open.<br />
+              <span class="param">timeout</span> [Optional]Seconds of timeout.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="read" class="keyword">read</a>(<span class="type rightspan">Integer</span> len)
+            </p>
+            <p class="description">
+              Read size of data from the socket.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">len</span> The length to read.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="readLine" class="keyword">readLine</a>()
+            </p>
+            <p class="description">
+              Read a line of data from the socket.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="readAll" class="keyword">readAll</a>()
+            </p>
+            <p class="description">
+              Read all the data from the socket.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="wait" class="keyword">wait</a>()
+            </p>
+            <p class="description">
+              Wait for receiving data.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="write" class="keyword">write</a>(<span class="type rightspan">String</span> text)
+            </p>
+            <p class="description">
+              Send data to the socket.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">text</span> The data to send.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="writeLine" class="keyword">writeLine</a>(<span class="type rightspan">String</span> text)
+            </p>
+            <p class="description">
+              Send data with a line end character to the socket.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">text</span> The data to send.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="mail.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="router.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

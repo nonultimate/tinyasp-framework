@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> Functions - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="variables.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="tinyasp.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">Functions</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Core functions. Some functions are migrated from PHP and may be useful.
+            </p>
+            <br />
+            <hr />
+            <p>
+              <a name="basename" class="keyword">basename</a>(<span class="type rightspan">String</span> path)
+            </p>
+            <p class="description">
+              Get base file name without path.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The path of the file or folder.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="keyword" class="keyword">defined</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable is defined.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the varaible is defined or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="die" class="keyword">die</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Output string and exit.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to output.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="dirname" class="keyword">dirname</a>(<span class="type rightspan">String</span> path)
+            </p>
+            <p class="description">
+              Get the parent directory path.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The path of the file or folder.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="dump" class="keyword">dump</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Output a object or variable.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The object or variable to output.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="echo" class="keyword">echo</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Output string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to output.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="encodeHTML" class="keyword">encodeHTML</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Encode HTML tag.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to encode.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="encodeURL" class="keyword">encodeURL</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Encode URL string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to encode.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="find" class="keyword">find</a>(<span class="type rightspan">RegExp</span> re, &nbsp;&nbsp; <span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Find regular expression in string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">re</span> The regular expression to search.<br />
+              <span class="param">str</span> The string to be searched.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span>
+            </p>
+            <hr />
+            <p>
+              <a name="getSize" class="keyword">getSize</a>(<span class="type rightspan">Integer</span> size)
+            </p>
+            <p class="description">
+              Format the number as size with 'B', 'KB', 'MB', 'GB'.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">size</span> The size of a file in bytes.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="include" class="keyword">include</a>(<span class="type rightspan">String</span> filename [, <span class="type rightspan">once</span>])
+            </p>
+            <p class="description">
+              Dynamic include file with repeating inclusion support, like include_once function in PHP.<br />
+              Note: use it with eval() (JavaScript will not execute it as global variables).
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">filename</span> The file to include.<br />
+              <span class="param">once</span> [Optional]Whether the file should be included only once, default is true.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+              <b>Example</b>
+              <code>
+                // Include a file once<br />
+                eval(include("include.asp"));<br />
+                // Include a file any times<br />
+                eval(include("any.asp", false));<br />
+                eval(include("any.asp", false));<br />
+              </code>
+            </p>
+            <hr />
+            <p>
+              <a name="isArray" class="keyword">isArray</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is array.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is array or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="isBool" class="keyword">isBool</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is boolean.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is boolean or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="isFunction" class="keyword">isFunction</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is function.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is function or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="isNumber" class="keyword">isNumber</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is number.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is number or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="isNumeric" class="keyword">isNumeric</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable is numeric.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable is numeric or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="isObject" class="keyword">isObject</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is object.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is object or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="isString" class="keyword">isString</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is string or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="objectExists" class="keyword">objectExists</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Ensures server object exist.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The object string name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the object exists or return false.
+            </p>
+            <hr />
+            <p>
+              <a name="print" class="keyword">print</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Output string, same as <a href="functions.html#echo">echo()</a>.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to output.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="println" class="keyword">println</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Output string and change line.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to output.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="realpath" class="keyword">realpath</a>(<span class="type rightspan">String</span> path)
+            </p>
+            <p class="description">
+              Get the absolute path.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The path of the file or folder.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="redirect" class="keyword">redirect</a>(<span class="type rightspan">var</span> url)
+            </p>
+            <p class="description">
+              Redirect URL. If url is a number, it will redirect to error page with HTTP state code (0, 403, 404).
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">url</span> The URL of the location to redirect, or HTTP state code.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b><br />
+              <code>
+                // Redirect a URL<br />
+                redirect("/index.html");<br />
+                // Goto 403 error page<br />
+                redirect(403);<br />
+                // Goto 404 error page<br />
+                redirect(404);<br />
+                // Goto error page<br />
+                redirect(0);<br />
+              </code>
+            </p>
+            <hr />
+            <p>
+              <a name="require" class="keyword">require</a>(<span class="type rightspan">String</span> lib)
+            </p>
+            <p class="description">
+              Import a library.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">lib</span> The library string.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b>
+              <code>
+                // Import file lib/mail/mail.asp<br />
+                require("$.Mail");<br />
+                // Import file lib/text/utf16.asp<br />
+                require("$.Text.UTF16");<br />
+                // Require app/lib/test.asp<br />
+                require("Test");<br />
+              </code>
+            </p>
+            <hr />
+            <p>
+              <a name="runtime" class="keyword">runtime</a>()
+            </p>
+            <p class="description">
+              Return program executing time in seconds.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setContentType" class="keyword">setContentType</a>(<span class="type rightspan">String</span> type)
+            </p>
+            <p class="description">
+              Set HTTP content type.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> The content type.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setExpires" class="keyword">setExpires</a>(<span class="type rightspan">String</span> time)
+            </p>
+            <p class="description">
+              Set the time the page expires.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">time</span> The time of minutes.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setHeader" class="keyword">setHeader</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> value)
+            </p>
+            <p class="description">
+              Set HTTP header.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The name of HTTP header.<br />
+              <span class="param">value</span> The value of HTTP header.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="TGet" class="keyword">TGet</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Get GET variables.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string of the variable.<br />
+              <b>Return</b>
+              <span class="type leftspan">String | Array</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="timer" class="keyword">timer</a>()
+            </p>
+            <p class="description">
+              Get milliseconds of current time.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">Integer</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="TPost" class="keyword">TPost</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Get POST variables.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string of the variable.<br />
+              <b>Return</b>
+              <span class="type leftspan">String | Array</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="transfer" class="keyword">transfer</a>(<span class="type rightspan">String</span> url)
+            </p>
+            <p class="description">
+              Transfer URL without parameters.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">url</span> The URL of the location to transfer.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="TServer" class="keyword">TServer</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Get server variables.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string of the variable.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="ucfirst" class="keyword">ucfirst</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              First letter upper case.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to format.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="ucwords" class="keyword">ucwords</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              First letter of each word upper case.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to format.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+            <div class="menu">Date Object</div>
+            <p>
+              <a name="Date.format" class="keyword">Date.format</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Format date.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The date format.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+            <div class="menu">String Object</div>
+            <p>
+              <a name="String.ltrim" class="keyword">String.ltrim</a>()
+            </p>
+            <p class="description">
+              Remove start blank characters.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="String.rtrim" class="keyword">String.rtrim</a>()
+            </p>
+            <p class="description">
+              Remove end blank characters.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="String.trim" class="keyword">String.trim</a>()
+            </p>
+            <p class="description">
+              Remove start and end blank characters.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+              <b>Example</b>
+              <code>
+                var s = "  Hello  ";<br />
+                echo("Length of the string: " + s.trim().length);<br />
+              </code>
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="variables.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="tinyasp.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

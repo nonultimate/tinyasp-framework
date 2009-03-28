@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> View - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="text.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="zip.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">$.View</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;The front class to show text with templates.
+            </p>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">Boolean</span><a name="component" class="keyword">component</a>
+            </p>
+            <p class="description">
+              Whether to use component to render the view.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="layout" class="keyword">layout</a>
+            </p>
+            <p class="description">
+              The layout for the view.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="title" class="keyword">title</a>
+            </p>
+            <p class="description">
+              The title of the view.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="assign" class="keyword">assign</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">var</span> value)
+            </p>
+            <p class="description">
+              Add a variable for replacement. Same as $.Template.assign.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The variable name.<br />
+              <span class="param">value</span> The variable value.<br />
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="display" class="keyword">display</a>()
+            </p>
+            <p class="description">
+              Display the view.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="setLayout" class="keyword">setLayout</a>(<span class="type rightspan">String</span> layout)
+            </p>
+            <p class="description">
+              Set the layout for the view.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">layout</span> The layout to display the view.<br />
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="setTitle" class="keyword">setTitle</a>(<span class="type rightspan">String</span> title)
+            </p>
+            <p class="description">
+              Set the title for the view.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">title</span> The title for the view.<br />
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <br />
+            <div class="menu">$.View.Component</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Component class for View.
+            </p>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="data" class="keyword">data</a>
+            </p>
+            <p class="description">
+              The data for replacing component.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="addContentFilter" class="keyword">addContentFilter</a>(<span class="type rightspan">String</span> path, <span class="type rightspan">String</span> layout_path)
+            </p>
+            <p class="description">
+              Filter for tag asp:content.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The view template path.<br />
+              <span class="param">layout_path</span> The view layout path.<br />
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="getContent" class="keyword">getContent</a>(<span class="type rightspan">String</span> path, <span class="type rightspan">String</span> layout)
+            </p>
+            <p class="description">
+              Get the content handled by filters.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The view template path.<br />
+              <span class="param">layout</span> The layout of the view.<br />
+              <b>Return</b>
+              <span class="type">String</span>
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="text.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="zip.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

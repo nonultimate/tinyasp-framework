@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> Cookie - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="controller.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="db.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">$.Cookie</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Class for manipulating cookies.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="get" class="keyword">get</a>(<span class="type rightspan">String</span> name)
+            </p>
+            <p class="description">
+              Get a cookie.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The cookie name to get.<br />
+              <b>Return</b>
+              <span class="leftspan">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="set" class="keyword">set</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">var</span> value [, <span class="type rightspan">String</span> expire [,  <span class="type rightspan">String</span> path [, <span class="type rightspan">String</span> domain [, <span class="type rightspan">Boolean</span> secure ]]]])
+            </p>
+            <p class="description">
+              Set a cookie.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The name of the cookie.<br />
+              <span class="param">value</span> The value of the cookie.<br />
+              <span class="param">expire</span> [Optional]Seconds expires from now.<br />
+              <span class="param">path</span> [Optional]The path in the server the cookie will be available.<br />
+              <span class="param">domain</span> [Optional]The domain that the cookie will be available.<br />
+              <span class="param">secure</span> [Optional]The cookies should only be transmitted over HTTPS.<br />
+              <b>Return</b>
+              <span class="leftspan">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="remove" class="keyword">remove</a>(<span class="type rightspan">String</span> name)
+            </p>
+            <p class="description">
+              Remove a cookie.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The cookie name to remove.<br />
+              <b>Return</b>
+              <span class="leftspan">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="removeAll" class="keyword">removeAll</a>()
+            </p>
+            <p class="description">
+              Remove all cookies.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="leftspan">void</span>
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="controller.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="db.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

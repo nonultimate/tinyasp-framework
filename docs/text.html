@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> Text - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="template.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="view.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li class="title">Packages</li>
+              <li><a href="action.html">Action</a></li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">$.Text</div>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Text handling, such as CRC32, BASE64, UTF8, UTF16.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="crc32" class="keyword">crc32</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Caculate crc32 value.
+            </p>
+            <p class="param">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to caculate.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+            <div class="menu">$.Text.Base64</div>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="enKey" class="keyword">enKey</a>
+            </p>
+            <p class="description">
+              Encoding key.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Array</span><a name="deKey" class="keyword">deKey</a>
+            </p>
+            <p class="description">
+              Decoding key.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="encode" class="keyword">encode</a>(<span class="type rightspan">String</span> src)
+            </p>
+            <p class="description">
+              Encode string in BASE64.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">src</span> The stirng to encode.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="decode" class="keyword">decode</a>(<span class="type rightspan">String</span> src)
+            </p>
+            <p class="description">
+              Decode the BASE64 string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">src</span> The stirng to decode.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+            <div class="menu">$.Text.UTF8</div>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="encode" class="keyword">encode</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Encode string in UTF8.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The stirng to encode.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="decode" class="keyword">decode</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Decode the UTF8 string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The stirng to decode.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="toUTF16" class="keyword">toUTF16</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Convert UTF8 string to UTF16 string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The stirng to convert.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+            <div class="menu">$.Text.UTF16</div>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="toUTF8" class="keyword">toUTF8</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Convert UTF16 string to UTF8 string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The stirng to convert.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="template.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="view.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

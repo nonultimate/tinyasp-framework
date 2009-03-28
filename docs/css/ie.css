@@ -1,0 +1,4 @@
+#container {
+width: 800px;
+width: expression((documentElement.clientWidth < 800) ? "800px" : "auto");
+}
