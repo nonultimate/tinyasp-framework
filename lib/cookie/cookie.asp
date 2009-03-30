@@ -14,7 +14,6 @@
  * @author    Joe D. <nonultimate@gmail.com>
  * @copyright Copyright (c) 2008 - 2009, Joe Dotoff
  * @license   New BSD License, see LICENSE.txt
- * @version   $Id: cookie.asp 60 2009-03-05 02:48:45Z joe $
  */
 
 $.Cookie = {

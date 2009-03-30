@@ -14,7 +14,6 @@
  * @author    Joe D. <nonultimate@gmail.com>
  * @copyright Copyright (c) 2008 - 2009, Joe Dotoff
  * @license   New BSD License, see LICENSE.txt
- * @version   $Id: router.asp 69 2009-03-16 01:02:45Z joe $
  */
 
 eval(include(APPLIB + "file\\file.asp"));

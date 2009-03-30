@@ -15,7 +15,6 @@
  * @author    Joe D. <nonultimate@gmail.com>
  * @copyright Copyright (c) 2008 - 2009, Joe Dotoff
  * @license   New BSD License, see LICENSE.txt
- * @version   $Id: tinyasp.asp 72 2009-03-21 00:50:00Z joe $
  */
 
 eval(include(APPLIB + "include\\ado.asp"));

@@ -14,7 +14,6 @@
  * @author    Joe D. <nonultimate@gmail.com>
  * @copyright Copyright (c) 2008 - 2009, Joe Dotoff
  * @license   New BSD License, see LICENSE.txt
- * @version   $Id: action.asp 40 2009-02-14 07:19:06Z joe $
  */
 
 eval(include(APPLIB + "view\\view.asp"));

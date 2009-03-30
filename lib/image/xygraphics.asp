@@ -14,7 +14,6 @@
  * @author    Joe D. <nonultimate@gmail.com>
  * @copyright Copyright (c) 2008 - 2009, Joe Dotoff
  * @license   New BSD License, see LICENSE.txt
- * @version   $Id: xygraphics.asp 67 2009-03-13 08:14:28Z joe $
  */
 
 // Font style
