@@ -28,6 +28,7 @@ function DB() {
   this.config = new Array();
   this.id = 0;
   this.dsn = "";
+  this.type = "";
   this.conn = new Array();
   if (defined(CONFIG["db"])) {
     var i = 0;
@@ -100,6 +101,25 @@ DB.prototype = {
       }
     }
     if (this.dsn != "") {
+      var m = this.dsn.match(/driver=\{([^\}]+)\}/i);
+      if (m) {
+        if (m[1].match(/access/i)) {
+          this.type = "access";
+        } else if (m[1].match(/sql server/i)) {
+          this.type = "mssql";
+        } else if (m[1].match(/mysql/i)) {
+          this.type = "mysql";
+        } else if (m[1].match(/oracle/i)) {
+          this.type = "oracle";
+        } else if (m[1].match(/postgresql/i)) {
+          this.type = "pgsql";
+        } else if (m[1].match(/sqlite/i)) {
+          this.type = "sqlite";
+        }
+      }
+      if (this.type == "") {
+        die("The type of the database not supported");
+      }
       try {
         var i = this.conn.length;
         this.conn[i] = Server.CreateObject("ADODB.Connection");

@@ -33,6 +33,7 @@ function View(file) {
   this.title = ucfirst($.action);
   this.layout = false;
   this.component = false;
+  this.cache = CONFIG["cache_view"];
   var tpl = $.Template();
 
   /**
@@ -69,7 +70,7 @@ function View(file) {
     if (this.layout == false) {
       $.File.remove(APPPATH + "tmp\\" + $.controller + "_" + $.action);
     }
-    if (CONFIG["cache_view"] && $.isGet) {
+    if (this.cache && $.isGet) {
       tpl.setCache($.cache_file);
     }
     tpl.display();
