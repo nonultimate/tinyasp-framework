@@ -48,10 +48,14 @@ function View(file) {
 
   /**
    * Display the view
+   * @param  view  [optional]the view to display
    * @return void
    */
-  this.display = function() {
-    if(!$.File.isFile(file)) {
+  this.display = function(view) {
+    if (defined(view)) {
+      file = APPPATH + "views\\html\\" + view.replace("/", "\\") + "." + CONFIG["template_extension"];
+    }
+    if (!$.File.isFile(file)) {
       die("The view template " + file + " not found");
     }
     if (this.component) {

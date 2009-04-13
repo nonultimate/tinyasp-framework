@@ -1,14 +1,13 @@
 Tinyasp Framework 0.1 beta2
 
-  A tiny framework for asp, implemented in JavaScript with basic MVC.
-And it provides some useful functions or features.
-
+  A tiny framework for asp, implemented in JavaScript with basic MVC. And it provides
+some useful functions or features.
 
 Install on IIS
 ==============
 
-1. Create a new website if you are using Windows 2003, set document root to the
-root path of the framework, where you can find this file README.txt.
+1. Create a new website, or set the document root to the root path of the framework,
+where you can find this file README.txt.
 
 2. Add bin\IsapiRewrite4.dll to ISAPI filter.
 Filter name: IsapiRewrite4

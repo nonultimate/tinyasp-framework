@@ -16,7 +16,7 @@
  * @license   New BSD License, see LICENSE.txt
  */
 
-eval(include(APPLIB + "action\\action.asp"));
+eval(include(APPLIB + "view\\view.asp"));
 
 $.Controller = function() {
   return new Controller();
@@ -26,7 +26,13 @@ $.Controller = function() {
  * Class Controller
  */
 function Controller() {
-  this.action = Action;
-  this.action();
+  $.view = $.View();
+
+  /**
+   * Default index action
+   */
+  this.index = function() {
+    echo("This is a default index action");
+  };
 }
 %>

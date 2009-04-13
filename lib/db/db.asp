@@ -25,24 +25,46 @@ if ($.File.isFile(APPPATH + "config\\database.asp")) {
  * Class DB
  */
 function DB() {
-  this.config = new Array();
-  this.id = 0;
-  this.dsn = "";
-  this.type = "";
-  this.conn = new Array();
   if (defined(CONFIG["db"])) {
-    var i = 0;
+    var default = "";
     for (name in CONFIG["db"]) {
-      this.config[name] = i;
-      if (!this.open(CONFIG["db"][name])) {
-        die("Open " + name + " database failed");
+      if (default == "") {
+        default = name;
       }
-      i++;
+      this.open(CONFIG["db"][name], name);
+    }
+    if (default != "") {
+      this.use(default);
     }
   }
 }
 
 DB.prototype = {
+
+  /**
+   * Database configuration
+   */
+  config: new Array(),
+
+  /**
+   * Data source string
+   */
+  dsn: "",
+
+  /**
+   * Current database configuration name
+   */
+  name: "",
+
+  /**
+   * Current database type
+   */
+  type: "",
+
+  /**
+   * Current database connection
+   */
+  conn: null,
 
   /**
    * Set data source parameters
@@ -77,22 +99,25 @@ DB.prototype = {
   },
 
   /**
-   * Set a default connection with the config name
+   * Use the connection with the config name
    * @param  name  the database config name
    * @return void
    */
-  setDefault: function(name) {
+  use: function(name) {
     if (defined(this.config[name])) {
-      this.id = this.config[name];
+      this.name = name;
+      this.type = this.config[name]["type"];
+      this.conn = this.config[name]["conn"];
     }
   },
 
   /**
    * Open a database connection
    * @param  dsn  [optional]the data souce string
+   * @param  name [optional]the connection name
    * @return boolean
    */
-  open: function(dsn) {
+  open: function(dsn, name) {
     if (defined(dsn)) {
       if (isString(dsn)) {
         this.dsn = dsn;
@@ -101,46 +126,45 @@ DB.prototype = {
       }
     }
     if (this.dsn != "") {
+      var dbtype = "";
       var m = this.dsn.match(/driver=\{([^\}]+)\}/i);
       if (m) {
         if (m[1].match(/access/i)) {
-          this.type = "access";
+          dbtype = "access";
         } else if (m[1].match(/sql server/i)) {
-          this.type = "mssql";
+          dbtype = "mssql";
         } else if (m[1].match(/mysql/i)) {
-          this.type = "mysql";
+          dbtype = "mysql";
         } else if (m[1].match(/oracle/i)) {
-          this.type = "oracle";
+          dbtype = "oracle";
         } else if (m[1].match(/postgresql/i)) {
-          this.type = "pgsql";
+          dbtype = "pgsql";
         } else if (m[1].match(/sqlite/i)) {
-          this.type = "sqlite";
+          dbtype = "sqlite";
         }
       }
-      if (this.type == "") {
+      if (dbtype == "") {
         die("The type of the database not supported");
       }
       try {
-        var i = this.conn.length;
-        this.conn[i] = Server.CreateObject("ADODB.Connection");
-        this.conn.length = i + 1;
-        this.conn[i].Open(this.dsn);
+        if (defined(name)) {
+          this.config[name] = new Array();
+          this.config[name]["type"] = dbtype;
+          this.config[name]["conn"] = Server.CreateObject("ADODB.Connection");
+        } else {
+          this.type = dbtype;
+          this.conn = Server.CreateObject("ADODB.Connection");
+          this.conn.Open(this.dsn);
+        }
         this.dsn = "";
         return true;
       } catch (e) {
-        return false;
+        if (!defined(name)) {
+          die("Open " + name + " database failed");
+        } else {
+          die("Open the database failed");
+        }
       }
-    }
-  },
-
-  /**
-   * Switch the database connection with the index of the connection list
-   * @param  i  the index of the connection list
-   * @return void
-   */
-  switchConnection: function(i) {
-    if (id >= 0 && id < this.conn.length) {
-      this.id = id;
     }
   },
 
@@ -149,9 +173,11 @@ DB.prototype = {
    * @return void
    */
   close: function() {
-    var i = this.id;
-    this.conn[i].Close();
-    this.conn[i] = null;
+    this.conn.Close();
+    this.conn = null;
+    if (this.name != "") {
+      delete this.config[this.name];
+    }
   },
 
   /**
@@ -159,11 +185,11 @@ DB.prototype = {
    * @return void
    */
   closeAll: function() {
-    var n = this.conn.length;
-    for (i = 0; i < n; i++) {
-      this.conn[i].Close();
+    for (name in this.config) {
+      this.config[name]["conn"].Close();
     }
-    this.conn = new Array();
+    this.config = null;
+    this.conn = null;
   },
 
   /**
@@ -178,22 +204,26 @@ DB.prototype = {
     if (!defined(cmdType)) {
       cmdType = adCmdText;
     }
-    if (!defined(params) || !isArray(params)) {
-      this.conn[this.id].Execute(cmdText, affected, cmdType);
-    } else {
-      var cmd = Server.CreateObject("ADODB.Command");
-      cmd.ActiveConnection = this.conn[this.id];
-      cmd.NamedParameters = true;
-      cmd.CommandText = cmdText;
-      cmd.CommandType = cmdType;
-      if (isArray(params[0])) {
-        for (param in params) {
-          cmd.Parameters.Append(cmd.CreateParameter(param[0], param[1], param[2], param[3], param[4]));
-        }
+    try {
+      if (!defined(params) || !isArray(params)) {
+        this.conn[this.id].Execute(cmdText, affected, cmdType);
       } else {
-        cmd.Parameters.Append(cmd.CreateParameter(params[0], params[1], params[2], params[3], params[4]));
+        var cmd = Server.CreateObject("ADODB.Command");
+        cmd.ActiveConnection = this.conn[this.id];
+        cmd.NamedParameters = true;
+        cmd.CommandText = cmdText;
+        cmd.CommandType = cmdType;
+        if (isArray(params[0])) {
+          for (param in params) {
+            cmd.Parameters.Append(cmd.CreateParameter(param[0], param[1], param[2], param[3], param[4]));
+          }
+        } else {
+          cmd.Parameters.Append(cmd.CreateParameter(params[0], params[1], params[2], params[3], params[4]));
+        }
+        cmd.Execute(affected);
       }
-      cmd.Execute(affected);
+    } catch (e) {
+      die("Error occured while executing the statement");
     }
 
     return affected > 0 ? true : false;
@@ -210,22 +240,26 @@ DB.prototype = {
     if (!defined(cmdType)) {
       cmdType = adCmdText;
     }
-    var rs = Server.CreateObject("ADODB.Recordset");
-    var cmd = Server.CreateObject("ADODB.Command");
-    cmd.ActiveConnection = this.conn[this.id];
-    cmd.NamedParameters = true;
-    cmd.CommandText = cmdText;
-    cmd.CommandType = cmdType;
-    if (defined(params)) {
-      if (isArray(params[0])) {
-        for (param in params) {
-          cmd.Parameters.Append(cmd.CreateParameter(param[0], param[1], param[2], param[3], param[4]));
+    try {
+      var rs = Server.CreateObject("ADODB.Recordset");
+      var cmd = Server.CreateObject("ADODB.Command");
+      cmd.ActiveConnection = this.conn[this.id];
+      cmd.NamedParameters = true;
+      cmd.CommandText = cmdText;
+      cmd.CommandType = cmdType;
+      if (defined(params)) {
+        if (isArray(params[0])) {
+          for (param in params) {
+            cmd.Parameters.Append(cmd.CreateParameter(param[0], param[1], param[2], param[3], param[4]));
+          }
+        } else {
+          cmd.Parameters.Append(cmd.CreateParameter(params[0], params[1], params[2], params[3], params[4]));
         }
-      } else {
-        cmd.Parameters.Append(cmd.CreateParameter(params[0], params[1], params[2], params[3], params[4]));
       }
+      rs = cmd.Execute();
+    } catch (e) {
+      die("Error occured while executing the statement");
     }
-    rs = cmd.Execute();
 
     return rs;
   },

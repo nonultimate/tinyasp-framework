@@ -479,4 +479,13 @@ Date.prototype.format = function(str) {
 
   return d;
 }
+
+/**
+ * Extend from an object
+ */
+Object.prototype.extend = function(obj) {
+  this.base = obj;
+  this.base();
+  delete this.base;
+}
 %>

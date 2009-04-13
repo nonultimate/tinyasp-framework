@@ -85,7 +85,17 @@ Router.prototype = {
           eval(include(APPLIB + "session\\session.asp"));
           eval(include(path));
           try {
-            eval(controllerName + "." + $.action + "()");
+            var action = eval(controllerName + "." + $.action);
+            var m = action.toString().match(/new\s+([a-z0-9_]+)Model/g);
+            if (m) {
+              eval(include(APPLIB + "model\\model.asp"));
+              var model = "";
+              for (i = 0; i < m.length; i++) {
+                model = m[i].replace(/new\s+/, "");
+                eval(include(APPPATH + "models\\" + model + ".asp"));
+              }
+            }
+            action();
           } catch(e) {
             die("An error occured in " + controllerName + "." + $.action + "()");
           }
