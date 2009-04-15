@@ -222,17 +222,6 @@ function getSize(size) {
 }
 
 /**
- * Find regular expression in string
- */
-function find(re, str) {
-  if (str.search(re) > -1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-/**
  * First letter upper case
  */
 function ucfirst(str) {
@@ -384,6 +373,21 @@ function objectExists(str) {
 }
 
 /**
+ * Extend an object
+ */
+function extend(obj, base) {
+  if (isFunction(base)) {
+    obj.__base__ = base;
+    obj.__base__();
+    delete obj.__base__;
+  } else {
+    for (m in base) {
+      obj[m] = base[m];
+    }
+  }
+}
+
+/**
  * Get GET variables
  */
 function TGet(str) {
@@ -478,14 +482,5 @@ Date.prototype.format = function(str) {
   d = d.replace("%Y", year);
 
   return d;
-}
-
-/**
- * Extend from an object
- */
-Object.prototype.extend = function(obj) {
-  this.base = obj;
-  this.base();
-  delete this.base;
 }
 %>

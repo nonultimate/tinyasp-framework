@@ -111,13 +111,14 @@
             </p>
             <hr />
             <p>
-              <a name="execute" class="keyword">execute</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">String</span> cmdType [, <span class="type rightspan">String</span> params]])
+              <a name="execute" class="keyword">execute</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> cmdText [, <span class="type rightspan">String</span> cmdType [, <span class="type rightspan">String</span> params]])
             </p>
             <p class="description">
               Execute SQL statement or procedure and return no result.
             </p>
             <p class="note">
               <b>Parameter</b><br />
+              <span class="param">name</span> The database configuration name to use.<br />
               <span class="param">cmdText</span> The command text or procedure name.<br />
               <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
               <span class="param">params</span> [Optional]The parameters to bind.<br />
@@ -171,31 +172,19 @@
             </p>
             <hr />
             <p>
-              <a name="query" class="keyword">query</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">String</span> cmdType [, <span class="type rightspan">String</span> params]])
+              <a name="query" class="keyword">query</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> cmdText [, <span class="type rightspan">String</span> cmdType [, <span class="type rightspan">String</span> params]])
             </p>
             <p class="description">
               Execute SQL statement or procedure and return data as recordset.
             </p>
             <p class="note">
               <b>Parameter</b><br />
+              <span class="param">name</span> The database configuration name to use.<br />
               <span class="param">cmdText</span> The command text or procedure name.<br />
               <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
               <span class="param">params</span> [Optional]The parameters to bind.<br />
               <b>Return</b>
               <span class="type leftspan">Object</span><br />
-            </p>
-            <hr />
-            <p>
-              <a name="setDefault" class="keyword">setDefault</a>(<span class="type rightspan">String</span> name)
-            </p>
-            <p class="description">
-              Set a default connection with the config name.
-            </p>
-            <p class="note">
-              <b>Parameter</b><br />
-              <span class="param">name</span> The database config name.<br />
-              <b>Return</b>
-              <span class="type leftspan">void</span><br />
             </p>
             <hr />
             <p>
@@ -212,14 +201,14 @@
             </p>
             <hr />
             <p>
-              <a name="switchConnection" class="keyword">switchConnection</a>(<span class="type rightspan">Integer</span> i)
+              <a name="use" class="keyword">use</a>(<span class="type rightspan">String</span> name)
             </p>
             <p class="description">
-              Switch the database connection with the index of the connection list.
+              Use the connection with the config name.
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">i</span> The index of the connection list.<br />
+              <span class="param">name</span> The database config name.<br />
               <b>Return</b>
               <span class="type leftspan">void</span><br />
             </p>

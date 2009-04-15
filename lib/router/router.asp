@@ -86,6 +86,9 @@ Router.prototype = {
           eval(include(path));
           try {
             var action = eval(controllerName + "." + $.action);
+            if (!defined(action)) {
+              redirect(404);
+            }
             var m = action.toString().match(/new\s+([a-z0-9_]+)Model/g);
             if (m) {
               eval(include(APPLIB + "model\\model.asp"));

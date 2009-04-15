@@ -9,13 +9,18 @@
  *             {PostgreSQL Unicode}
  * SQLite:     {SQLite ODBC Driver}
  *             {SQLite3 ODBC Driver}
+ * Oracle XE:  {Oracle in XE}
+ * Oracle:     {Oracle ODBC Driver}
  */
+// Database configuration
 CONFIG["db"] = {
   "default": {
-    "driver":   "{Microsoft Access Driver (*.mdb)}",
-    "database": "app\\data\\db.mdb",
+    "driver":   "{SQL Server}",
+    "server":   ".\\SQLEXPRESS",
     "user":     "admin",
-    "password": "manager"
+    "password": "manager",
+    "database": "test",
+    "charset":  "utf8"
   }
 }
 %>

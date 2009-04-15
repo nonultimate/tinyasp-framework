@@ -26,15 +26,15 @@ if ($.File.isFile(APPPATH + "config\\database.asp")) {
  */
 function DB() {
   if (defined(CONFIG["db"])) {
-    var default = "";
+    var default_name = "";
     for (name in CONFIG["db"]) {
-      if (default == "") {
-        default = name;
+      if (default_name == "") {
+        default_name = name;
       }
       this.open(CONFIG["db"][name], name);
     }
-    if (default != "") {
-      this.use(default);
+    if (default_name != "") {
+      this.use(default_name);
     }
   }
 }
@@ -89,7 +89,7 @@ DB.prototype = {
       dsn += "PORT=" + options["port"] + ";";
     }
     if (defined(options["database"])) {
-      if (find(/Access/i, options["driver"])) {
+      if (/Access/i.test(options["driver"])) {
         dsn += "DBQ=" + realpath(options["database"]) + ";";
       } else {
         dsn += "DATABASE=" + options["database"] + ";";
@@ -129,17 +129,17 @@ DB.prototype = {
       var dbtype = "";
       var m = this.dsn.match(/driver=\{([^\}]+)\}/i);
       if (m) {
-        if (m[1].match(/access/i)) {
+        if (/access/i.test(m[1])) {
           dbtype = "access";
-        } else if (m[1].match(/sql server/i)) {
+        } else if (/sql server/i.test(m[1])) {
           dbtype = "mssql";
-        } else if (m[1].match(/mysql/i)) {
+        } else if (/mysql/i.test(m[1])) {
           dbtype = "mysql";
-        } else if (m[1].match(/oracle/i)) {
+        } else if (/oracle/i.test(m[1])) {
           dbtype = "oracle";
-        } else if (m[1].match(/postgresql/i)) {
+        } else if (/postgresql/i.test(m[1])) {
           dbtype = "pgsql";
-        } else if (m[1].match(/sqlite/i)) {
+        } else if (/sqlite/i.test(m[1])) {
           dbtype = "sqlite";
         }
       }
@@ -151,6 +151,7 @@ DB.prototype = {
           this.config[name] = new Array();
           this.config[name]["type"] = dbtype;
           this.config[name]["conn"] = Server.CreateObject("ADODB.Connection");
+          this.config[name]["conn"].Open(this.dsn);
         } else {
           this.type = dbtype;
           this.conn = Server.CreateObject("ADODB.Connection");
@@ -159,7 +160,7 @@ DB.prototype = {
         this.dsn = "";
         return true;
       } catch (e) {
-        if (!defined(name)) {
+        if (defined(name)) {
           die("Open " + name + " database failed");
         } else {
           die("Open the database failed");
@@ -194,22 +195,24 @@ DB.prototype = {
 
   /**
    * Execute SQL statement or procedure and return no result
+   * @param  name     the database configuration name to use
    * @param  cmdText  the command text or procedure name
    * @param  cmdType  [optional]the command type, default is adCmdText
    * @param  params   [optional]the parameters to bind
    * @return boolean
    */
-  execute: function(cmdText, cmdType, params) {
+  execute: function(name, cmdText, cmdType, params) {
     var affected = 0;
     if (!defined(cmdType)) {
       cmdType = adCmdText;
     }
     try {
+      var conn = (name != "" && defined(this.config[name])) ? this.config[name]["conn"] : this.conn;
       if (!defined(params) || !isArray(params)) {
-        this.conn[this.id].Execute(cmdText, affected, cmdType);
+        conn.Execute(cmdText, affected, cmdType);
       } else {
         var cmd = Server.CreateObject("ADODB.Command");
-        cmd.ActiveConnection = this.conn[this.id];
+        cmd.ActiveConnection = conn;
         cmd.NamedParameters = true;
         cmd.CommandText = cmdText;
         cmd.CommandType = cmdType;
@@ -231,19 +234,20 @@ DB.prototype = {
 
   /**
    * Execute SQL statement or procedure and return data as recordset
+   * @param  name     the database configuration name to use
    * @param  cmdText  the command text or procedure name
    * @param  cmdType  [optional]the command type, default is adCmdText
    * @param  params   [optional]the parameters to bind
    * @return recordset
    */
-  query: function(cmdText, cmdType, params) {
+  query: function(name, cmdText, cmdType, params) {
     if (!defined(cmdType)) {
       cmdType = adCmdText;
     }
     try {
-      var rs = Server.CreateObject("ADODB.Recordset");
+      var conn = (name != "" && defined(this.config[name])) ? this.config[name]["conn"] : this.conn;
       var cmd = Server.CreateObject("ADODB.Command");
-      cmd.ActiveConnection = this.conn[this.id];
+      cmd.ActiveConnection = conn;
       cmd.NamedParameters = true;
       cmd.CommandText = cmdText;
       cmd.CommandType = cmdType;
@@ -256,7 +260,7 @@ DB.prototype = {
           cmd.Parameters.Append(cmd.CreateParameter(params[0], params[1], params[2], params[3], params[4]));
         }
       }
-      rs = cmd.Execute();
+      var rs = cmd.Execute();
     } catch (e) {
       die("Error occured while executing the statement");
     }

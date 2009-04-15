@@ -22,18 +22,15 @@ $.Model = function() {
   if (!defined(this.constructor)) {
     die("Model class must be extended");
   }
-  var c = this.constructor.toString();
-  var a = c.match(/function\s+([^\s\(]+)/i);
-  c = a[1].replace(/Model$/, "");
   if (this.table == "") {
-    this.table = c;
+    var c = this.constructor.toString();
+    var a = c.match(/function\s+([^\s\(]+)/i);
+    this.table = a[1].replace(/Model$/, "").toLowerCase();
   }
-  if (this.db != "") {
-    $.DB.use(this.db);
-  }
+  this.type = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["conn"] : $.DB.type;
   if (this.type == "mysql") {
     this.lq = this.rq = "`";
-  } else if(this.type == "oracle") {
+  } else if(this.type == "oracle" || this.type == "pgsql") {
     this.lq = this.rq = '"';
   }
 }
@@ -44,6 +41,11 @@ $.Model.prototype = {
    * Database configuration name
    */
   db: "",
+
+  /**
+   * Database type
+   */
+  type: "",
 
   /**
    * Table name
@@ -83,6 +85,157 @@ $.Model.prototype = {
    * @return void
    */
   getFields: function() {
+    if (this.fields.length > 0) {
+      return;
+    }
+    var sql = "";
+    var rs, field;
+    switch (this.type) {
+      case "access":
+        var conn = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["conn"] : $.DB.conn;
+        var rs = conn.OpenSchema(adSchemaColumns);
+        var start = false;
+        while (!rs.EOF) {
+          if (rs("TABLE_NAME").Value.toLowerCase() == this.table.toLowerCase()) {
+            start = true;
+          } else if (start == true){
+            break;
+          }
+          field = ucfirst(rs("COLUMN_NAME").Value);
+          var type = AccessDataType(rs("DATA_TYPE").Value);
+          var size = "";
+          if (rs("NUMERIC_PRECISION").Value != null) {
+            size = rs("NUMERIC_PRECISION").Value
+          } else if(rs("DATETIME_PRECISION").Value != null) {
+            size = rs("DATETIME_PRECISION").Value;
+          } else if(rs("CHARACTER_MAXIMUM_LENGTH").Value != null) {
+            size = rs("CHARACTER_MAXIMUM_LENGTH").Value;
+            if (size > 255) {
+              type = "memo"
+              size = "";
+            }
+          }
+          this.fields[field] = {
+            "name": rs("COLUMN_NAME").Value,
+            "type": type,
+            "size": size,
+            "null": rs("IS_NULLABLE").Value,
+            "default": (rs("COLUMN_DEFAULT").Value != null) ? rs("COLUMN_DEFAULT").Value : "",
+            "auto": (rs("DATA_TYPE").Value == 3 && rs("COLUMN_FLAGS").Value == 24) ? true : false
+          };
+          rs.MoveNext();
+        }
+        rs.Close();
+        break;
+      case "mssql":
+        sql = "EXEC sp_columns '" + this.table + "'";
+        rs = this.query(sql);
+        while (!rs.EOF) {
+          field = ucfirst(rs("COLUMN_NAME").Value);
+          var a = rs("TYPE_NAME").Value.split(" ");
+          var type = a[0];
+          var auto = (a.length > 1) ? true : false;
+          this.fields[field] = {
+            "name": rs("COLUMN_NAME").Value,
+            "type": type,
+            "size": rs["LENGTH"],
+            "null": (rs("NULLABLE").Value == 0) ? true : false,
+            "default": rs("COLUMN_DEF").Value,
+            "auto": auto
+          };
+          rs.MoveNext();
+        }
+        rs.Close();
+        if (this.pkey == "") {
+          rs = this.query("EXEC sp_pkeys '" + this.table + "'");
+          if (!rs.EOF) {
+            this.pkey = rs("COLUMN_NAME").Value;
+          }
+          rs.Close();
+        }
+        break;
+      case "mysql":
+        sql = "DESCRIBE " + this.addQuote(this.table);
+        rs = this.query(sql);
+        while (!rs.EOF) {
+          field = ucfirst(rs("Field").Value);
+          if (this.pkey == "" && rs("Key").Value == "PRI") {
+            this.pkey = rs("Key").Value;
+          }
+          var a = rs("Type").Value.split("(");
+          var type = a[0];
+          var size = (a.length > 1) ? a[1].replace(/\)$/, "") : "";
+          this.fields[field] = {
+            "name": rs("Field").Value,
+            "type": type,
+            "size": size,
+            "null": (rs("Null").Value == "NO") ? false : true,
+            "default": rs("Default").Value.replace(/^\(|\)$/, "");
+            "auto": (rs("Extra").Value != "") ? true : false
+          };
+          rs.MoveNext();
+        }
+        rs.Close();
+        break;
+      case "oracle":
+        sql = "SELECT * FROM col WHERE TNAME='" + this.table + "'";
+        rs = this.query(sql);
+        while (!rs.EOF) {
+          field = ucfirst(rs("CNAME").Value);
+          this.fields[field] = {
+            "name": rs("CNAME").Value,
+            "type": rs("COLTYPE").Value,
+            "size": rs("WIDTH").Value,
+            "null": (rs("NULLS").Value == "NULL") ? true : false,
+            "default": rs("DEFAULTVAL").Value,
+            "auto": ""
+          };
+          rs.MoveNext();
+        }
+        rs.Close();
+        break;
+      case "pgsql":
+        sql = "SELECT pg_attribute.attname,pg_type.typname,pg_attribute.attlen,pg_attribute.attnotnull FROM pg_type INNER JOIN pg_attribute ON (pg_type.oid=pg_attribute.atttypid) INNER JOIN pg_class ON (pg_class.relfilenode=pg_attribute.attrelid) WHERE pg_attribute.attstattarget<>0 AND pg_class.relname='" + this.table + "'";
+        rs = this.query(sql);
+        while (!rs.EOF) {
+          field = ucfirst(rs("attname").Value);
+          var size = (rs("attlen").Value > -1) ? rs("attlen").Value : "";
+          this.fields[field] = {
+            "name": rs("attname").Value,
+            "type": rs("typname").Value,
+            "size": size,
+            "null": (rs("attnotnull").Value == "t") ? true : false,
+            "default": "",
+            "auto": ""
+          };
+          rs.MoveNext();
+        }
+        rs.Close();
+        break;
+      case "sqlite":
+        sql = "PRAGMA table_info(" + this.addQuote(this.table) + ")";
+        rs = this.query(sql);
+        while (!rs.EOF) {
+          field = ucfirst(rs("name").Value);
+          if (this.pkey == "" && rs("pk").Value == 1) {
+            this.pkey = rs("name").Value;
+          }
+          var a = rs("type").Value.split("(");
+          var type = a[0];
+          var size = (a.length > 1) ? a[1].replace(/\)$/, "") : "";
+          this.fields[field] = {
+            "name": rs("name").Value,
+            "type": type,
+            "size": size,
+            "null": (rs("notnull").Value == 0) ? true : false,
+            "default": rs("dflt_value").Value,
+            "auto": (rs("pk").Value == 1 && type == "INTEGER") ? true : false
+          };
+          rs.MoveNext();
+        }
+        rs.Close();
+        break;
+    }
   },
 
   /**
@@ -153,7 +306,7 @@ $.Model.prototype = {
    * @return string
    */
   addQuote: function(str) {
-    if (str.match(/[a-z0-9_]+\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/i)) {
+    if (/[a-z0-9_]+\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/i.test(str)) {
       return str.replace(/([a-z0-9_]+)\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/ig, function() {
         return this.lq + $1.replace(/\./g, this.rq + "." + this.lq) + this.rq;
       });
@@ -180,18 +333,44 @@ $.Model.prototype = {
         sql += ",";
         first = false;
       }
-      sql += this.addQuote(this.fields[field]["name"]) + " " + this.fields[field]["type"];
-      if (this.fields[field]["size"] != "") {
-        sql += "(" + this.fields[field]["size"] + ")";
-      }
-      if (this.fields[field]["null"] != "") {
-        sql += " " + this.fields[field]["null"];
-      }
-      if (this.fields[field]["default"] != "") {
-        sql += " " + this.fields[field]["default"];
+      sql += this.addQuote(this.fields[field]["name"]);
+      if (!(this.type == "access" && this.fields[field]["auto"] == true)) {
+        sql += " " + this.fields[field]["type"];
+        if (this.fields[field]["size"] != "") {
+          sql += "(" + this.fields[field]["size"] + ")";
+        }
+        if (this.fields[field]["null"] != "") {
+          if (this.fields[field]["null"] == false) {
+            sql += " NOT NULL";
+          } else if(isString(this.fields[field]["null"])) {
+            sql += " " + this.fields["field"]["null"];
+          }
+        }
+        if (this.fields[field]["default"] != "") {
+          sql += " " + this.fields[field]["default"];
+        }
       }
       if (this.fields[field]["auto"] != "") {
-        sql += " " + this.fields[field]["auto"];
+        if (this.fields[field]["auto"] == true) {
+          switch (this.type) {
+            case "access":
+              sql += " COUNTER(1, 1)";
+              break;
+            case "mssql":
+              sql += " IDENTITY(1, 1)";
+              break;
+            case "mysql":
+              sql += " AUTO_INCREMENT";
+              break;
+            case "oracle":
+              break;
+            case "sqlite":
+              sql += " AUTOINCREMENT";
+              break;
+          }
+        } else if(isString(this.fields[field]["auto"])) {
+          sql += " " + this.fields[field]["auto"];
+        }
       }
     }
     if (this.pkey != "") {
@@ -199,7 +378,7 @@ $.Model.prototype = {
       sql += "PRIMARY KEY (" + this.addQuote(this.pkey) + ")";
     }
     sql += ")";
-    return $.DB.execute(sql);
+    return this.execute(sql);
   },
 
   /**
@@ -211,7 +390,7 @@ $.Model.prototype = {
    */
   fetch: function(fields, conditions, orders) {
     var sql = this.buildQuery(fields, conditions, orders, 1);
-    var rs = $.DB.query(sql);
+    var rs = this.query(sql);
   },
 
   /**
@@ -225,7 +404,7 @@ $.Model.prototype = {
    */
   fetchAll: function(fields, conditions, orders, limit, offset) {
     var sql = this.buildQuery(fields, conditions, orders, limit, offset);
-    var rs = $.DB.query(sql);
+    var rs = this.query(sql);
   },
 
   /**
@@ -281,7 +460,7 @@ $.Model.prototype = {
       }
       var sql = "INSERT INTO " + this.addQuote(this.table) + "(" + sFields + ") VALUES(" + sValues + ")";
     }
-    var ret = $.DB.execute(sql);
+    var ret = this.execute(sql);
     return ret;
   },
 
@@ -295,8 +474,43 @@ $.Model.prototype = {
       return false;
     }
     var sql = "DELETE FROM " + this.addQuote(this.table) + " WHERE " + this.addQuote(conditions);
-    return $.DB.execute(sql);
+    return this.execute(sql);
+  },
+
+  /**
+   * Execute SQL statement or procedure and return no result
+   * @param  cmdText  the command text or procedure name
+   * @param  cmdType  [optional]the command type, default is adCmdText
+   * @param  params   [optional]the parameters to bind
+   * @return boolean
+   */
+  execute: function(cmdText, cmdType, params) {
+    return $.DB.execute(this.db, cmdText, cmdType, params);
+  },
+
+  /**
+   * Execute SQL statement or procedure and return data as recordset
+   * @param  cmdText  the command text or procedure name
+   * @param  cmdType  [optional]the command type, default is adCmdText
+   * @param  params   [optional]the parameters to bind
+   * @return recordset
+   */
+  query: function(cmdText, cmdType, params) {
+    return $.DB.query(this.db, cmdText, cmdType, params);
   }
 
+}
+
+function AccessDataType(id) {
+  switch (id) {
+    case 2: return "smallint";
+    case 3: return "integer";
+    case 4: return "single";
+    case 5: return "double";
+    case 6: return "currency";
+    case 11: return "bit";
+    case 130: return "varchar";
+    case 135: return "datetime";
+  }
 }
 %>

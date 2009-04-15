@@ -217,7 +217,7 @@ $.File = {
    * @return object
    */
   get: function(path) {
-    if (find(/^[a-z]:\\?$/i, path)) {
+    if (/^[a-z]:\\?$/i.test(path)) {
       var d = this.fso.GetDrive(path);
       return d;
     } else {

@@ -18,14 +18,14 @@
 
 eval(include(APPLIB + "view\\view.asp"));
 
-$.Controller = function() {
-  return new Controller();
+$.Controller = function(obj) {
+  return new Controller(obj);
 }
 
 /**
  * Class Controller
  */
-function Controller() {
+function Controller(obj) {
   $.view = $.View();
 
   /**
@@ -34,5 +34,9 @@ function Controller() {
   this.index = function() {
     echo("This is a default index action");
   };
+
+  if (defined(obj)) {
+    extend(this, obj);
+  }
 }
 %>

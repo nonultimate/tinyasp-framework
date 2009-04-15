@@ -204,7 +204,7 @@ var $ = {
     if (str != "" && defined(CONFIG["router"])) {
       for (v in CONFIG["router"]) {
         re = new RegExp("^" + v, "i");
-        if (find(re, str)) {
+        if (re.test(str)) {
           str = str.replace(re, CONFIG["router"][v]);
           break;
         }
