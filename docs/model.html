@@ -51,9 +51,196 @@
             <br />
             <b>Properties</b><br />
             <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="db" class="keyword">db</a>
+            </p>
+            <p class="description">
+              Database configuration name.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Array</span><a name="fields" class="keyword">fields</a>
+            </p>
+            <p class="description">
+              The fields of the table.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="lq" class="keyword">lq</a>
+            </p>
+            <p class="description">
+              Left quote for table or column name.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="pkey" class="keyword">pkey</a>
+            </p>
+            <p class="description">
+              Primary key.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="rq" class="keyword">rq</a>
+            </p>
+            <p class="description">
+              Right quote for table or column name.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="table" class="keyword">table</a>
+            </p>
+            <p class="description">
+              Table name.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">String</span><a name="type" class="keyword">type</a>
+            </p>
+            <p class="description">
+              Database type.
+            </p>
             <br />
             <b>Methods</b><br />
             <hr />
+            <p>
+              <a name="addQuote" class="keyword">addQuote</a>(<span class="type rightspan">String</span> str)
+            </p>
+            <p class="description">
+              Add table or column quote for query.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> The string to add quote.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="buildQuery" class="keyword">buildQuery</a>([<span class="type rightspan">String</span> fields [, <span class="type rightspan">String</span> conditions [, <span class="type rightspan">String</span> orders [, <span class="type rightspan">String</span> limit [, <span class="type rightspan">String</span> offset ]]]]])
+            </p>
+            <p class="description">
+              Build query statement with arguments.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">fields</span> [Optional]The fields to fetch.<br />
+              <span class="param">conditions</span> [Optional]The conditions to search.<br />
+              <span class="param">orders</span> [Optional]Order by columns.<br />
+              <span class="param">limit</span> [Optional]The number of rows to fetch.<br />
+              <span class="param">offset</span> [Optional]The offset in rows to seek.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="create" class="keyword">create</a>()
+            </p>
+            <p class="description">
+              Create the table.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="execute" class="keyword">execute</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">Integer</span> cmdType [, <span class="type rightspan">Array</span> params]])
+            </p>
+            <p class="description">
+              Execute SQL statement or procedure and return no result.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cmdText</span> The command text or procedure name.<br />
+              <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="fetch" class="keyword">fetch</a>([<span class="type rightspan">String</span> fields [, <span class="type rightspan">String</span> conditions [, <span class="type rightspan">String</span> orders ]]])
+            </p>
+            <p class="description">
+              Fetch a row.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">fields</span> [Optional]The fields to fetch.<br />
+              <span class="param">conditions</span> [Optional]The conditions to search.<br />
+              <span class="param">orders</span> [Optional]Order by columns.<br />
+              <b>Return</b>
+              <span class="type leftspan">Object</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="fetchAll" class="keyword">fetchAll</a>([<span class="type rightspan">String</span> fields [, <span class="type rightspan">String</span> conditions [, <span class="type rightspan">String</span> orders [, <span class="type rightspan">String</span> limit [, <span class="type rightspan">String</span> offset ]]]]])
+            </p>
+            <p class="description">
+              Fetch all rows with limit.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">fields</span> [Optional]The fields to fetch.<br />
+              <span class="param">conditions</span> [Optional]The conditions to search.<br />
+              <span class="param">orders</span> [Optional]Order by columns.<br />
+              <span class="param">limit</span> [Optional]The number of rows to fetch.<br />
+              <span class="param">offset</span> [Optional]The offset in rows to seek.<br />
+              <b>Return</b>
+              <span class="type leftspan">Array</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="getFields" class="keyword">getFields</a>()
+            </p>
+            <p class="description">
+              Get the fields of the table.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="query" class="keyword">query</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">Integer</span> cmdType [, <span class="type rightspan">Array</span> params]])
+            </p>
+            <p class="description">
+              Execute SQL statement or procedure and return data as recordset.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cmdText</span> The command text or procedure name.<br />
+              <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">RecordSet</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="remove" class="keyword">remove</a>(<span class="type rightspan">String</span> conditions)
+            </p>
+            <p class="description">
+              Remove rows with the condition.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">conditions</span> The condition to search.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="save" class="keyword">save</a>(<span class="type rightspan">Object</span> model)
+            </p>
+            <p class="description">
+              Save the model with data.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">model</span> The model object to save.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
             <br />
           </td>
         </tr>

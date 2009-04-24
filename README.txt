@@ -22,3 +22,7 @@ XZip       Required by $.Zip, compressing and decompressing zip files.
 
 Download Dependencies.7z, unpack and run install.bat to install these components.
 Restart of IIS may required, if components are not active.
+
+Documentation
+=============
+View documentation online at http://tinyasp.org/docs/.

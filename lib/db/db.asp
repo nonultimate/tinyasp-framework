@@ -99,8 +99,8 @@ DB.prototype = {
   },
 
   /**
-   * Use the connection with the config name
-   * @param  name  the database config name
+   * Use the connection with the configuration name
+   * @param  name  the database configuration name
    * @return void
    */
   use: function(name) {

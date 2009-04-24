@@ -234,6 +234,19 @@
             </p>
             <hr />
             <p>
+              <a name="isDate" class="keyword">isDate</a>(<span class="type rightspan">var</span> v)
+            </p>
+            <p class="description">
+              Ensures the variable type is date.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">v</span> The variable name.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
               <a name="isFunction" class="keyword">isFunction</a>(<span class="type rightspan">var</span> v)
             </p>
             <p class="description">
@@ -262,14 +275,14 @@
             </p>
             <hr />
             <p>
-              <a name="isNumeric" class="keyword">isNumeric</a>(<span class="type rightspan">var</span> v)
+              <a name="isNumeric" class="keyword">isNumeric</a>(<span class="type rightspan">var</span> str)
             </p>
             <p class="description">
               Ensures the variable is numeric.
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">v</span> The variable name.<br />
+              <span class="param">str</span> The string variable.<br />
               <b>Return</b>
               <span class="type leftspan">Boolean</span><br />
               &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable is numeric or return false.
@@ -440,6 +453,21 @@
             </p>
             <hr />
             <p>
+              <a name="serialize" class="keyword">serialize</a>(<span class="type rightspan">Object</span> obj [, <span class="type rightspan">String</span> name [, <span class="type rightspan">Boolean</span> isvar]])
+            </p>
+            <p class="description">
+              Serialize an object to javascript definition.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">obj</span> The object to serialize.<br />
+              <span class="param">name</span> [Optional]The variable name for definition.<br />
+              <span class="param">name</span> [Optional]Whether to use var for definition.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
               <a name="setHeader" class="keyword">setHeader</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> value)
             </p>
             <p class="description">
@@ -461,7 +489,7 @@
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">str</span> The string of the variable.<br />
+              <span class="param">str</span> The string variable.<br />
               <b>Return</b>
               <span class="type leftspan">String | Array</span><br />
             </p>
@@ -485,7 +513,7 @@
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">str</span> The string of the variable.<br />
+              <span class="param">str</span> The string variable.<br />
               <b>Return</b>
               <span class="type leftspan">String | Array</span><br />
             </p>
@@ -511,7 +539,7 @@
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">str</span> The string of the variable.<br />
+              <span class="param">str</span> The string variable.<br />
               <b>Return</b>
               <span class="type leftspan">String</span><br />
             </p>
@@ -544,14 +572,27 @@
             <br />
             <div class="menu">Date Object</div>
             <p>
-              <a name="Date.format" class="keyword">Date.format</a>(<span class="type rightspan">String</span> str)
+              <a name="Date.format" class="keyword">Date.format</a>([<span class="type rightspan">String</span> str])
             </p>
             <p class="description">
               Format date.
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">str</span> The date format.<br />
+              <span class="param">str</span> [Optional]The date format.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="Date.toString" class="keyword">Date.toString</a>([<span class="type rightspan">String</span> str])
+            </p>
+            <p class="description">
+              Convert to date type to string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">str</span> [Optional]The date format.<br />
               <b>Return</b>
               <span class="type leftspan">String</span><br />
             </p>

@@ -89,7 +89,7 @@ Router.prototype = {
             if (!defined(action)) {
               redirect(404);
             }
-            var m = action.toString().match(/new\s+([a-z0-9_]+)Model/g);
+            var m = action.toString().match(/new\s+([A-Za-z0-9_]+)Model/g);
             if (m) {
               eval(include(APPLIB + "model\\model.asp"));
               var model = "";

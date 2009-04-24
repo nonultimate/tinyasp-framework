@@ -34,17 +34,20 @@ CONFIG["cache_view"] = true;
 
 /**
  * Return program executing time
+ * @return string
  */
 function runtime() {
   time = new String(Math.round((timer() - StartTime)) / 1000);
   if (time.substr == ".") {
     time = "0" + time;
   }
+
   return time;
 }
 
 /**
  * Get milliseconds of current time
+ * @return integer
  */
 function timer() {
   return (new Date()).getTime();
@@ -52,6 +55,8 @@ function timer() {
 
 /**
  * Output string
+ * @param  str  the string to output
+ * @return void
  */
 function echo(str) {
   Response.Write(str);
@@ -59,6 +64,8 @@ function echo(str) {
 
 /**
  * Output string
+ * @param  str  the string to output
+ * @return void
  */
 function print(str) {
   echo(str);
@@ -66,6 +73,8 @@ function print(str) {
 
 /**
  * Output string and change line
+ * @param  str  the string to output
+ * @return void
  */
 function println(str) {
   echo(str + "\n");
@@ -73,6 +82,8 @@ function println(str) {
 
 /**
  * Output string and exit
+ * @param  str  the string to output
+ * @return void
  */
 function die(str) {
 	Response.Write(str);
@@ -81,6 +92,8 @@ function die(str) {
 
 /**
  * Output a object or variable
+ * @param  v  the object or variable to output
+ * @return void
  */
 function dump(v) {
   if (isObject(v) || isFunction(v)) {
@@ -107,6 +120,9 @@ function dump(v) {
 
 /**
  * Redirect URL
+ * If url is a number, it will redirect to error page with HTTP state code (0, 403, 404). 
+ * @param  url  the URL of the location to redirect, or HTTP state code
+ * @return void
  */
 function redirect(url) {
   if (isNumber(url)) {
@@ -124,6 +140,8 @@ function redirect(url) {
 
 /**
  * Transfer URL without parameters
+ * @param  url  the URL of the location to transfer
+ * @return void
  */
 function transfer(url) {
   Server.Transfer(url);
@@ -131,6 +149,8 @@ function transfer(url) {
 
 /**
  * Set HTTP content type
+ * @param  type  the content type
+ * @return void
  */
 function setContentType(type) {
   Response.ContentType = type;
@@ -138,6 +158,8 @@ function setContentType(type) {
 
 /**
  * Set the time the page expires
+ * @param  time  the time of minutes
+ * @return void
  */
 function setExpires(time) {
   Response.Expires = time;
@@ -145,6 +167,9 @@ function setExpires(time) {
 
 /**
  * Set HTTP header
+ * @param  name   the name of HTTP header
+ * @param  value  the value of HTTP header
+ * @return void
  */
 function setHeader(name, value) {
   Response.AddHeader(name, value);
@@ -152,6 +177,8 @@ function setHeader(name, value) {
 
 /**
  * Get the parent directory path
+ * @param  path  the path of the file or folder
+ * @return string
  */
 function dirname(path) {
   var name = "";
@@ -168,6 +195,8 @@ function dirname(path) {
 
 /**
  * Get base file name without path
+ * @param  path  the path of the file or folder
+ * @return string
  */
 function basename(path) {
   if (!isString(path)) {
@@ -180,6 +209,8 @@ function basename(path) {
 
 /**
  * Get the absolute path
+ * @param  path  the path of the file or folder
+ * @return string
  */
 function realpath(path) {
   if (!isString(path)) {
@@ -194,6 +225,8 @@ function realpath(path) {
 
 /**
  * Encode HTML tag
+ * @param  str  the string to encode
+ * @return string
  */
 function encodeHTML(str) {
   return Server.HTMLEncode(str);
@@ -201,6 +234,8 @@ function encodeHTML(str) {
 
 /**
  * Encode URL string
+ * @param  str  the string to encode
+ * @return string
  */
 function encodeURL(str) {
   return Server.URLEncode(str);
@@ -208,6 +243,8 @@ function encodeURL(str) {
 
 /**
  * Format the number as size with 'B', 'KB', 'MB', 'GB'
+ * @param  size  the size of a file in bytes
+ * @return string
  */
 function getSize(size) {
   if (size < 1024) {
@@ -223,6 +260,8 @@ function getSize(size) {
 
 /**
  * First letter upper case
+ * @param  str  the string to format
+ * @return string
  */
 function ucfirst(str) {
   return str.substr(0, 1).toUpperCase() + str.substr(1);
@@ -230,6 +269,8 @@ function ucfirst(str) {
 
 /**
  * First letter of each word upper case
+ * @param  str  the string to format
+ * @return string
  */
 function ucwords(str) {
   return str.replace(/(\S+)/g, function($0, $1) {
@@ -241,7 +282,8 @@ function ucwords(str) {
  * Dynamic include file with repeating inclusion support,
  * like include_once function in PHP
  * @param  filename  the file path to include
- * @param  once      whether the file can be included only once, default is true.
+ * @param  once      [optional]whether the file can be included only once, default is true.
+ * @return string
  */
 function include(filename, once) {
   var content, stream, tagStart, tagEnd, code;
@@ -284,6 +326,8 @@ function include(filename, once) {
 
 /**
  * Import a library
+ * @param  string  the library string
+ * @return void
  */
 function require(lib) {
   var a = lib.split(".");
@@ -306,20 +350,53 @@ function require(lib) {
 
 /**
  * Ensures the variable is defined
+ * @param  v  the variable name
+ * @return boolean
  */
 function defined(v) {
   return typeof v != "undefined";
 }
 
 /**
+ * Ensures the variable type is array
+ * @param  v  the variable name
+ * @return boolean
+ */
+function isArray(v) {
+  return Array.prototype.isPrototypeOf(v);
+}
+
+/**
  * Ensures the variable type is boolean
+ * @param  v  the variable name
+ * @return boolean
  */
 function isBool(v) {
   return typeof v == "boolean";
 }
 
 /**
+ * Ensures the variable type is date
+ * @param  v  the variable name
+ * @return boolean
+ */
+function isDate(v) {
+  return (typeof v == "date" || Date.prototype.isPrototypeOf(v));
+}
+
+/**
+ * Ensures the variable type is function
+ * @param  v  the variable name
+ * @return boolean
+ */
+function isFunction(v) {
+  return typeof v == "function";
+}
+
+/**
  * Ensures the variable type is number
+ * @param  v  the variable name
+ * @return boolean
  */
 function isNumber(v) {
   return typeof v == "number";
@@ -327,41 +404,35 @@ function isNumber(v) {
 
 /**
  * Ensures the variable is numeric
+ * @param  str  the string variable
+ * @return boolean
  */
 function isNumeric(str) {
-  return str.search(/^[\+\-]?\d+\.?\d*$/) == 0;
-}
-
-/**
- * Ensures the variable type is string
- */
-function isString(v) {
-  return typeof v == "string";
+  return /^[\+\-]?\d+\.?\d*$/.test(str);
 }
 
 /**
  * Ensures the variable type is object
+ * @param  v  the variable name
+ * @return boolean
  */
 function isObject(v) {
   return typeof v == "object";
 }
 
 /**
- * Ensures the variable type is function
+ * Ensures the variable type is string
+ * @param  v  the variable name
+ * @return boolean
  */
-function isFunction(v) {
-  return typeof v == "function";
-}
-
-/**
- * Ensures the variable type is array
- */
-function isArray(v) {
-  return Array.prototype.isPrototypeOf(v);
+function isString(v) {
+  return typeof v == "string";
 }
 
 /**
  * Ensures server object exist
+ * @param  str  the object string name
+ * @return boolean
  */
 function objectExists(str) {
   try {
@@ -374,6 +445,9 @@ function objectExists(str) {
 
 /**
  * Extend an object
+ * @param  obj   the object to extend
+ * @param  base  the object to extend from
+ * @return void
  */
 function extend(obj, base) {
   if (isFunction(base)) {
@@ -388,7 +462,79 @@ function extend(obj, base) {
 }
 
 /**
+ * Serialize an object to javascript definition
+ * @param  obj    the object to serialize
+ * @param  name   [optional]the variable name for definition
+ * @param  isvar  [optional]whether to use var for definition
+ * @return string
+ */
+function serialize(obj, name, isvar) {
+  var s = "";
+  if (!defined(isvar) || isvar == true) {
+    s += "var ";
+  }
+  if (defined(name)) {
+    s += name + " = ";
+  }
+  if (obj == null) {
+    s += "null";
+  } else if(isArray(obj)) {
+    var len = obj.length;
+    if (defined(name)) {
+      s += "new Array();";
+      for (key in obj) {
+        s += name + "[";
+        if (isString(key)) {
+          s += "\"" + key + "\"";
+        } else {
+          s += key;
+        }
+        s += "] = " + serialize(obj[key]) + ";";
+      }
+    } else if (len > 0) {
+      var first = false;
+      s += "new Array(";
+      for (i = 0; i < len; i++) {
+        if (first) {
+          s += ", ";
+        } else {
+          first = true;
+        }
+        s += serialize(obj[i]);
+      }
+      s += ")";
+    }
+  } else if (isObject(obj)) {
+    s += "{";
+    var first = false;
+    for (k in obj) {
+      if (first) {
+        s += ", ";
+      } else {
+        first = true;
+      }
+      s += "\"" + k + "\"" + ": ";
+      s += serialize(obj[k]);
+    }
+    s += "}";
+  } else if (isFunction(obj)) {
+    s = obj.toString();
+  } else if (isString(obj)) {
+    s += "\"" + obj.replace(/"/, "\\\"") + "\"";
+  } else {
+    s += obj;
+  }
+  if (defined(name) && /[^;]$/.test(s)) {
+    s += ";";
+  }
+
+  return s;
+}
+
+/**
  * Get GET variables
+ * @param  str  the string variable
+ * @return string|array
  */
 function TGet(str) {
   var len = Request.QueryString(str).Count;
@@ -405,6 +551,8 @@ function TGet(str) {
 
 /**
  * Get POST variables
+ * @param  str  the string variable
+ * @return string|array
  */
 function TPost(str) {
   if (isMultiData) {
@@ -431,6 +579,8 @@ function TPost(str) {
 
 /**
  * Get server variables
+ * @param  str  the string variable
+ * @return string
  */
 function TServer(str) {
   if (Request.ServerVariables(str).Count == 0) {
@@ -449,6 +599,7 @@ String.prototype.trim = function() {
 
 /**
  * Remove start blank characters
+ * @return string
  */
 String.prototype.ltrim = function() {
   return this.replace(/^\s*/g, "");
@@ -456,13 +607,16 @@ String.prototype.ltrim = function() {
 
 /**
  * Remove end blank characters
+ * @return string
  */
 String.prototype.rtrim = function() {
   return this.replace(/\s*$/g, "");
 }
 
 /**
- * Format date
+ * Format date, default yyyy-mm-dd HH:MM:SS
+ * @param  str  [optional]the date format
+ * @return string
  */
 Date.prototype.format = function(str) {
   var year = this.getYear();
@@ -471,16 +625,47 @@ Date.prototype.format = function(str) {
   var hour = this.getHours();
   var minute = this.getMinutes();
   var second = this.getSeconds();
-  var f = str ? str : "%Y-%m-%j %H:%M:%S";
-  var d = f;
-  d = d.replace("%H", hour);
-  d = d.replace("%j", day);
-  d = d.replace("%m", month);
-  d = d.replace("%M", minute);
-  d = d.replace("%S", second);
-  d = d.replace("%y", year % 100);
-  d = d.replace("%Y", year);
-
+  var d = defined(str) ? str : "yyyy-mm-dd HH:MM:SS";
+  if (/yyyy/.test(d)) {
+    d = d.replace("yyyy", year);
+  } else {
+    d = d.replace("yy", year.substr(2, 2));
+  }
+  if (/mm/.test(d)) {
+    d = d.replace("mm", (month < 10) ? ("0" + month) : month);
+  } else {
+    d = d.replace("m", month);
+  }
+  if (/dd/.test(d)) {
+    d = d.replace("dd", (day < 10) ? ("0" + day) : day);
+  } else {
+    d = d.replace("d", day);
+  }
+  if (/HH/.test(d)) {
+    d = d.replace("HH", (hour < 10) ? ("0" + hour) : hour);
+  } else {
+    d = d.replace("H", hour);
+  }
+  if (/MM/.test(d)) {
+    d = d.replace("MM", (minute < 10) ? ("0" + minute) : minute);
+  } else {
+    d = d.replace("M", minute);
+  }
+  if (/SS/.test(d)) {
+    d = d.replace("SS", (second < 10) ? ("0" + second) : second);
+  } else {
+    d = d.replace("S", second);
+  }
+  
   return d;
+}
+
+/**
+ * Convert to date type to string
+ * @param  str  [optional]the date format
+ * @return string
+ */
+Date.prototype.toString = function(str) {
+  return this.format(str);
 }
 %>

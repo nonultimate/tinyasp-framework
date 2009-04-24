@@ -22,221 +22,210 @@ $.Model = function() {
   if (!defined(this.constructor)) {
     die("Model class must be extended");
   }
-  if (this.table == "") {
-    var c = this.constructor.toString();
-    var a = c.match(/function\s+([^\s\(]+)/i);
-    this.table = a[1].replace(/Model$/, "").toLowerCase();
-  }
-  this.type = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["conn"] : $.DB.type;
-  if (this.type == "mysql") {
-    this.lq = this.rq = "`";
-  } else if(this.type == "oracle" || this.type == "pgsql") {
-    this.lq = this.rq = '"';
-  }
-}
-
-$.Model.prototype = {
 
   /**
    * Database configuration name
    */
-  db: "",
+  this.db = "";
 
   /**
    * Database type
    */
-  type: "",
+  this.type = "";
 
   /**
    * Table name
    */
-  table: "",
+  this.table = "";
 
   /**
    * Primary key
    */
-  pkey: "",
+  this.pkey = "";
 
   /**
    * The fields of the table
    */
-  fields: new Array(),
+  this.fields = new Array();
 
   /**
    * Left quote for table or column name
    */
-  lq: "[",
+  this.lq = "[";
 
   /**
    * Right quote for table or column name
    */
-  rq: "]",
-
-  hasOne: "",
-
-  belongsTo: "",
-
-  hasMany: "",
-
-  manyToMany: "",
+  this.rq = "]";
 
   /**
    * Get the fields of the table
    * @return void
    */
-  getFields: function() {
-    if (this.fields.length > 0) {
+  this.getFields = function() {
+    if (this.fields.length > 0 || this.table == "") {
       return;
     }
-    var sql = "";
-    var rs, field;
-    switch (this.type) {
-      case "access":
-        var conn = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["conn"] : $.DB.conn;
-        var rs = conn.OpenSchema(adSchemaColumns);
-        var start = false;
-        while (!rs.EOF) {
-          if (rs("TABLE_NAME").Value.toLowerCase() == this.table.toLowerCase()) {
-            start = true;
-          } else if (start == true){
-            break;
-          }
-          field = ucfirst(rs("COLUMN_NAME").Value);
-          var type = AccessDataType(rs("DATA_TYPE").Value);
-          var size = "";
-          if (rs("NUMERIC_PRECISION").Value != null) {
-            size = rs("NUMERIC_PRECISION").Value
-          } else if(rs("DATETIME_PRECISION").Value != null) {
-            size = rs("DATETIME_PRECISION").Value;
-          } else if(rs("CHARACTER_MAXIMUM_LENGTH").Value != null) {
-            size = rs("CHARACTER_MAXIMUM_LENGTH").Value;
-            if (size > 255) {
-              type = "memo"
-              size = "";
+    var path = APPPATH + "data\\fields\\";
+    if (this.db != "") {
+      path += this.db + "_";
+    }
+    path += this.table + ".asp";
+    if ($.File.isFile(path)) {
+      eval(include(path));
+    } else {
+      var sql = "";
+      var rs, field;
+      switch (this.type) {
+        case "access":
+          var conn = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["conn"] : $.DB.conn;
+          rs = conn.OpenSchema(adSchemaColumns);
+          var start = false;
+          while (!rs.EOF) {
+            if (rs("TABLE_NAME").Value.toLowerCase() == this.table.toLowerCase()) {
+              start = true;
+            } else if (start == true){
+              break;
             }
-          }
-          this.fields[field] = {
-            "name": rs("COLUMN_NAME").Value,
-            "type": type,
-            "size": size,
-            "null": rs("IS_NULLABLE").Value,
-            "default": (rs("COLUMN_DEFAULT").Value != null) ? rs("COLUMN_DEFAULT").Value : "",
-            "auto": (rs("DATA_TYPE").Value == 3 && rs("COLUMN_FLAGS").Value == 24) ? true : false
-          };
-          rs.MoveNext();
-        }
-        rs.Close();
-        break;
-      case "mssql":
-        sql = "EXEC sp_columns '" + this.table + "'";
-        rs = this.query(sql);
-        while (!rs.EOF) {
-          field = ucfirst(rs("COLUMN_NAME").Value);
-          var a = rs("TYPE_NAME").Value.split(" ");
-          var type = a[0];
-          var auto = (a.length > 1) ? true : false;
-          this.fields[field] = {
-            "name": rs("COLUMN_NAME").Value,
-            "type": type,
-            "size": rs["LENGTH"],
-            "null": (rs("NULLABLE").Value == 0) ? true : false,
-            "default": rs("COLUMN_DEF").Value,
-            "auto": auto
-          };
-          rs.MoveNext();
-        }
-        rs.Close();
-        if (this.pkey == "") {
-          rs = this.query("EXEC sp_pkeys '" + this.table + "'");
-          if (!rs.EOF) {
-            this.pkey = rs("COLUMN_NAME").Value;
+            field = ucfirst(rs("COLUMN_NAME").Value);
+            var type = AccessDataType(rs("DATA_TYPE").Value);
+            var size = "";
+            if (rs("NUMERIC_PRECISION").Value != null) {
+              size = rs("NUMERIC_PRECISION").Value
+            } else if(rs("DATETIME_PRECISION").Value != null) {
+              size = rs("DATETIME_PRECISION").Value;
+            } else if(rs("CHARACTER_MAXIMUM_LENGTH").Value != null) {
+              size = rs("CHARACTER_MAXIMUM_LENGTH").Value;
+              if (size > 255) {
+                type = "memo"
+                size = "";
+              }
+            }
+            this.fields[field] = {
+              "name": rs("COLUMN_NAME").Value,
+              "type": type,
+              "size": size,
+              "null": rs("IS_NULLABLE").Value,
+              "default": (rs("COLUMN_DEFAULT").Value != null) ? rs("COLUMN_DEFAULT").Value : "",
+              "auto": (rs("DATA_TYPE").Value == 3 && rs("COLUMN_FLAGS").Value == 24) ? true : false
+            };
+            rs.MoveNext();
           }
           rs.Close();
-        }
-        break;
-      case "mysql":
-        sql = "DESCRIBE " + this.addQuote(this.table);
-        rs = this.query(sql);
-        while (!rs.EOF) {
-          field = ucfirst(rs("Field").Value);
-          if (this.pkey == "" && rs("Key").Value == "PRI") {
-            this.pkey = rs("Key").Value;
+          break;
+        case "mssql":
+          sql = "EXEC sp_columns '" + this.table + "'";
+          rs = this.query(sql);
+          while (!rs.EOF) {
+            field = ucfirst(rs("COLUMN_NAME").Value);
+            var a = rs("TYPE_NAME").Value.split(" ");
+            var type = a[0];
+            var auto = (a.length > 1) ? true : false;
+            this.fields[field] = {
+              "name": rs("COLUMN_NAME").Value,
+              "type": type,
+              "size": rs("LENGTH"),
+              "null": (rs("NULLABLE").Value == 0) ? true : false,
+              "default": rs("COLUMN_DEF").Value,
+              "auto": auto
+            };
+            rs.MoveNext();
           }
-          var a = rs("Type").Value.split("(");
-          var type = a[0];
-          var size = (a.length > 1) ? a[1].replace(/\)$/, "") : "";
-          this.fields[field] = {
-            "name": rs("Field").Value,
-            "type": type,
-            "size": size,
-            "null": (rs("Null").Value == "NO") ? false : true,
-            "default": rs("Default").Value.replace(/^\(|\)$/, "");
-            "auto": (rs("Extra").Value != "") ? true : false
-          };
-          rs.MoveNext();
-        }
-        rs.Close();
-        break;
-      case "oracle":
-        sql = "SELECT * FROM col WHERE TNAME='" + this.table + "'";
-        rs = this.query(sql);
-        while (!rs.EOF) {
-          field = ucfirst(rs("CNAME").Value);
-          this.fields[field] = {
-            "name": rs("CNAME").Value,
-            "type": rs("COLTYPE").Value,
-            "size": rs("WIDTH").Value,
-            "null": (rs("NULLS").Value == "NULL") ? true : false,
-            "default": rs("DEFAULTVAL").Value,
-            "auto": ""
-          };
-          rs.MoveNext();
-        }
-        rs.Close();
-        break;
-      case "pgsql":
-        sql = "SELECT pg_attribute.attname,pg_type.typname,pg_attribute.attlen,pg_attribute.attnotnull FROM pg_type INNER JOIN pg_attribute ON (pg_type.oid=pg_attribute.atttypid) INNER JOIN pg_class ON (pg_class.relfilenode=pg_attribute.attrelid) WHERE pg_attribute.attstattarget<>0 AND pg_class.relname='" + this.table + "'";
-        rs = this.query(sql);
-        while (!rs.EOF) {
-          field = ucfirst(rs("attname").Value);
-          var size = (rs("attlen").Value > -1) ? rs("attlen").Value : "";
-          this.fields[field] = {
-            "name": rs("attname").Value,
-            "type": rs("typname").Value,
-            "size": size,
-            "null": (rs("attnotnull").Value == "t") ? true : false,
-            "default": "",
-            "auto": ""
-          };
-          rs.MoveNext();
-        }
-        rs.Close();
-        break;
-      case "sqlite":
-        sql = "PRAGMA table_info(" + this.addQuote(this.table) + ")";
-        rs = this.query(sql);
-        while (!rs.EOF) {
-          field = ucfirst(rs("name").Value);
-          if (this.pkey == "" && rs("pk").Value == 1) {
-            this.pkey = rs("name").Value;
+          rs.Close();
+          if (this.pkey == "") {
+            rs = this.query("EXEC sp_pkeys '" + this.table + "'");
+            if (!rs.EOF) {
+              this.pkey = rs("COLUMN_NAME").Value;
+            }
+            rs.Close();
           }
-          var a = rs("type").Value.split("(");
-          var type = a[0];
-          var size = (a.length > 1) ? a[1].replace(/\)$/, "") : "";
-          this.fields[field] = {
-            "name": rs("name").Value,
-            "type": type,
-            "size": size,
-            "null": (rs("notnull").Value == 0) ? true : false,
-            "default": rs("dflt_value").Value,
-            "auto": (rs("pk").Value == 1 && type == "INTEGER") ? true : false
-          };
-          rs.MoveNext();
-        }
-        rs.Close();
-        break;
+          break;
+        case "mysql":
+          sql = "DESCRIBE " + this.addQuote(this.table);
+          rs = this.query(sql);
+          while (!rs.EOF) {
+            field = ucfirst(rs("Field").Value);
+            if (this.pkey == "" && rs("Key").Value == "PRI") {
+              this.pkey = rs("Key").Value;
+            }
+            var a = rs("Type").Value.split("(");
+            var type = a[0];
+            var size = (a.length > 1) ? a[1].replace(/\)$/, "") : "";
+            this.fields[field] = {
+              "name": rs("Field").Value,
+              "type": type,
+              "size": size,
+              "null": (rs("Null").Value == "NO") ? false : true,
+              "default": rs("Default").Value.replace(/^\(|\)$/, ""),
+              "auto": (rs("Extra").Value != "") ? true : false
+            };
+            rs.MoveNext();
+          }
+          rs.Close();
+          break;
+        case "oracle":
+          sql = "SELECT * FROM col WHERE TNAME='" + this.table + "'";
+          rs = this.query(sql);
+          while (!rs.EOF) {
+            field = ucfirst(rs("CNAME").Value);
+            this.fields[field] = {
+              "name": rs("CNAME").Value,
+              "type": rs("COLTYPE").Value,
+              "size": rs("WIDTH").Value,
+              "null": (rs("NULLS").Value == "NULL") ? true : false,
+              "default": rs("DEFAULTVAL").Value,
+              "auto": ""
+            };
+            rs.MoveNext();
+          }
+          rs.Close();
+          break;
+        case "pgsql":
+          sql = "SELECT pg_attribute.attname,pg_type.typname,pg_attribute.attlen,pg_attribute.attnotnull FROM pg_type INNER JOIN pg_attribute ON (pg_type.oid=pg_attribute.atttypid) INNER JOIN pg_class ON (pg_class.relfilenode=pg_attribute.attrelid) WHERE pg_attribute.attstattarget<>0 AND pg_class.relname='" + this.table + "'";
+          rs = this.query(sql);
+          while (!rs.EOF) {
+            field = ucfirst(rs("attname").Value);
+            var size = (rs("attlen").Value > -1) ? rs("attlen").Value : "";
+            this.fields[field] = {
+              "name": rs("attname").Value,
+              "type": rs("typname").Value,
+              "size": size,
+              "null": (rs("attnotnull").Value == "t") ? true : false,
+              "default": "",
+              "auto": ""
+            };
+            rs.MoveNext();
+          }
+          rs.Close();
+          break;
+        case "sqlite":
+          sql = "PRAGMA table_info(" + this.addQuote(this.table) + ")";
+          rs = this.query(sql);
+          while (!rs.EOF) {
+            field = ucfirst(rs("name").Value);
+            if (this.pkey == "" && rs("pk").Value == 1) {
+              this.pkey = rs("name").Value;
+            }
+            var a = rs("type").Value.split("(");
+            var type = a[0];
+            var size = (a.length > 1) ? a[1].replace(/\)$/, "") : "";
+            this.fields[field] = {
+              "name": rs("name").Value,
+              "type": type,
+              "size": size,
+              "null": (rs("notnull").Value == 0) ? true : false,
+              "default": rs("dflt_value").Value,
+              "auto": (rs("pk").Value == 1 && type == "INTEGER") ? true : false
+            };
+            rs.MoveNext();
+          }
+          rs.Close();
+          break;
+      }
+      // Write fields to the file
+      $.File.writeFile(path, serialize(this.fields, "this.fields", false));
     }
-  },
+  };
 
   /**
    * Build query statement with arguments
@@ -247,7 +236,7 @@ $.Model.prototype = {
    * @param  offset     [optional]the offset in rows to seek
    * @return string
    */
-  buildQuery: function(fields, conditions, orders, limit, offset) {
+  this.buildQuery = function(fields, conditions, orders, limit, offset) {
     var top = "";
     var end = "";
     var sql = "";
@@ -255,10 +244,10 @@ $.Model.prototype = {
       fields = "*";
     }
     if (!defined(conditions)) {
-      condition = "";
+      conditions = "";
     }
     if (!defined(orders)) {
-      order = "";
+      orders = "";
     }
     if (!defined(limit)) {
       limit = 100;
@@ -297,35 +286,38 @@ $.Model.prototype = {
       }
       sql += end;
     }
+
     return sql;
-  },
+  };
 
   /**
    * Add table or column quote for query
    * @param  str  the string to add quote
    * @return string
    */
-  addQuote: function(str) {
+  this.addQuote = function(str) {
+    var lq = this.lq;
+    var rq = this.rq;
     if (/[a-z0-9_]+\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/i.test(str)) {
       return str.replace(/([a-z0-9_]+)\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/ig, function() {
-        return this.lq + $1.replace(/\./g, this.rq + "." + this.lq) + this.rq;
+        return lq + $1.replace(/\./g, rq + "." + lq) + rq;
       });
     } else {
       var a = str.split(",");
       for (i = 0; i < a.length; i++) {
         a[i] = a[i].replace(/([a-z0-9_]+)/i, function($1) {
-          return this.lq + $1.replace(/\./g, this.rq + "." + this.lq) + this.rq;
+          return lq + $1.replace(/\./g, rq + "." + lq) + rq;
         });
       }
       return a.join(",");
     }
-  },
+  };
 
   /**
    * Create the table
    * @return boolean
    */
-  create: function() {
+  this.create = function() {
     var sql = "CREATE TABLE " + this.addQuote(this.table) + " (";
     var first = true;
     for (field in this.fields) {
@@ -379,7 +371,7 @@ $.Model.prototype = {
     }
     sql += ")";
     return this.execute(sql);
-  },
+  };
 
   /**
    * Fetch a row
@@ -388,10 +380,26 @@ $.Model.prototype = {
    * @param  orders     [optional]order by columns
    * @return object
    */
-  fetch: function(fields, conditions, orders) {
+  this.fetch = function(fields, conditions, orders) {
     var sql = this.buildQuery(fields, conditions, orders, 1);
     var rs = this.query(sql);
-  },
+    var obj = null;
+    if (!rs.EOF) {
+      obj = new Object();
+      var len = rs.Fields.Count;
+      for (i = 0; i < len; i ++) {
+        var tmp = rs.Fields.Item(i).Value;
+        if (isDate(tmp)) {
+          obj[rs.Fields.Item(i).Name] = new Date(tmp);
+        } else {
+          obj[rs.Fields.Item(i).Name] = tmp;
+        }
+      }
+    }
+    rs.Close();
+
+    return obj;
+  };
 
   /**
    * Fetch all rows with limit
@@ -400,45 +408,59 @@ $.Model.prototype = {
    * @param  orders     [optional]order by columns
    * @param  limit      [optional]the number of rows to fetch
    * @param  offset     [optional]the offset in rows to seek
-   * @return object
+   * @return array
    */
-  fetchAll: function(fields, conditions, orders, limit, offset) {
+  this.fetchAll = function(fields, conditions, orders, limit, offset) {
     var sql = this.buildQuery(fields, conditions, orders, limit, offset);
     var rs = this.query(sql);
-  },
+    var a = new Array();
+    var len = 0;
+    //return rs;
+    while (!rs.EOF) {
+      var obj = new Object();
+      if (len == 0) {
+        len = rs.Fields.Count;
+      }
+      for (i = 0; i < len; i ++) {
+        var tmp = rs.Fields.Item(i).Value;
+        if (isDate(tmp)) {
+          obj[rs.Fields.Item(i).Name] = new Date(tmp);
+        } else {
+          obj[rs.Fields.Item(i).Name] = tmp;
+        }
+      }
+      a.push(obj);
+      rs.MoveNext();
+    }
+    rs.Close();
+
+    return a;
+  };
 
   /**
    * Save the model with data
-   * @param  model  [optional]the model object to save
+   * @param  model  the model object to save
    * @return boolean
    */
-  save: function(model) {
-    if (!defined()) {
-      model = this;
-    }
+  this.save = function(model) {
     if (!isObject(model)) {
       die("The model must be an object");
     }
     var sql = "";
     var pkey = "";
-    for (field in this.fields) {
-      if (this.fields[field]["name"] == this.pkey) {
-        pkey = field;
-        break;
-      }
+    if (defined(this.fields[ucfirst(this.pkey)])) {
+      pkey = ucfirst(this.pkey);
     }
     if (pkey != "" && model[pkey] != "") {
       sql = "UPDATE " + this.addQuote(this.table) + " SET ";
       var first = true;
       for (field in this.fields) {
-        if (field != this.pkey) {
-          if (model[field] != null) {
-            if (!first) {
-              sql += ","
-              first = false;
-            }
-            sql += this.addQuote(this.fields[field]["name"]) + "=" + model[field];
+        if (field != this.pkey && model[field] != null) {
+          if (!first) {
+            sql += ","
+            first = false;
           }
+          sql += this.addQuote(this.fields[field]["name"]) + "=" + model[field];
         }
       }
       sql += " WHERE " + this.addQuote(this.pkey) + "=" + model[pkey];
@@ -460,22 +482,23 @@ $.Model.prototype = {
       }
       var sql = "INSERT INTO " + this.addQuote(this.table) + "(" + sFields + ") VALUES(" + sValues + ")";
     }
-    var ret = this.execute(sql);
-    return ret;
-  },
+
+    return this.execute(sql);
+  };
 
   /**
    * Remove rows with the condition
    * @param  conditions  the condition to search
    * @return boolean
    */
-  remove: function(conditions) {
+  this.remove = function(conditions) {
     if (!defined(conditions)) {
       return false;
     }
     var sql = "DELETE FROM " + this.addQuote(this.table) + " WHERE " + this.addQuote(conditions);
+
     return this.execute(sql);
-  },
+  };
 
   /**
    * Execute SQL statement or procedure and return no result
@@ -484,9 +507,9 @@ $.Model.prototype = {
    * @param  params   [optional]the parameters to bind
    * @return boolean
    */
-  execute: function(cmdText, cmdType, params) {
+  this.execute = function(cmdText, cmdType, params) {
     return $.DB.execute(this.db, cmdText, cmdType, params);
-  },
+  };
 
   /**
    * Execute SQL statement or procedure and return data as recordset
@@ -495,10 +518,16 @@ $.Model.prototype = {
    * @param  params   [optional]the parameters to bind
    * @return recordset
    */
-  query: function(cmdText, cmdType, params) {
+  this.query = function(cmdText, cmdType, params) {
     return $.DB.query(this.db, cmdText, cmdType, params);
-  }
+  };
 
+  this.type = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["type"] : $.DB.type;
+  if (this.type == "mysql") {
+    this.lq = this.rq = "`";
+  } else if(this.type == "oracle" || this.type == "pgsql") {
+    this.lq = this.rq = '"';
+  }
 }
 
 function AccessDataType(id) {
@@ -511,6 +540,7 @@ function AccessDataType(id) {
     case 11: return "bit";
     case 130: return "varchar";
     case 135: return "datetime";
+    default: return "varchar";
   }
 }
 %>
