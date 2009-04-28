@@ -23,7 +23,7 @@ var $ = {
 
   name: "Tinyasp Framework",
 
-  version: "0.1 beta2",
+  version: "0.1 beta3",
 
   copyright: "Copyright (c) 2008-2009 Joe Dotoff",
 

@@ -1,4 +1,4 @@
-Tinyasp Framework 0.1 beta2
+Tinyasp Framework 0.1 beta3
 
   A tiny framework for asp, implemented in JavaScript with basic MVC. And it provides
 some useful functions or features.

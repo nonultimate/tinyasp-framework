@@ -22,6 +22,9 @@ $.Model = function() {
   if (!defined(this.constructor)) {
     die("Model class must be extended");
   }
+  if (this.table == "" && this.view == "") {
+    die("Table or view undefined");
+  }
 
   /**
    * Database configuration name
@@ -42,6 +45,11 @@ $.Model = function() {
    * Primary key
    */
   this.pkey = "";
+
+  /**
+   * View name
+   */
+  this.view = "";
 
   /**
    * The fields of the table
@@ -240,6 +248,7 @@ $.Model = function() {
     var top = "";
     var end = "";
     var sql = "";
+    var obj = (this.table != "") ? this.table : this.view;
     if (!defined(fields) || fields == "") {
       fields = "*";
     }
@@ -263,7 +272,7 @@ $.Model = function() {
       case "sqlite": end = " LIMIT " + limit + " OFFSET " + offset;break;
     }
     if (top != "" && this.pkey != "" && offset > 0) {
-      sql = "SELECT " + top + this.addQuote(fields) + " FROM " + this.addQuote(this.table) + " WHERE ";
+      sql = "SELECT " + top + this.addQuote(fields) + " FROM " + this.addQuote(obj) + " WHERE ";
       if (conditions != "") {
         sql += "(" + this.addQuote(conditions) + ") AND "
       }
@@ -277,7 +286,7 @@ $.Model = function() {
         sql += ")";
       }
     } else {
-      sql = "SELECT " + top + this.addQuote(fields) + " FROM " + this.addQuote(this.table);
+      sql = "SELECT " + top + this.addQuote(fields) + " FROM " + this.addQuote(obj);
       if (conditions != "") {
         sql += " WHERE " + this.addQuote(conditions);
       }
@@ -318,6 +327,9 @@ $.Model = function() {
    * @return boolean
    */
   this.create = function() {
+    if (this.table == "") {
+      return false;
+    }
     var sql = "CREATE TABLE " + this.addQuote(this.table) + " (";
     var first = true;
     for (field in this.fields) {
@@ -443,6 +455,9 @@ $.Model = function() {
    * @return boolean
    */
   this.save = function(model) {
+    if (this.table == "") {
+      return false;
+    }
     if (!isObject(model)) {
       die("The model must be an object");
     }
@@ -492,7 +507,7 @@ $.Model = function() {
    * @return boolean
    */
   this.remove = function(conditions) {
-    if (!defined(conditions)) {
+    if (this.table == "" || !defined(conditions)) {
       return false;
     }
     var sql = "DELETE FROM " + this.addQuote(this.table) + " WHERE " + this.addQuote(conditions);

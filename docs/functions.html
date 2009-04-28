@@ -183,7 +183,7 @@
             </p>
             <hr />
             <p>
-              <a name="include" class="keyword">include</a>(<span class="type rightspan">String</span> filename [, <span class="type rightspan">once</span>])
+              <a name="include" class="keyword">include</a>(<span class="type rightspan">String</span> filename [, <span class="type rightspan">Boolean</span> once])
             </p>
             <p class="description">
               Dynamic include file with repeating inclusion support, like include_once function in PHP.<br />
@@ -244,6 +244,7 @@
               <span class="param">v</span> The variable name.<br />
               <b>Return</b>
               <span class="type leftspan">Boolean</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;Return true if the variable type is date or return false.
             </p>
             <hr />
             <p>
@@ -427,6 +428,21 @@
             </p>
             <hr />
             <p>
+              <a name="serialize" class="keyword">serialize</a>(<span class="type rightspan">Object</span> obj [, <span class="type rightspan">String</span> name [, <span class="type rightspan">Boolean</span> isvar]])
+            </p>
+            <p class="description">
+              Serialize an object to javascript definition.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">obj</span> The object to serialize.<br />
+              <span class="param">name</span> [Optional]The variable name for definition.<br />
+              <span class="param">name</span> [Optional]Whether to use var for definition.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
               <a name="setContentType" class="keyword">setContentType</a>(<span class="type rightspan">String</span> type)
             </p>
             <p class="description">
@@ -450,21 +466,6 @@
               <span class="param">time</span> The time of minutes.<br />
               <b>Return</b>
               <span class="type leftspan">void</span><br />
-            </p>
-            <hr />
-            <p>
-              <a name="serialize" class="keyword">serialize</a>(<span class="type rightspan">Object</span> obj [, <span class="type rightspan">String</span> name [, <span class="type rightspan">Boolean</span> isvar]])
-            </p>
-            <p class="description">
-              Serialize an object to javascript definition.
-            </p>
-            <p class="note">
-              <b>Parameter</b><br />
-              <span class="param">obj</span> The object to serialize.<br />
-              <span class="param">name</span> [Optional]The variable name for definition.<br />
-              <span class="param">name</span> [Optional]Whether to use var for definition.<br />
-              <b>Return</b>
-              <span class="type leftspan">String</span><br />
             </p>
             <hr />
             <p>
@@ -575,7 +576,7 @@
               <a name="Date.format" class="keyword">Date.format</a>([<span class="type rightspan">String</span> str])
             </p>
             <p class="description">
-              Format date.
+              Format date, default yyyy-mm-dd HH:MM:SS.
             </p>
             <p class="note">
               <b>Parameter</b><br />
