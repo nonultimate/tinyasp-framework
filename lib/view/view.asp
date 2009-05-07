@@ -68,6 +68,7 @@ function View(file) {
     if (this.cache && $.isGet) {
       tpl.setCache($.cache_file);
     }
+    eval(include(APPLIB + "view\\helper.asp"));
     tpl.display();
   };
 

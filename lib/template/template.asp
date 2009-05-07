@@ -90,33 +90,58 @@ Template.prototype = {
    * @return string
    */
   eval: function(data, arr) {
-    var matches = data.match(/\{[a-z0-9\$\._-]+\}/ig);
+    var matches = data.match(/\{[^\}]+\}/ig);
     if (matches) {
       var len = matches.length;
-      var name, value, exec;
+      var name, value, exec, code;
       for (i = 0; i < len; i++) {
         name = matches[i].substr(1, matches[i].length - 2);
         value = "";
         exec = false;
-        if (/^\$/.test(name)) {
-          exec = true;
-        } else if (defined(arr) && defined(arr[name])) {
-          value = arr[name];
-        } else if (defined(this.vList[name])) {
-          value = this.vList[name];
-        } else if (name.indexOf(".") > -1) {
-          var a = name.split(".", 2);
-          if (defined(arr) && defined(arr[a[0]])) {
-            name = "arr[\"" + a[0] + "\"]." + a[1];
+        if (/^[a-z0-9\$\._]+$/.test(name)) {
+          if (/^\$/.test(name)) {
             exec = true;
-          } else if (defined(this.vList[a[0]])) {
-            name = "this.vList[\"" + a[0] + "\"]." + a[1];
-            exec = true;
+          } else if (defined(arr) && defined(arr[name])) {
+            value = arr[name];
+          } else if (defined(this.vList[name])) {
+            value = this.vList[name];
+          } else if (name.indexOf(".") > -1) {
+            var a = name.split(".", 2);
+            if (defined(arr) && defined(arr[a[0]])) {
+              name = "arr[\"" + a[0] + "\"]." + a[1];
+              exec = true;
+            } else if (defined(this.vList[a[0]])) {
+              name = "this.vList[\"" + a[0] + "\"]." + a[1];
+              exec = true;
+            }
           }
+        } else {
+          var m = name.match(/\$\([a-z0-9\$\._]+\)/ig);
+          if (m) {
+            var len2 = m.length;
+            for (j = 0; j < len2; j++) { 
+              var v = m[j].substr(2, m[j].length - 3);
+              if (defined(arr) && defined(arr[v])) {
+                v = "arr[\"" + v + "\"]";
+              } else if (defined(this.vList[v])) {
+                v = "this.vList[\"" + v + "\"]";
+              } else if (v.indexOf(".") > -1) {
+                var a = v.split(".", 2);
+                if (defined(arr) && defined(arr[a[0]])) {
+                  v = "arr[\"" + a[0] + "\"]." + a[1];
+                } else if (defined(this.vList[a[0]])) {
+                  v = "this.vList[\"" + a[0] + "\"]." + a[1];
+                }
+              }
+              name = name.replace(m[j], v);
+            }
+          }
+          exec = true;
         }
         if (exec) {
           try {
-            value = eval(name);
+            code = defined($.View) ? "with ($.View.Helper) {" + name + "}" : name;
+            value = eval(code);
           } catch (e) {
             value = "";
           }
@@ -172,6 +197,7 @@ Template.prototype = {
       if (tagEnd < this.content.length) {
         write_html_code(this.content.substr(tagEnd));
       }
+      code = defined($.View) ? "with ($.View.Helper) {" + code + "}" : code;
       eval(code);
     } catch (e) {
       die("Execute view of " + $.controller + "/" + $.action + " failed" + "<br />\n" + e.description);
