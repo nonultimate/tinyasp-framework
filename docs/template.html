@@ -91,6 +91,20 @@
             </p>
             <hr />
             <p>
+              <a name="addContentFilter" class="keyword">addContentFilter</a>(<span class="type rightspan">String</span> path, <span class="type rightspan">String</span> layout_path)
+            </p>
+            <p class="description">
+              Filter for tag asp:content.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">path</span> The view template path.<br />
+              <span class="param">layout_path</span> The view layout path.<br />
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <hr />
+            <p>
               <a name="addFile" class="keyword">addFile</a>(<span class="type rightspan">String</span> path)
             </p>
             <p class="description">
@@ -99,6 +113,18 @@
             <p class="note">
               <b>Parameter</b><br />
               <span class="param">path</span> The file to add.<br />
+              <b>Return</b>
+              <span class="type">void</span>
+            </p>
+            <hr />
+            <p>
+              <a name="addListFilter" class="keyword">addListFilter</a>()
+            </p>
+            <p class="description">
+              Filter for tag asp:list.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
               <b>Return</b>
               <span class="type">void</span>
             </p>
@@ -118,19 +144,6 @@
             </p>
             <hr />
             <p>
-              <a name="createTemplate" class="keyword">createTemplate</a>(<span class="type rightspan">String</span> path)
-            </p>
-            <p class="description">
-              Create a template file.
-            </p>
-            <p class="note">
-              <b>Parameter</b><br />
-              <span class="param">path</span> The path of the file.<br />
-              <b>Return</b>
-              <span class="type">Boolean</span>
-            </p>
-            <hr />
-            <p>
               <a name="display" class="keyword">display</a>()
             </p>
             <p class="description">
@@ -142,16 +155,29 @@
             </p>
             <hr />
             <p>
-              <a name="execute" class="keyword">execute</a>(<span class="type rightspan">String</span> content)
+              <a name="eval" class="keyword">eval</a>(<span class="type rightspan">String</span> data [, <span class="type rightspan">Array</span> arr])
+            </p>
+            <p class="description">
+              Replace the template variables.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">data</span> The data to replace.<br />
+              <span class="param">arr</span> The array variables for replacement.<br />
+              <b>Return</b>
+              <span class="type">String</span>
+            </p>
+            <hr />
+            <p>
+              <a name="execute" class="keyword">execute</a>()
             </p>
             <p class="description">
               Execute ASP code in the template.
             </p>
             <p class="note">
               <b>Parameter</b><br />
-              <span class="param">content</span> The code in the template to execute.<br />
               <b>Return</b>
-              <span class="type">String</span>
+              <span class="type">void</span>
             </p>
             <hr />
             <p>

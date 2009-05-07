@@ -31,8 +31,7 @@ function View(file) {
     file = APPPATH + "views\\html\\" + $.controller + "\\" + $.action + "." + CONFIG["template_extension"];
   }
   this.title = ucfirst($.action);
-  this.layout = false;
-  this.component = false;
+  this.layout = "";
   this.cache = CONFIG["cache_view"];
   var tpl = $.Template();
 
@@ -58,21 +57,13 @@ function View(file) {
     if (!$.File.isFile(file)) {
       die("The view template " + file + " not found");
     }
-    if (this.component) {
-      // Use component to render the view
-      eval(include(APPLIB + "view\\component.asp"));
-      if (this.layout != false) {
-        tpl.add(this.Component.getContent(file, this.layout));
-        $.File.writeFile(APPPATH + "tmp\\" + $.controller + "_" + $.action, this.layout);
-      } else {
-        tpl.add(this.Component.getContent(file));
-      }
+    var path = APPPATH + "tmp\\" + $.controller + "_" + $.action;
+    if (this.layout != "") {
+      tpl.addContentFilter(file, this.layout);
+      $.File.writeFile(path, this.layout);
     } else {
-      // Simple template engine
       tpl.addFile(file);
-    }
-    if (this.layout == false) {
-      $.File.remove(APPPATH + "tmp\\" + $.controller + "_" + $.action);
+      $.File.remove(path);
     }
     if (this.cache && $.isGet) {
       tpl.setCache($.cache_file);
@@ -87,7 +78,6 @@ function View(file) {
    */
   this.setLayout = function(layout) {
     this.layout = layout;
-    this.component = true;
   };
 
   /**

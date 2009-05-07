@@ -58,52 +58,16 @@ Template.prototype = {
   },
 
   /**
-   * Create a template file
-   * @param  path  the path of the file
-   * @return boolean
-   */
-  createTemplate: function(path) {
-    return $.File.writeFile(path, this.content);
-  },
-
-  /**
    * Display the template
    * @return void
    */
   display: function() {
-    data = this.content;
-    matches = data.match(/\{[a-z0-9\$\._-]+\}/ig);
-    if (matches) {
-      var len = matches.length;
-      for (i = 0; i < len; i++) {
-        name = matches[i].substr(1, matches[i].length - 2);
-        value = null;
-        if (defined(this.vList[name])) {
-          value = this.vList[name];
-        } else {
-          if (name.indexOf(".") > -1) {
-            a = name.split(".", 2);
-            if (defined(this.vList[a[0]])) {
-              name = "this.vList[\"" + a[0] + "\"]." + a[1];
-            }
-          }
-          try {
-            value = eval(name);
-          } catch (e) {
-            value = "";
-          }
-        }
-        if (!defined(value)) {
-          value = "";
-        }
-        //if (value != null) {
-          data = data.replace(matches[i], value);
-        //}
-      }
+    if (this.content.indexOf("<%") > -1) {
+      this.execute();
     }
-    if (data.indexOf("<%") > -1) {
-      data = this.execute(data);
-    }
+    // Add filters
+    this.addListFilter();
+    var data = this.eval(this.content);
     if (this.file != "") {
       $.File.writeFile(this.file, data);
     }
@@ -120,56 +84,189 @@ Template.prototype = {
   },
 
   /**
-   * Execute ASP code in the template
-   * @param  content  the code in the template to execute
+   * Replace the template variables
+   * @param  data  the data to replace
+   * @param  arr   [optional]the array variables for replacement
    * @return string
    */
-  execute: function(content) {
-    var tagStart, tagEnd, code;
+  eval: function(data, arr) {
+    var matches = data.match(/\{[a-z0-9\$\._-]+\}/ig);
+    if (matches) {
+      var len = matches.length;
+      var name, value, exec;
+      for (i = 0; i < len; i++) {
+        name = matches[i].substr(1, matches[i].length - 2);
+        value = "";
+        exec = false;
+        if (/^\$/.test(name)) {
+          exec = true;
+        } else if (defined(arr) && defined(arr[name])) {
+          value = arr[name];
+        } else if (defined(this.vList[name])) {
+          value = this.vList[name];
+        } else if (name.indexOf(".") > -1) {
+          var a = name.split(".", 2);
+          if (defined(arr) && defined(arr[a[0]])) {
+            name = "arr[\"" + a[0] + "\"]." + a[1];
+            exec = true;
+          } else if (defined(this.vList[a[0]])) {
+            name = "this.vList[\"" + a[0] + "\"]." + a[1];
+            exec = true;
+          }
+        }
+        if (exec) {
+          try {
+            value = eval(name);
+          } catch (e) {
+            value = "";
+          }
+        }
+        data = data.replace(matches[i], value);
+      }
+    }
+
+    return data;
+  },
+
+  /**
+   * Execute ASP code in the template
+   * @return void
+   */
+  execute: function() {
+    var tagStart, tagEnd, code, buffer;
     code = "";
+    buffer = ""
     tagEnd = 0;
-    tagStart = content.indexOf("<%") + 2;
+    tagStart = this.content.indexOf("<%") + 2;
+    var write_buffer = function(data) {
+      buffer += data;
+    };
+    var write_line_buffer = function(data) {
+      buffer += data + "\n";
+    };
+    var write_html_code = function(data) {
+      var str = data.replace(/\s+$/, "");
+      str = str.replace(/\r?\n/g, "\\n");
+      str = str.replace(/'/g, "\\'");
+      code += "write_line_buffer('" + str + "');\n";
+    };
     try {
       while (tagStart - tagEnd > 1) {
         if (tagStart - tagEnd > 2) {
-          code += content.substring(tagEnd, tagStart - 2);
+          write_html_code(this.content.substring(tagEnd, tagStart - 2));
         }
-        tagEnd = content.indexOf("%\>", tagStart) + 2;
-        str = content.substring(tagStart, tagEnd - 2);
+        tagEnd = this.content.indexOf("%\>", tagStart) + 2;
+        str = this.content.substring(tagStart, tagEnd - 2);
         if (str.match(/^\s*=/)) {
           str = str.replace(/^\s*=(.*)/, "$1");
-          code += eval(str);
+          code += "write_buffer(" + str + ");";
         } else {
-          if(str.match(/echo\(/) || str.match(/Response.Write\(/i)) {
-            var a = str.split("\n");
-            var len = a.length;
-            for (i = 0; i < len; i++) {
-              if (a[i].match(/echo\(/)) {
-                str = a[i].replace(/echo\(/, "");
-                str = str.replace(/\);?\s*$/, "");
-                code += eval(str);
-              } else if(a[i].match(/Response.Write\(/i)) {
-                str = a[i].replace(/Response.Write\(/i, "");
-                str = str.replace(/\);?\s*$/, "");
-                code += eval(str);
-              } else {
-                eval(a[i]);
-              }
-            }
-          } else {
-            eval(str);
-          }
+          str = str.replace(/echo\(/g, "write_buffer(");
+          str = str.replace(/print\(/g, "write_buffer(");
+          str = str.replace(/println\(/g, "write_line_buffer(");
+          str = str.replace(/Response.Write\(/ig, "write_buffer(");
+          code += str + "\n";
         }
-        tagStart = content.indexOf("<%", tagEnd) + 2;
+        tagStart = this.content.indexOf("<%", tagEnd) + 2;
       }
-      if (tagEnd < content.length) {
-        code += content.substr(tagEnd);
+      if (tagEnd < this.content.length) {
+        write_html_code(this.content.substr(tagEnd));
       }
+      eval(code);
     } catch (e) {
-      die("Execute view of " + $.controller + "/" + $.action + " failed");
+      die("Execute view of " + $.controller + "/" + $.action + " failed" + "<br />\n" + e.description);
     }
+    this.content = buffer;
+  },
 
-    return code;
+  /**
+   * Filter for asp:content tag
+   * @param  path    the view template path
+   * @param  layout  the layout of the view
+   * @return void
+   */
+  addContentFilter: function(path, layout) {
+    var layout_path = APPPATH + "views\\layout\\" + layout + "." + CONFIG["template_extension"];
+    if (!$.File.isFile(layout_path)) {
+      die("The layout " + layout_path + " not found");
+    }
+    var data = $.File.readFile(layout_path);
+    var str = $.File.readFile(path);
+    var a = new Array();
+    var tagStart = str.indexOf("<asp:content ");
+    var tagEnd = 0;
+    var idStart, idEnd, id;
+    while (tagStart > -1) {
+      tagEnd = str.indexOf("</asp:content>", tagStart);
+      idStart = str.indexOf('"', tagStart) + 1;
+      idEnd = str.indexOf('"', idStart);
+      id = str.substring(idStart, idEnd);
+      a[id] = str.substring(tagStart, tagEnd).replace(/^<[^>]+>[ \t\r]*\n?[ \t]*/, "");
+      a[id] = a[id].replace(/\r?\n[ \t]*$/, "");
+      tagStart = str.indexOf("<asp:content ", tagEnd + 14);
+    }
+    while ((m = data.match(/<asp:content id="([A-Za-z0-9]+)">\s*<\/asp:content>/))) {
+      if (!defined(a[m[1]])) {
+        data = data.replace(m[0], "");
+      } else {
+        data = data.replace(m[0], a[m[1]]);
+      }
+    }
+    this.content = data;
+  },
+
+  /**
+   * Filter for asp:list tag
+   * @return void
+   */
+  addListFilter: function() {
+    var tagStart = this.content.indexOf("<asp:list ");
+    var tagEnd = 0;
+    if (tagStart == -1) return;
+    var data = this.content.substring(0, tagStart);
+    var dataStart, str, obj, m, content, a;
+    while (tagStart > -1) {
+      tagEnd = this.content.indexOf("</asp:list>", tagStart);
+      dataStart = this.content.indexOf(">", tagStart) + 1;
+      str = this.content.substring(tagStart, dataStart);
+      obj = item = value = "";
+      m = str.match(/ var="([^"]+)"/);
+      if (m) {
+        if (defined(this.vList[m[1]])) {
+          obj = this.vList[m[1]];
+        }
+      }
+      m = str.match(/ item="([^"]+)"/);
+      if (m) {
+        item = m[1];
+      }
+      m = str.match(/ value="([^"]+)"/);
+      if (m) {
+        value = m[1];
+      }
+      if (obj != "") {
+        if (item == "") {
+          item = "item";
+        }
+        if (value == "") {
+          value = "object";
+        }
+        content = this.content.substring(dataStart, tagEnd);
+        a = new Array();
+        for (key in obj) {
+          a[item] = key;
+          a[value] = obj[key];
+          data += this.eval(content, a);
+        }
+      }
+      tagStart = this.content.indexOf("<asp:list ", tagEnd + 11);
+      if (tagStart > -1) {
+        data += this.content.substring(tagEnd + 11, tagStart);
+      } else {
+        data += this.content.substr(tagEnd + 11);
+      }
+    }
+    this.content = data;
   }
 
 }

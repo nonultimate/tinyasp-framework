@@ -537,6 +537,21 @@ $.Model = function() {
     return $.DB.query(this.db, cmdText, cmdType, params);
   };
 
+  /**
+   * Get the id of the last inserted row
+   * @return Integer
+   */
+  this.inserted = function() {
+    if (this.table == "") {
+      return false;
+    }
+    var rs = this.query("SELECT MAX(" + this.addQuote(this.pkey) + ") AS rowid FROM " + this.addQuote(this.table));
+    var id = (!rs.EOF) ? rs("rowid").Value : false;
+    rs.Close();
+
+    return id;
+  }
+
   this.type = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["type"] : $.DB.type;
   if (this.type == "mysql") {
     this.lq = this.rq = "`";
