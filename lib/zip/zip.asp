@@ -17,7 +17,7 @@
  */
 
 if (!objectExists("XStandard.Zip")) {
-  die("XZip not installed");
+  error("XZip not installed");
 }
 
 $.Zip = {

@@ -144,7 +144,7 @@ DB.prototype = {
         }
       }
       if (dbtype == "") {
-        die("The type of the database not supported");
+        error("The type of the database not supported");
       }
       try {
         if (defined(name)) {
@@ -161,9 +161,9 @@ DB.prototype = {
         return true;
       } catch (e) {
         if (defined(name)) {
-          die("Open " + name + " database failed");
+          error("Open " + name + " database failed");
         } else {
-          die("Open the database failed");
+          error("Open the database failed");
         }
       }
     }
@@ -226,7 +226,7 @@ DB.prototype = {
         cmd.Execute(affected);
       }
     } catch (e) {
-      die("Error occured while executing the statement");
+      error("Error occured while executing the statement");
     }
 
     return affected > 0 ? true : false;
@@ -262,7 +262,7 @@ DB.prototype = {
       }
       var rs = cmd.Execute();
     } catch (e) {
-      die("Error occured while executing the statement");
+      error("Error occured while executing the statement");
     }
 
     return rs;

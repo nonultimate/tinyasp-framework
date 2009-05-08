@@ -200,7 +200,7 @@ Template.prototype = {
       code = defined($.View) ? "with ($.View.Helper) {" + code + "}" : code;
       eval(code);
     } catch (e) {
-      die("Execute view of " + $.controller + "/" + $.action + " failed" + "<br />\n" + e.description);
+      error("Execute view of " + $.controller + "/" + $.action + " failed", e);
     }
     this.content = buffer;
   },
@@ -214,7 +214,7 @@ Template.prototype = {
   addContentFilter: function(path, layout) {
     var layout_path = APPPATH + "views\\layout\\" + layout + "." + CONFIG["template_extension"];
     if (!$.File.isFile(layout_path)) {
-      die("The layout " + layout_path + " not found");
+      error("The layout " + layout_path + " not found");
     }
     var data = $.File.readFile(layout_path);
     var str = $.File.readFile(path);

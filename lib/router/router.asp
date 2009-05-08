@@ -100,7 +100,7 @@ Router.prototype = {
             }
             action();
           } catch(e) {
-            die("An error occured in " + controllerName + "." + $.action + "()");
+            error("An error occured in " + controllerName + "." + $.action + "()", e);
           }
           // Remove uploaded files
           if ($.files.length > 0) {
@@ -110,10 +110,10 @@ Router.prototype = {
           }
         }
       } catch(e) {
-        die("An error occured in controller " + controllerName);
+        error("An error occured in controller " + controllerName, e);
       }
     } else {
-      die("No Index controller");
+      error("No Index controller");
     }
   }
 

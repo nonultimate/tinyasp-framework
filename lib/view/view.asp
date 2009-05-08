@@ -55,7 +55,7 @@ function View(file) {
       file = APPPATH + "views\\html\\" + view.replace("/", "\\") + "." + CONFIG["template_extension"];
     }
     if (!$.File.isFile(file)) {
-      die("The view template " + file + " not found");
+      error("The view template " + file + " not found");
     }
     var path = APPPATH + "tmp\\" + $.controller + "_" + $.action;
     if (this.layout != "") {

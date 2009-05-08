@@ -91,6 +91,21 @@ function die(str) {
 }
 
 /**
+ * Throw an error and exit
+ * @param  str  the error message
+ * @param  err  [optional]the error object
+ * @return void
+ */
+function error(str, err) {
+  setContentType("text/plain");
+  if (defined(err)) {
+    die(msg + "\n" + err.description);
+  } else {
+    die(msg);
+  }
+}
+
+/**
  * Output a object or variable
  * @param  v  the object or variable to output
  * @return void

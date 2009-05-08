@@ -17,7 +17,7 @@
  */
 
 if (!objectExists("JMail.Message")) {
-  die("JMail not installed");
+  error("JMail not installed");
 }
 // Load mail configuration
 if ($.File.isFile(APPPATH + "config\\mail.asp")) {

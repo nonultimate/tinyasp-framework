@@ -17,7 +17,7 @@
  */
 
 if (!objectExists("XY.Graphics")) {
-  die("XYGraphics not installed");
+  error("XYGraphics not installed");
 }
 
 eval(include(APPLIB + "image\\xygraphics.asp"));

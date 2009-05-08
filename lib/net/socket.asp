@@ -17,7 +17,7 @@
  */
 
 if (!objectExists("Socket.TCP")) {
-  die("w3Socket not installed");
+  error("w3Socket not installed");
 }
 
 eval(include(APPLIB + "net\\net.asp"));

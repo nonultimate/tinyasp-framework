@@ -20,10 +20,10 @@ eval(include(APPLIB + "db\\db.asp"));
 
 $.Model = function() {
   if (!defined(this.constructor)) {
-    die("Model class must be extended");
+    error("Model class must be extended");
   }
   if (this.table == "" && this.view == "") {
-    die("Table or view undefined");
+    error("Table or view undefined");
   }
 
   /**
@@ -459,7 +459,7 @@ $.Model = function() {
       return false;
     }
     if (!isObject(model)) {
-      die("The model must be an object");
+      error("The model must be an object");
     }
     var sql = "";
     var pkey = "";
