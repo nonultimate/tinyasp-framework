@@ -60,9 +60,40 @@ function View(file) {
     var path = APPPATH + "tmp\\" + $.controller + "_" + $.action;
     if (this.layout != "") {
       tpl.addContentFilter(file, this.layout);
-      $.File.writeFile(path, this.layout);
     } else {
       tpl.addFile(file);
+    }
+    if (this.layout != "" || TABLES.length > 0) {
+      var data = "{";
+      if (this.layout != "") {
+        data += "layout: \"" + this.layout + "\"";
+      }
+      if (TABLES.length > 0) {
+        if (data.length > 1) {
+          data += ", ";
+        }
+        data += "models: [";
+        var len = MODELS.length;
+        for (var i = 0; i < len; i++) {
+          if (i > 0) {
+            data += ", ";
+          }
+          data += "\"" + MODELS[i] + "\"";
+        }
+        data += "], ";
+        data += "tables: [";
+        len = TABLES.length;
+        for (var i = 0; i < len; i++) {
+          if (i > 0) {
+            data += ", ";
+          }
+          data += "\"" + TABLES[i] + "\"";
+        }
+        data += "]";
+      }
+      data += "}";
+      $.File.writeFile(path, data);
+    } else {
       $.File.remove(path);
     }
     if (this.cache && $.isGet) {

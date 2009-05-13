@@ -27,7 +27,7 @@ if ($.File.isFile(APPPATH + "config\\database.asp")) {
 function DB() {
   if (defined(CONFIG["db"])) {
     var default_name = "";
-    for (name in CONFIG["db"]) {
+    for (var name in CONFIG["db"]) {
       if (default_name == "") {
         default_name = name;
       }
@@ -186,7 +186,7 @@ DB.prototype = {
    * @return void
    */
   closeAll: function() {
-    for (name in this.config) {
+    for (var name in this.config) {
       this.config[name]["conn"].Close();
     }
     this.config = null;
@@ -217,8 +217,9 @@ DB.prototype = {
         cmd.CommandText = cmdText;
         cmd.CommandType = cmdType;
         if (isArray(params[0])) {
-          for (param in params) {
-            cmd.Parameters.Append(cmd.CreateParameter(param[0], param[1], param[2], param[3], param[4]));
+          var len = params.length;
+          for (var i = 0; i < len; i++) {
+            cmd.Parameters.Append(cmd.CreateParameter(params[i][0], params[i][1], params[i][2], params[i][3], params[i][4]));
           }
         } else {
           cmd.Parameters.Append(cmd.CreateParameter(params[0], params[1], params[2], params[3], params[4]));
@@ -253,7 +254,7 @@ DB.prototype = {
       cmd.CommandType = cmdType;
       if (defined(params)) {
         if (isArray(params[0])) {
-          for (param in params) {
+          for (var param in params) {
             cmd.Parameters.Append(cmd.CreateParameter(param[0], param[1], param[2], param[3], param[4]));
           }
         } else {

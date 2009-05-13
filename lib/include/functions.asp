@@ -22,6 +22,8 @@ var APPLIB = APPROOT + "lib\\";
 var APPPATH = APPROOT + "app\\";
 var INCLUDE_ONCE = new Array();
 var CONFIG = new Array();
+var MODELS = new Array();
+var TABLES = new Array();
 
 // Initialize variables
 INCLUDE_ONCE[APPLIB + "include\\functions.asp"] = 1;
@@ -92,11 +94,11 @@ function die(str) {
 
 /**
  * Throw an error and exit
- * @param  str  the error message
+ * @param  msg  the error message
  * @param  err  [optional]the error object
  * @return void
  */
-function error(str, err) {
+function error(msg, err) {
   setContentType("text/plain");
   if (defined(err)) {
     die(msg + "\n" + err.description);
@@ -114,7 +116,7 @@ function dump(v) {
   if (isObject(v) || isFunction(v)) {
     println(typeof v + " (");
     var first = true;
-    for (key in v) {
+    for (var key in v) {
       if (first) {
         first = false;
       } else {
@@ -294,6 +296,22 @@ function ucwords(str) {
 }
 
 /**
+ * Find the value in the array
+ * @param  arr  the array for finding
+ * @param  v    the value to find
+ * @return boolean
+ */
+function find(arr, v) {
+  for (var key in arr) {
+    if (arr[key] == v) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Dynamic include file with repeating inclusion support,
  * like include_once function in PHP
  * @param  filename  the file path to include
@@ -348,7 +366,7 @@ function require(lib) {
   var a = lib.split(".");
   var path = (a[0] == '$') ? APPLIB : APPPATH + "lib\\";
   var len = a.length;
-  for (i = 0; i < len; i++) {
+  for (var i = 0; i < len; i++) {
     if (i > 0) {
       path += "\\";
     }
@@ -361,6 +379,22 @@ function require(lib) {
   }
   path += ".asp";
   eval(include(path));
+}
+
+/**
+ * Ensures the varialbe is undefined or empty
+ * @param  v  the variable name
+ * @return boolean
+ */
+function empty(v) {
+  if (!defined(v)) {
+    return true;
+  }
+  if (!v) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -470,7 +504,7 @@ function extend(obj, base) {
     obj.__base__();
     delete obj.__base__;
   } else {
-    for (m in base) {
+    for (var m in base) {
       obj[m] = base[m];
     }
   }
@@ -497,7 +531,7 @@ function serialize(obj, name, isvar) {
     var len = obj.length;
     if (defined(name)) {
       s += "new Array();";
-      for (key in obj) {
+      for (var key in obj) {
         s += name + "[";
         if (isString(key)) {
           s += "\"" + key + "\"";
@@ -509,7 +543,7 @@ function serialize(obj, name, isvar) {
     } else if (len > 0) {
       var first = false;
       s += "new Array(";
-      for (i = 0; i < len; i++) {
+      for (var i = 0; i < len; i++) {
         if (first) {
           s += ", ";
         } else {
@@ -522,7 +556,7 @@ function serialize(obj, name, isvar) {
   } else if (isObject(obj)) {
     s += "{";
     var first = false;
-    for (k in obj) {
+    for (var k in obj) {
       if (first) {
         s += ", ";
       } else {
@@ -555,7 +589,7 @@ function TGet(str) {
   var len = Request.QueryString(str).Count;
   if (len > 1) {
     var a = new Array(len);
-    for (i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       a[i] = Request.QueryString(str).Item(i + 1);
     }
     return a;
@@ -579,7 +613,7 @@ function TPost(str) {
     var len = Request.Form(str).Count;
     if (len > 1) {
       var a = new Array(len);
-      for (i = 0; i < len; i++) {
+      for (var i = 0; i < len; i++) {
         a[i] = Request.Form(str).Item(i + 1);
       }
       return a;

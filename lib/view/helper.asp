@@ -17,18 +17,29 @@
  */
 
 $.View.Helper = {
+
   /**
    * Get the current URL
    * @return string
    */
   url: function() {
-    var url = $.get["q"];
+    var url = "/" + $.query;
     var str = $.server["QUERY_STRING"].replace(/^q=[^&]*&?/, "");
     if (str != "") {
       url += "?" + str;
     }
 
     return url;
+  },
+
+  /**
+   * Validate the post data, return true if it is empty
+   * @param  v  the post variable
+   * @return boolean
+   */
+  validate: function(v) {
+    return $.isPost && empty(v);
   }
+
 }
 %>

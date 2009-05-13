@@ -21,25 +21,60 @@ eval(include(APPLIB + "include\\ado.asp"));
 
 var $ = {
 
+  /**
+   * The name of the framework
+   */
   name: "Tinyasp Framework",
 
+  /**
+   * The version of the framework
+   */
   version: "0.1 beta3",
 
+  /**
+   * The copyright of the framework
+   */
   copyright: "Copyright (c) 2008-2009 Joe Dotoff",
 
+  /**
+   * Whether the request method is GET or not
+   */
   isGet: false,
 
+  /**
+   * Whether the request method is POST or not
+   */
   isPost: false,
 
+  /**
+   * Whether the request method is multipart/form-data POST or not
+   */
   isMultiPost: false,
 
+  /**
+   * The HTTP GET variables
+   */
   get: null,
 
+  /**
+   * The HTTP POST variables
+   */
   post: null,
 
+  /**
+   * The HTTP Server variables
+   */
   server: null,
 
+  /**
+   * The HTTP POST file variables
+   */
   files: null,
+
+  /**
+   * The query URL for rewriting
+   */
+  query: "",
 
   /**
    * Setup runtime configuration
@@ -113,11 +148,11 @@ var $ = {
     $.get = function() {
       var len = Request.QueryString.Count;
       var a = new Array(len);
-      for (i = 1; i <= len; i++) {
+      for (var i = 1; i <= len; i++) {
         if (Request.QueryString.Item(i).Count > 1) {
           var k = Request.QueryString.Item(i).Count;
           var b = new Array(k);
-          for (j = 0; j < k; j++) {
+          for (var j = 0; j < k; j++) {
             b[j] = Request.QueryString.Item(i).Item(j + 1);
           }
           a[Request.QueryString.Key(i)] = b;
@@ -128,11 +163,20 @@ var $ = {
 
       return a;
     }();
+    if (defined($.get["q"])) {
+      if (isArray($.get["q"])) {
+        $.query = $.get["q"].shift();
+      } else {
+        $.query = $.get["q"];
+        delete $.get["q"];
+        $.get.length -= 1;
+      }
+    }
 
     $.server = function() {
       var len = Request.ServerVariables.Count;
       var a = new Array(len + 2);
-      for (i = 1; i <= len; i++) {
+      for (var i = 1; i <= len; i++) {
         a[Request.ServerVariables.Key(i)] = Request.ServerVariables.Item(i).Item(1);
       }
       a["REQUEST_URI"] = Request.ServerVariables("SCRIPT_NAME").Item(1);
@@ -163,11 +207,11 @@ var $ = {
       } else {
         var len = Request.Form.Count;
         var a = new Array(len);
-        for (i = 1; i <= len; i++) {
+        for (var i = 1; i <= len; i++) {
           if (Request.Form.Item(i).Count > 1) {
             var k = Request.Form.Item(i).Count;
             var b = new Array(k);
-            for (j = 0; j < k; j++) {
+            for (var j = 0; j < k; j++) {
               b[j] = Request.Form.Item(i).Item(j + 1);
             }
             a[Request.Form.Key(i)] = b;
@@ -199,10 +243,10 @@ var $ = {
     this.init();
 
     // Define variables
-    var str = this.get["q"] || "";
+    var str = this.query;
     // Load router and rewrite URL
     if (str != "" && defined(CONFIG["router"])) {
-      for (v in CONFIG["router"]) {
+      for (var v in CONFIG["router"]) {
         re = new RegExp("^" + v, "i");
         if (re.test(str)) {
           str = str.replace(re, CONFIG["router"][v]);
@@ -216,7 +260,7 @@ var $ = {
     var param = new Array();
     if (a.length > 2) {
       param.length = a.length - 2;
-      for (i = 0; i + 2 < a.length; i++) {
+      for (var i = 0; i + 2 < a.length; i++) {
         param[i] = a[i + 2];
       }
     }

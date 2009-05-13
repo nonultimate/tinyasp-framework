@@ -66,6 +66,7 @@ Template.prototype = {
       this.execute();
     }
     // Add filters
+    this.addIfFilter();
     this.addListFilter();
     var data = this.eval(this.content);
     if (this.file != "") {
@@ -94,11 +95,11 @@ Template.prototype = {
     if (matches) {
       var len = matches.length;
       var name, value, exec, code;
-      for (i = 0; i < len; i++) {
+      for (var i = 0; i < len; i++) {
         name = matches[i].substr(1, matches[i].length - 2);
         value = "";
         exec = false;
-        if (/^[a-z0-9\$\._]+$/.test(name)) {
+        if (/^[A-Za-z0-9\$\._]+$/.test(name)) {
           if (/^\$/.test(name)) {
             exec = true;
           } else if (defined(arr) && defined(arr[name])) {
@@ -119,7 +120,7 @@ Template.prototype = {
           var m = name.match(/\$\([a-z0-9\$\._]+\)/ig);
           if (m) {
             var len2 = m.length;
-            for (j = 0; j < len2; j++) { 
+            for (var j = 0; j < len2; j++) { 
               var v = m[j].substr(2, m[j].length - 3);
               if (defined(arr) && defined(arr[v])) {
                 v = "arr[\"" + v + "\"]";
@@ -221,7 +222,7 @@ Template.prototype = {
     var a = new Array();
     var tagStart = str.indexOf("<asp:content ");
     var tagEnd = 0;
-    var idStart, idEnd, id;
+    var idStart, idEnd, id, m;
     while (tagStart > -1) {
       tagEnd = str.indexOf("</asp:content>", tagStart);
       idStart = str.indexOf('"', tagStart) + 1;
@@ -242,15 +243,51 @@ Template.prototype = {
   },
 
   /**
+   * Filter for asp:if tag
+   * @return void
+   */
+  addIfFilter: function() {
+    var tagStart = this.content.indexOf("<asp:if ");
+    var tagEnd = 0;
+    if (tagStart == -1) {
+      return;
+    }
+    var data = this.content.substring(0, tagStart);
+    var dataStart, str, content, m, result, code;
+    while (tagStart > -1) {
+      tagEnd = this.content.indexOf("</asp:if>", tagStart);
+      dataStart = this.content.indexOf(">", tagStart) + 1;
+      str = this.content.substring(tagStart, dataStart);
+      m = str.match(/ condition="([^"]+)"/);
+      if (m) {
+        code = defined($.View) ? "with ($.View.Helper) {" + m[1] + "}" : m[1];
+        result = eval(code);
+        if (result) {
+          data += this.eval(this.content.substring(dataStart, tagEnd));
+        }
+      }
+      tagStart = this.content.indexOf("<asp:if ", tagEnd + 9);
+      if (tagStart > -1) {
+        data += this.content.substring(tagEnd + 9, tagStart);
+      } else {
+        data += this.content.substr(tagEnd + 9);
+      }
+    }
+    this.content = data;
+  },
+
+  /**
    * Filter for asp:list tag
    * @return void
    */
   addListFilter: function() {
     var tagStart = this.content.indexOf("<asp:list ");
     var tagEnd = 0;
-    if (tagStart == -1) return;
+    if (tagStart == -1) {
+      return;
+    }
     var data = this.content.substring(0, tagStart);
-    var dataStart, str, obj, m, content, a;
+    var dataStart, str, obj, item, value, m, content, a;
     while (tagStart > -1) {
       tagEnd = this.content.indexOf("</asp:list>", tagStart);
       dataStart = this.content.indexOf(">", tagStart) + 1;

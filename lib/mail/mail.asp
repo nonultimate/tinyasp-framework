@@ -200,7 +200,7 @@ Mail.prototype = {
     }
     var a = to.split(",");
     var len = a.length;
-    for (i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       s = a[i].indexOf("<");
       if (s == -1) {
         this.msg.AddRecipient(a[i].trim());

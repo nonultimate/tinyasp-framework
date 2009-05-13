@@ -50,7 +50,7 @@ $.Image = {
     var len = code.length;
     if (!defined(width)) {
       width = 10;
-      for (i = 0; i < len; i++) {
+      for (var i = 0; i < len; i++) {
         if (code.charCodeAt(i) > 255) {
           width += 30;
         } else {
@@ -66,9 +66,9 @@ $.Image = {
     var colors = [xyBlack, xyBlue, xyOrange, xyGreen, xyPurple];
     var size = colors.length;
     // Draw miscellaneous points
-    for (i = 0; i < width; i++) {
+    for (var i = 0; i < width; i++) {
       i += Math.round(Math.random() * 15);
-      for (j = 0; j < height; j++) {
+      for (var j = 0; j < height; j++) {
         j += Math.round(Math.random() * 15);
         n = Math.floor(Math.random() * size);
         this.setPen(colors[n]);
@@ -76,7 +76,7 @@ $.Image = {
       }
     }
     // Draw text string
-    for (i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       r = Math.round(Math.random() * 10);
       n = Math.floor(Math.random() * size);
       this.setFont("monospace", 20, 0, colors[n], xyWhite);

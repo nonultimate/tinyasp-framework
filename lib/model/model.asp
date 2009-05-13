@@ -18,13 +18,7 @@
 
 eval(include(APPLIB + "db\\db.asp"));
 
-$.Model = function() {
-  if (!defined(this.constructor)) {
-    error("Model class must be extended");
-  }
-  if (this.table == "" && this.view == "") {
-    error("Table or view undefined");
-  }
+$.Model = function(base) {
 
   /**
    * Database configuration name
@@ -313,7 +307,7 @@ $.Model = function() {
       });
     } else {
       var a = str.split(",");
-      for (i = 0; i < a.length; i++) {
+      for (var i = 0; i < a.length; i++) {
         a[i] = a[i].replace(/([a-z0-9_]+)/i, function($1) {
           return lq + $1.replace(/\./g, rq + "." + lq) + rq;
         });
@@ -332,7 +326,7 @@ $.Model = function() {
     }
     var sql = "CREATE TABLE " + this.addQuote(this.table) + " (";
     var first = true;
-    for (field in this.fields) {
+    for (var field in this.fields) {
       if (!first) {
         sql += ",";
         first = false;
@@ -399,7 +393,7 @@ $.Model = function() {
     if (!rs.EOF) {
       obj = new Object();
       var len = rs.Fields.Count;
-      for (i = 0; i < len; i ++) {
+      for (var i = 0; i < len; i ++) {
         var tmp = rs.Fields.Item(i).Value;
         if (isDate(tmp)) {
           obj[rs.Fields.Item(i).Name] = new Date(tmp);
@@ -433,7 +427,7 @@ $.Model = function() {
       if (len == 0) {
         len = rs.Fields.Count;
       }
-      for (i = 0; i < len; i ++) {
+      for (var i = 0; i < len; i ++) {
         var tmp = rs.Fields.Item(i).Value;
         if (isDate(tmp)) {
           obj[rs.Fields.Item(i).Name] = new Date(tmp);
@@ -469,7 +463,7 @@ $.Model = function() {
     if (pkey != "" && model[pkey] != "") {
       sql = "UPDATE " + this.addQuote(this.table) + " SET ";
       var first = true;
-      for (field in this.fields) {
+      for (var field in this.fields) {
         if (field != this.pkey && model[field] != null) {
           if (!first) {
             sql += ","
@@ -484,7 +478,7 @@ $.Model = function() {
       var sFields = "";
       var sValues = "";
       var first = true;
-      for (field in this.fields) {
+      for (var field in this.fields) {
         if (model[field] != null) {
           if (!first) {
             sFields += ",";
@@ -523,7 +517,14 @@ $.Model = function() {
    * @return boolean
    */
   this.execute = function(cmdText, cmdType, params) {
-    return $.DB.execute(this.db, cmdText, cmdType, params);
+    var ret = $.DB.execute(this.db, cmdText, cmdType, params);
+    if (ret && this.table != "") {
+      var file = (this.db != "") ? this.db + "_" + this.table : this.table;
+      file = file.toLowerCase();
+      $.File.touch(APPPATH + "data\\modified\\" + file);
+    }
+
+    return ret;
   };
 
   /**
@@ -552,11 +553,23 @@ $.Model = function() {
     return id;
   }
 
+  // Initialize the model
+  if (defined(base)) {
+    extend(this, base);
+  }
+  if (this.table == "" && this.view == "") {
+    error("Table or view undefined");
+  }
   this.type = (this.db != "" && defined($.DB.config[this.db])) ? $.DB.config[this.db]["type"] : $.DB.type;
   if (this.type == "mysql") {
     this.lq = this.rq = "`";
   } else if(this.type == "oracle" || this.type == "pgsql") {
     this.lq = this.rq = '"';
+  }
+  var model_file = (this.db != "") ? this.db + "_" + this.table : this.table;
+  model_file = model_file.toLowerCase();
+  if (!find(TABLES, model_file)) {
+    TABLES.push(model_file);
   }
 }
 

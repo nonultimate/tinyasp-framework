@@ -23,11 +23,23 @@ eval(include(APPLIB + "text\\text.asp"));
  * Class Router
  */
 function Router(controller, action, param) {
-  $.controller = controller ? controller : "";
-  $.action = action ? action : "index";
-  $.param = param ? param : new Array();
-  $.url = "";
+  /**
+   * The controller name
+   */
+  $.controller = controller || "";
+  /**
+   * The action name
+   */
+  $.action = action || "index";
+  /**
+   * The parameter variables
+   */
+  $.param = param || new Array();
+  /**
+   * The cache file of the view
+   */
   $.cache_file = "";
+
   this.dispatch();
 }
 
@@ -52,7 +64,7 @@ Router.prototype = {
         redirect(404);
       }
       try {
-        var cache = false;
+        var cache = $.isGet ? true : false;
         var str = $.server["QUERY_STRING"].replace(/^q=[^&]*/i, "");
         if (CONFIG["cache_view"] && $.isGet && str == "") {
           var url = $.controller + "/" + $.action;
@@ -64,21 +76,45 @@ Router.prototype = {
           var controller_mdtime = $.File.modified(APPPATH + "controllers\\" + ucfirst($.controller) + "Controller.asp");
           var view_file = APPPATH + "views\\html\\" + $.controller + "\\" + $.action + "." + CONFIG["template_extension"];
           var view_mdtime = $.File.isFile(view_file) ? $.File.modified(view_file) : cache_mdtime;
-          var layout_file = APPPATH + "tmp\\" + $.controller + "_" + $.action;
-          var layout_mdtime = 0;
-          if ($.File.isFile(layout_file)) {
-            layout_file = APPPATH + "views\\layout\\" + $.File.readFile(layout_file) + "." + CONFIG["template_extension"];
-            if (!$.File.isFile(layout_file)) {
-              die("The layout " + layout_file + " not found");
-            }
-            layout_mdtime = $.File.modified(layout_file);
+          var tmp_file = APPPATH + "tmp\\" + $.controller + "_" + $.action;
+          if (cache_mdtime < controller_mdtime || cache_mdtime < view_mdtime) {
+            cache = false;
           }
-          if (cache_mdtime > controller_mdtime && cache_mdtime > view_mdtime && cache_mdtime > layout_mdtime) {
-            cache = true;
-            $.File.output($.cache_file);
+          if ($.File.isFile(tmp_file)) {
+            eval("var obj = " + $.File.readFile(tmp_file) + ";");
+            if (defined(obj.layout)) {
+              var layout_file = APPPATH + "views\\layout\\" + obj.layout + "." + CONFIG["template_extension"];
+              if ($.File.isFile(layout_file) && cache_mdtime < $.File.modified(layout_file)) {
+                cache = false;
+              }
+            }
+            if (cache == false && defined(obj.models)) {
+              var len = obj.models.length;
+              var model_path;
+              for (var i = 0; i < len; i++) {
+                model_path = APPPATH + "models\\" + obj.models[i] + ".asp";
+                if ($.File.isFile(model_path) && cache_mdtime < $.File.modified(model_path)) {
+                  cache = false;
+                  break;
+                }
+              }
+            }
+            if (cache == false && defined(obj.tables)) {
+              var len = obj.tables.length;
+              var table_path;
+              for (var i = 0; i < len; i++) {
+                table_path = APPPATH + "data\\modified\\" + obj.tables[i];
+                if ($.File.isFile(table_path) && cache_mdtime < $.File.modified(table_path)) {
+                  cache = false;
+                  break;
+                }
+              }
+            }
           }
         }
-        if (cache == false) {
+        if (cache) {
+          $.File.output($.cache_file);
+        } else {
           // Include libraries
           eval(include(APPLIB + "controller\\controller.asp")); 
           eval(include(APPLIB + "cookie\\cookie.asp"));
@@ -93,8 +129,12 @@ Router.prototype = {
             if (m) {
               eval(include(APPLIB + "model\\model.asp"));
               var model = "";
-              for (i = 0; i < m.length; i++) {
+              var len = m.length;
+              for (var i = 0; i < len; i++) {
                 model = m[i].replace(/new\s+/, "");
+                if (!find(MODELS, model)) {
+                  MODELS.push(model);
+                }
                 eval(include(APPPATH + "models\\" + model + ".asp"));
               }
             }
@@ -104,7 +144,7 @@ Router.prototype = {
           }
           // Remove uploaded files
           if ($.files.length > 0) {
-            for (item in $.files) {
+            for (var item in $.files) {
               $.File.remove($.files[item]["path"]);
             }
           }

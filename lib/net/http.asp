@@ -33,6 +33,7 @@ $.Net.Http = {
   get: function(url) {
     this.req.open("GET", url, false);
     this.req.send();
+
     return this.req.responseText;
   },
 
@@ -45,6 +46,7 @@ $.Net.Http = {
   post: function(url, data) {
     this.req.open("POST", url, false);
     this.req.send(data);
+
     return this.req.responseText;
   }
 
