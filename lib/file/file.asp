@@ -16,6 +16,17 @@
  * @license   New BSD License, see LICENSE.txt
  */
 
+//---- Binary or text type
+var adTypeBinary = 1;
+var adTypeText = 2;
+
+//---- File options
+var adForReading = 1;
+var adForWriting = 2;
+var adForAppending = 8;
+var adSaveCreateNotExist = 1;
+var adSaveCreateOverWrite = 2;
+
 $.File = {
 
   /**

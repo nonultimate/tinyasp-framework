@@ -438,15 +438,4 @@ var adResyncAll = 15;
 //---- ADCPROP_AUTORECALC_ENUM Values ----
 var adRecalcUpFront = 0;
 var adRecalcAlways = 1;
-
-//---- Binary or text type
-var adTypeBinary = 1;
-var adTypeText = 2;
-
-//---- File options
-var adForReading = 1;
-var adForWriting = 2;
-var adForAppending = 8;
-var adSaveCreateNotExist = 1;
-var adSaveCreateOverWrite = 2;
 %>

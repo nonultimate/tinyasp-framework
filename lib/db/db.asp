@@ -20,6 +20,7 @@
 if ($.File.isFile(APPPATH + "config\\database.asp")) {
   eval(include(APPPATH + "config\\database.asp"));
 }
+eval(include(APPLIB + "include\\ado.asp"));
 
 /**
  * Class DB

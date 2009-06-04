@@ -16,6 +16,8 @@
  * @license   New BSD License, see LICENSE.txt
  */
 
+eval(include(APPLIB + "file\\file.asp"));
+
 /**
  * Class Template
  */
@@ -97,7 +99,7 @@ Template.prototype = {
       var name, value, exec, code;
       for (var i = 0; i < len; i++) {
         name = matches[i].substr(1, matches[i].length - 2);
-        value = "";
+        value = null;
         exec = false;
         if (/^[A-Za-z0-9\$\._]+$/.test(name)) {
           if (/^\$/.test(name)) {
@@ -144,10 +146,14 @@ Template.prototype = {
             code = defined($.View) ? "with ($.View.Helper) {" + name + "}" : name;
             value = eval(code);
           } catch (e) {
-            value = "";
+            if (/^[A-Za-z0-9\$\._]+$/.test(name)) {
+              value = "";
+            }
           }
         }
-        data = data.replace(matches[i], value);
+        if (value != null) {
+          data = data.replace(matches[i], value);
+        }
       }
     }
 
@@ -263,7 +269,8 @@ Template.prototype = {
         code = defined($.View) ? "with ($.View.Helper) {" + m[1] + "}" : m[1];
         result = eval(code);
         if (result) {
-          data += this.eval(this.content.substring(dataStart, tagEnd));
+          result = this.eval(this.content.substring(dataStart, tagEnd));
+          data += result.replace(/\{/g, "LBrace").replace(/\}/g, "RBrace");
         }
       }
       tagStart = this.content.indexOf("<asp:if ", tagEnd + 9);
@@ -287,7 +294,7 @@ Template.prototype = {
       return;
     }
     var data = this.content.substring(0, tagStart);
-    var dataStart, str, obj, item, value, m, content, a;
+    var dataStart, str, obj, item, value, m, content, a, result;
     while (tagStart > -1) {
       tagEnd = this.content.indexOf("</asp:list>", tagStart);
       dataStart = this.content.indexOf(">", tagStart) + 1;
@@ -319,7 +326,8 @@ Template.prototype = {
         for (key in obj) {
           a[item] = key;
           a[value] = obj[key];
-          data += this.eval(content, a);
+          result = this.eval(content, a);
+          data += result.replace(/\{/g, "LBrace").replace(/\}/g, "RBrace");
         }
       }
       tagStart = this.content.indexOf("<asp:list ", tagEnd + 11);

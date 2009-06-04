@@ -17,7 +17,6 @@
  */
 
 eval(include(APPLIB + "file\\file.asp"));
-eval(include(APPLIB + "text\\text.asp"));
 
 /**
  * Class Router
@@ -65,13 +64,13 @@ Router.prototype = {
       }
       try {
         var cache = $.isGet ? true : false;
-        var str = $.server["QUERY_STRING"].replace(/^q=[^&]*/i, "");
+        var str = TServer("QUERY_STRING").replace(/^q=[^&]*/i, "");
         if (CONFIG["cache_view"] && $.isGet && str == "") {
           var url = $.controller + "/" + $.action;
           if ($.param.length > 0) {
             url += "/" + $.param.join("/");
           }
-          $.cache_file = APPPATH + "cache\\" + $.Text.crc32(url);
+          $.cache_file = APPPATH + "cache\\" + encodeURIComponent(url);
           var cache_mdtime = $.File.isFile($.cache_file) ? $.File.modified($.cache_file) : 0;
           var controller_mdtime = $.File.modified(APPPATH + "controllers\\" + ucfirst($.controller) + "Controller.asp");
           var view_file = APPPATH + "views\\html\\" + $.controller + "\\" + $.action + "." + CONFIG["template_extension"];
@@ -115,6 +114,8 @@ Router.prototype = {
         if (cache) {
           $.File.output($.cache_file);
         } else {
+          // Initialize form variables
+          $.init();
           // Include libraries
           eval(include(APPLIB + "controller\\controller.asp")); 
           eval(include(APPLIB + "cookie\\cookie.asp"));

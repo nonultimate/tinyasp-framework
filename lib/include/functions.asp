@@ -241,41 +241,6 @@ function realpath(path) {
 }
 
 /**
- * Encode HTML tag
- * @param  str  the string to encode
- * @return string
- */
-function encodeHTML(str) {
-  return Server.HTMLEncode(str);
-}
-
-/**
- * Encode URL string
- * @param  str  the string to encode
- * @return string
- */
-function encodeURL(str) {
-  return Server.URLEncode(str);
-}
-
-/**
- * Format the number as size with 'B', 'KB', 'MB', 'GB'
- * @param  size  the size of a file in bytes
- * @return string
- */
-function getSize(size) {
-  if (size < 1024) {
-    return size + "B";
-  } else if (size < 1024 * 1024) {
-    return Math.round((size * 100) / 1024) / 100 + "KB";
-  } else if (size < 1024 * 1024 * 1024) {
-    return Math.round((size * 100 ) / (1024 * 1024)) / 100 + "MB";
-  } else {
-    return Math.round((size * 100 ) / (1024 * 1024 * 1024)) / 100 + "GB";
-  }
-}
-
-/**
  * First letter upper case
  * @param  str  the string to format
  * @return string
@@ -593,8 +558,10 @@ function TGet(str) {
       a[i] = Request.QueryString(str).Item(i + 1);
     }
     return a;
-  } else {
+  } else if(len == 1) {
     return Request.QueryString(str).Item(1);
+  } else {
+    return "";
   }
 }
 
@@ -617,11 +584,10 @@ function TPost(str) {
         a[i] = Request.Form(str).Item(i + 1);
       }
       return a;
-    } else {
-      if (Request.Form(str).Count == 0) {
-        return "";
-      }
+    } else if(len == 1) {
       return Request.Form(str).Item(1);
+    } else {
+      return "";
     }
   }
 }

@@ -17,8 +17,6 @@
  * @license   New BSD License, see LICENSE.txt
  */
 
-eval(include(APPLIB + "include\\ado.asp"));
-
 var $ = {
 
   /**
@@ -29,7 +27,7 @@ var $ = {
   /**
    * The version of the framework
    */
-  version: "0.1 beta3",
+  version: "0.1 beta4",
 
   /**
    * The copyright of the framework
@@ -136,6 +134,17 @@ var $ = {
     if (defined(codepage)) {
       Session.CodePage = codepage;
     }
+    var a = TGet("q");
+    $.query = isArray(a) ? a[0] : a;
+    if (TServer("REQUEST_METHOD") == "GET") {
+      $.isGet = true;
+    } else if(TServer("REQUEST_METHOD") == "POST") {
+      $.isPost = true;
+      // Dealing post data of content type "multipart/form-data"
+      if (TServer("CONTENT_TYPE").match(/multipart\/form-data;/i)) {
+        $.isMultiPost = true;
+      }
+    }
   },
 
   /**
@@ -163,11 +172,11 @@ var $ = {
 
       return a;
     }();
+
     if (defined($.get["q"])) {
       if (isArray($.get["q"])) {
-        $.query = $.get["q"].shift();
+        $.get["q"].shift();
       } else {
-        $.query = $.get["q"];
         delete $.get["q"];
         $.get.length -= 1;
       }
@@ -189,16 +198,9 @@ var $ = {
       return a;
     }();
 
-    if ($.server["REQUEST_METHOD"] == "GET") {
-      $.isGet = true;
-    } else if($.server["REQUEST_METHOD"] == "POST") {
-      $.isPost = true;
-      // Dealing post data of content type "multipart/form-data"
-      if ($.server["CONTENT_TYPE"].match(/multipart\/form-data;/i)) {
-        $.isMultiPost = true;
-        eval(include(APPLIB + "include\\formhelper.asp"));
-        myRequest = new FormHelper();
-      }
+    if ($.isMultiPost) {
+      eval(include(APPLIB + "include\\formhelper.asp"));
+      myRequest = new FormHelper();
     }
 
     $.post = function() {
@@ -239,11 +241,10 @@ var $ = {
    */
   run: function() {
     // Setup configuration
-    this.config();
-    this.init();
+    $.config();
 
     // Define variables
-    var str = this.query;
+    var str = $.query;
     // Load router and rewrite URL
     if (str != "" && defined(CONFIG["router"])) {
       for (var v in CONFIG["router"]) {
