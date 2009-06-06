@@ -17,425 +17,425 @@
  */
 
 //---- CursorTypeEnum Values ----
-var adOpenForwardOnly = 0;
-var adOpenKeyset = 1;
-var adOpenDynamic = 2;
-var adOpenStatic = 3;
+adOpenForwardOnly = 0;
+adOpenKeyset = 1;
+adOpenDynamic = 2;
+adOpenStatic = 3;
 
 //---- CursorOptionEnum Values ----
-var adHoldRecords = 0x00000100;
-var adMovePrevious = 0x00000200;
-var adAddNew = 0x01000400;
-var adDelete = 0x01000800;
-var adUpdate = 0x01008000;
-var adBookmark = 0x00002000;
-var adApproxPosition = 0x00004000;
-var adUpdateBatch = 0x00010000;
-var adResync = 0x00020000;
-var adNotify = 0x00040000;
-var adFind = 0x00080000;
-var adSeek = 0x00400000;
-var adIndex = 0x00800000;
+adHoldRecords = 0x00000100;
+adMovePrevious = 0x00000200;
+adAddNew = 0x01000400;
+adDelete = 0x01000800;
+adUpdate = 0x01008000;
+adBookmark = 0x00002000;
+adApproxPosition = 0x00004000;
+adUpdateBatch = 0x00010000;
+adResync = 0x00020000;
+adNotify = 0x00040000;
+adFind = 0x00080000;
+adSeek = 0x00400000;
+adIndex = 0x00800000;
 
 //---- LockTypeEnum Values ----
-var adLockReadOnly = 1;
-var adLockPessimistic = 2;
-var adLockOptimistic = 3;
-var adLockBatchOptimistic = 4;
+adLockReadOnly = 1;
+adLockPessimistic = 2;
+adLockOptimistic = 3;
+adLockBatchOptimistic = 4;
 
 //---- ExecuteOptionEnum Values ----
-var adRunAsync = 0x00000010;
-var adAsyncExecute = 0x00000010;
-var adAsyncFetch = 0x00000020;
-var adAsyncFetchNonBlocking = 0x00000040;
-var adExecuteNoRecords = 0x00000080;
+adRunAsync = 0x00000010;
+adAsyncExecute = 0x00000010;
+adAsyncFetch = 0x00000020;
+adAsyncFetchNonBlocking = 0x00000040;
+adExecuteNoRecords = 0x00000080;
 
 //---- ConnectOptionEnum Values ----
-var adAsyncConnect = 0x00000010;
+adAsyncConnect = 0x00000010;
 
 //---- ObjectStateEnum Values ----
-var adStateClosed = 0x00000000;
-var adStateOpen = 0x00000001;
-var adStateConnecting = 0x00000002;
-var adStateExecuting = 0x00000004;
-var adStateFetching = 0x00000008;
+adStateClosed = 0x00000000;
+adStateOpen = 0x00000001;
+adStateConnecting = 0x00000002;
+adStateExecuting = 0x00000004;
+adStateFetching = 0x00000008;
 
 //---- CursorLocationEnum Values ----
-var adUseServer = 2;
-var adUseClient = 3;
+adUseServer = 2;
+adUseClient = 3;
 
 //---- DataTypeEnum Values ----
-var adEmpty = 0;
-var adTinyInt = 16;
-var adSmallInt = 2;
-var adInteger = 3;
-var adBigInt = 20;
-var adUnsignedTinyInt = 17;
-var adUnsignedSmallInt = 18;
-var adUnsignedInt = 19;
-var adUnsignedBigInt = 21;
-var adSingle = 4;
-var adDouble = 5;
-var adCurrency = 6;
-var adDecimal = 14;
-var adNumeric = 131;
-var adBoolean = 11;
-var adError = 10;
-var adUserDefined = 132;
-var adVariant = 12;
-var adIDispatch = 9;
-var adIUnknown = 13;
-var adGUID = 72;
-var adDate = 7;
-var adDBDate = 133;
-var adDBTime = 134;
-var adDBTimeStamp = 135;
-var adBSTR = 8;
-var adChar = 129;
-var adVarChar = 200;
-var adLongVarChar = 201;
-var adWChar = 130;
-var adVarWChar = 202;
-var adLongVarWChar = 203;
-var adBinary = 128;
-var adVarBinary = 204;
-var adLongVarBinary = 205;
-var adChapter = 136;
-var adFileTime = 64;
-var adDBFileTime = 137;
-var adPropVariant = 138;
-var adVarNumeric = 139;
+adEmpty = 0;
+adTinyInt = 16;
+adSmallInt = 2;
+adInteger = 3;
+adBigInt = 20;
+adUnsignedTinyInt = 17;
+adUnsignedSmallInt = 18;
+adUnsignedInt = 19;
+adUnsignedBigInt = 21;
+adSingle = 4;
+adDouble = 5;
+adCurrency = 6;
+adDecimal = 14;
+adNumeric = 131;
+adBoolean = 11;
+adError = 10;
+adUserDefined = 132;
+adVariant = 12;
+adIDispatch = 9;
+adIUnknown = 13;
+adGUID = 72;
+adDate = 7;
+adDBDate = 133;
+adDBTime = 134;
+adDBTimeStamp = 135;
+adBSTR = 8;
+adChar = 129;
+adVarChar = 200;
+adLongVarChar = 201;
+adWChar = 130;
+adVarWChar = 202;
+adLongVarWChar = 203;
+adBinary = 128;
+adVarBinary = 204;
+adLongVarBinary = 205;
+adChapter = 136;
+adFileTime = 64;
+adDBFileTime = 137;
+adPropVariant = 138;
+adVarNumeric = 139;
 
 //---- FieldAttributeEnum Values ----
-var adFldMayDefer = 0x00000002;
-var adFldUpdatable = 0x00000004;
-var adFldUnknownUpdatable = 0x00000008;
-var adFldFixed = 0x00000010;
-var adFldIsNullable = 0x00000020;
-var adFldMayBeNull = 0x00000040;
-var adFldLong = 0x00000080;
-var adFldRowID = 0x00000100;
-var adFldRowVersion = 0x00000200;
-var adFldCacheDeferred = 0x00001000;
-var adFldKeyColumn = 0x00008000;
+adFldMayDefer = 0x00000002;
+adFldUpdatable = 0x00000004;
+adFldUnknownUpdatable = 0x00000008;
+adFldFixed = 0x00000010;
+adFldIsNullable = 0x00000020;
+adFldMayBeNull = 0x00000040;
+adFldLong = 0x00000080;
+adFldRowID = 0x00000100;
+adFldRowVersion = 0x00000200;
+adFldCacheDeferred = 0x00001000;
+adFldKeyColumn = 0x00008000;
 
 //---- EditModeEnum Values ----
-var adEditNone = 0x0000;
-var adEditInProgress = 0x0001;
-var adEditAdd = 0x0002;
-var adEditDelete = 0x0004;
+adEditNone = 0x0000;
+adEditInProgress = 0x0001;
+adEditAdd = 0x0002;
+adEditDelete = 0x0004;
 
 //---- RecordStatusEnum Values ----
-var adRecOK = 0x0000000;
-var adRecNew = 0x0000001;
-var adRecModified = 0x0000002;
-var adRecDeleted = 0x0000004;
-var adRecUnmodified = 0x0000008;
-var adRecInvalid = 0x0000010;
-var adRecMultipleChanges = 0x0000040;
-var adRecPendingChanges = 0x0000080;
-var adRecCanceled = 0x0000100;
-var adRecCantRelease = 0x0000400;
-var adRecConcurrencyViolation = 0x0000800;
-var adRecIntegrityViolation = 0x0001000;
-var adRecMaxChangesExceeded = 0x0002000;
-var adRecObjectOpen = 0x0004000;
-var adRecOutOfMemory = 0x0008000;
-var adRecPermissionDenied = 0x0010000;
-var adRecSchemaViolation = 0x0020000;
-var adRecDBDeleted = 0x0040000;
+adRecOK = 0x0000000;
+adRecNew = 0x0000001;
+adRecModified = 0x0000002;
+adRecDeleted = 0x0000004;
+adRecUnmodified = 0x0000008;
+adRecInvalid = 0x0000010;
+adRecMultipleChanges = 0x0000040;
+adRecPendingChanges = 0x0000080;
+adRecCanceled = 0x0000100;
+adRecCantRelease = 0x0000400;
+adRecConcurrencyViolation = 0x0000800;
+adRecIntegrityViolation = 0x0001000;
+adRecMaxChangesExceeded = 0x0002000;
+adRecObjectOpen = 0x0004000;
+adRecOutOfMemory = 0x0008000;
+adRecPermissionDenied = 0x0010000;
+adRecSchemaViolation = 0x0020000;
+adRecDBDeleted = 0x0040000;
 
 //---- GetRowsOptionEnum Values ----
-var adGetRowsRest = -1;
+adGetRowsRest = -1;
 
 //---- PositionEnum Values ----
-var adPosUnknown = -1;
-var adPosBOF = -2;
-var adPosEOF = -3;
+adPosUnknown = -1;
+adPosBOF = -2;
+adPosEOF = -3;
 
 //---- enum Values ----
-var adBookmarkCurrent = 0;
-var adBookmarkFirst = 1;
-var adBookmarkLast = 2;
+adBookmarkCurrent = 0;
+adBookmarkFirst = 1;
+adBookmarkLast = 2;
 
 //---- MarshalOptionsEnum Values ----
-var adMarshalAll = 0;
-var adMarshalModifiedOnly = 1;
+adMarshalAll = 0;
+adMarshalModifiedOnly = 1;
 
 //---- AffectEnum Values ----
-var adAffectCurrent = 1;
-var adAffectGroup = 2;
-var adAffectAll = 3;
-var adAffectAllChapters = 4;
+adAffectCurrent = 1;
+adAffectGroup = 2;
+adAffectAll = 3;
+adAffectAllChapters = 4;
 
 //---- ResyncEnum Values ----
-var adResyncUnderlyingValues = 1;
-var adResyncAllValues = 2;
+adResyncUnderlyingValues = 1;
+adResyncAllValues = 2;
 
 //---- CompareEnum Values ----
-var adCompareLessThan = 0;
-var adCompareEqual = 1;
-var adCompareGreaterThan = 2;
-var adCompareNotEqual = 3;
-var adCompareNotComparable = 4;
+adCompareLessThan = 0;
+adCompareEqual = 1;
+adCompareGreaterThan = 2;
+adCompareNotEqual = 3;
+adCompareNotComparable = 4;
 
 //---- FilterGroupEnum Values ----
-var adFilterNone = 0;
-var adFilterPendingRecords = 1;
-var adFilterAffectedRecords = 2;
-var adFilterFetchedRecords = 3;
-var adFilterPredicate = 4;
-var adFilterConflictingRecords = 5;
+adFilterNone = 0;
+adFilterPendingRecords = 1;
+adFilterAffectedRecords = 2;
+adFilterFetchedRecords = 3;
+adFilterPredicate = 4;
+adFilterConflictingRecords = 5;
 
 //---- SearchDirectionEnum Values ----
-var adSearchForward = 1;
-var adSearchBackward = -1;
+adSearchForward = 1;
+adSearchBackward = -1;
 
 //---- PersistFormatEnum Values ----
-var adPersistADTG = 0;
-var adPersistXML = 1;
+adPersistADTG = 0;
+adPersistXML = 1;
 
 //---- StringFormatEnum Values ----
-var adStringXML = 0;
-var adStringHTML = 1;
-var adClipString = 2;
+adStringXML = 0;
+adStringHTML = 1;
+adClipString = 2;
 
 //---- ConnectPromptEnum Values ----
-var adPromptAlways = 1;
-var adPromptComplete = 2;
-var adPromptCompleteRequired = 3;
-var adPromptNever = 4;
+adPromptAlways = 1;
+adPromptComplete = 2;
+adPromptCompleteRequired = 3;
+adPromptNever = 4;
 
 //---- EventReasonEnum Values ----
-var adRsnAddNew = 1;
-var adRsnDelete = 2;
-var adRsnUpdate = 3;
-var adRsnUndoUpdate = 4;
-var adRsnUndoAddNew = 5;
-var adRsnUndoDelete = 6;
-var adRsnRequery = 7;
-var adRsnResynch = 8;
-var adRsnClose = 9;
-var adRsnMove = 10;
-var adRsnFirstChange = 11;
-var adRsnMoveFirst = 12;
-var adRsnMoveNext = 13;
-var adRsnMovePrevious = 14;
-var adRsnMoveLast = 15;
+adRsnAddNew = 1;
+adRsnDelete = 2;
+adRsnUpdate = 3;
+adRsnUndoUpdate = 4;
+adRsnUndoAddNew = 5;
+adRsnUndoDelete = 6;
+adRsnRequery = 7;
+adRsnResynch = 8;
+adRsnClose = 9;
+adRsnMove = 10;
+adRsnFirstChange = 11;
+adRsnMoveFirst = 12;
+adRsnMoveNext = 13;
+adRsnMovePrevious = 14;
+adRsnMoveLast = 15;
 
 //---- SchemaEnum Values ----
-var adSchemaProviderSpecific = -1;
-var adSchemaAsserts = 0;
-var adSchemaCatalogs = 1;
-var adSchemaCharacterSets = 2;
-var adSchemaCollations = 3;
-var adSchemaColumns = 4;
-var adSchemaCheckvarraints = 5;
-var adSchemavarraintColumnUsage = 6;
-var adSchemavarraintTableUsage = 7;
-var adSchemaKeyColumnUsage = 8;
-var adSchemaReferentialvarraints = 9;
-var adSchemaTablevarraints = 10;
-var adSchemaColumnsDomainUsage = 11;
-var adSchemaIndexes = 12;
-var adSchemaColumnPrivileges = 13;
-var adSchemaTablePrivileges = 14;
-var adSchemaUsagePrivileges = 15;
-var adSchemaProcedures = 16;
-var adSchemaSchemata = 17;
-var adSchemaSQLLanguages = 18;
-var adSchemaStatistics = 19;
-var adSchemaTables = 20;
-var adSchemaTranslations = 21;
-var adSchemaProviderTypes = 22;
-var adSchemaViews = 23;
-var adSchemaViewColumnUsage = 24;
-var adSchemaViewTableUsage = 25;
-var adSchemaProcedureParameters = 26;
-var adSchemaForeignKeys = 27;
-var adSchemaPrimaryKeys = 28;
-var adSchemaProcedureColumns = 29;
-var adSchemaDBInfoKeywords = 30;
-var adSchemaDBInfoLiterals = 31;
-var adSchemaCubes = 32;
-var adSchemaDimensions = 33;
-var adSchemaHierarchies = 34;
-var adSchemaLevels = 35;
-var adSchemaMeasures = 36;
-var adSchemaProperties = 37;
-var adSchemaMembers = 38;
+adSchemaProviderSpecific = -1;
+adSchemaAsserts = 0;
+adSchemaCatalogs = 1;
+adSchemaCharacterSets = 2;
+adSchemaCollations = 3;
+adSchemaColumns = 4;
+adSchemaCheckvarraints = 5;
+adSchemavarraintColumnUsage = 6;
+adSchemavarraintTableUsage = 7;
+adSchemaKeyColumnUsage = 8;
+adSchemaReferentialvarraints = 9;
+adSchemaTablevarraints = 10;
+adSchemaColumnsDomainUsage = 11;
+adSchemaIndexes = 12;
+adSchemaColumnPrivileges = 13;
+adSchemaTablePrivileges = 14;
+adSchemaUsagePrivileges = 15;
+adSchemaProcedures = 16;
+adSchemaSchemata = 17;
+adSchemaSQLLanguages = 18;
+adSchemaStatistics = 19;
+adSchemaTables = 20;
+adSchemaTranslations = 21;
+adSchemaProviderTypes = 22;
+adSchemaViews = 23;
+adSchemaViewColumnUsage = 24;
+adSchemaViewTableUsage = 25;
+adSchemaProcedureParameters = 26;
+adSchemaForeignKeys = 27;
+adSchemaPrimaryKeys = 28;
+adSchemaProcedureColumns = 29;
+adSchemaDBInfoKeywords = 30;
+adSchemaDBInfoLiterals = 31;
+adSchemaCubes = 32;
+adSchemaDimensions = 33;
+adSchemaHierarchies = 34;
+adSchemaLevels = 35;
+adSchemaMeasures = 36;
+adSchemaProperties = 37;
+adSchemaMembers = 38;
 
 //---- ConnectModeEnum Values ----
-var adModeUnknown = 0;
-var adModeRead = 1;
-var adModeWrite = 2;
-var adModeReadWrite = 3;
-var adModeShareDenyRead = 4;
-var adModeShareDenyWrite = 8;
-var adModeShareExclusive = 0xc;
-var adModeShareDenyNone = 0x10;
+adModeUnknown = 0;
+adModeRead = 1;
+adModeWrite = 2;
+adModeReadWrite = 3;
+adModeShareDenyRead = 4;
+adModeShareDenyWrite = 8;
+adModeShareExclusive = 0xc;
+adModeShareDenyNone = 0x10;
 
 //---- IsolationLevelEnum Values ----
-var adXactUnspecified = 0xffffffff;
-var adXactChaos = 0x00000010;
-var adXactReadUncommitted = 0x00000100;
-var adXactBrowse = 0x00000100;
-var adXactCursorStability = 0x00001000;
-var adXactReadCommitted = 0x00001000;
-var adXactRepeatableRead = 0x00010000;
-var adXactSerializable = 0x00100000;
-var adXactIsolated = 0x00100000;
+adXactUnspecified = 0xffffffff;
+adXactChaos = 0x00000010;
+adXactReadUncommitted = 0x00000100;
+adXactBrowse = 0x00000100;
+adXactCursorStability = 0x00001000;
+adXactReadCommitted = 0x00001000;
+adXactRepeatableRead = 0x00010000;
+adXactSerializable = 0x00100000;
+adXactIsolated = 0x00100000;
 
 //---- XactAttributeEnum Values ----
-var adXactCommitRetaining = 0x00020000;
-var adXactAbortRetaining = 0x00040000;
+adXactCommitRetaining = 0x00020000;
+adXactAbortRetaining = 0x00040000;
 
 //---- PropertyAttributesEnum Values ----
-var adPropNotSupported = 0x0000;
-var adPropRequired = 0x0001;
-var adPropOptional = 0x0002;
-var adPropRead = 0x0200;
-var adPropWrite = 0x0400;
+adPropNotSupported = 0x0000;
+adPropRequired = 0x0001;
+adPropOptional = 0x0002;
+adPropRead = 0x0200;
+adPropWrite = 0x0400;
 
 //---- ErrorValueEnum Values ----
-var adErrInvalidArgument = 0xbb9;
-var adErrNoCurrentRecord = 0xbcd;
-var adErrIllegalOperation = 0xc93;
-var adErrInTransaction = 0xcae;
-var adErrFeatureNotAvailable = 0xcb3;
-var adErrItemNotFound = 0xcc1;
-var adErrObjectInCollection = 0xd27;
-var adErrObjectNotSet = 0xd5c;
-var adErrDataConversion = 0xd5d;
-var adErrObjectClosed = 0xe78;
-var adErrObjectOpen = 0xe79;
-var adErrProviderNotFound = 0xe7a;
-var adErrBoundToCommand = 0xe7b;
-var adErrInvalidParamInfo = 0xe7c;
-var adErrInvalidConnection = 0xe7d;
-var adErrNotReentrant = 0xe7e;
-var adErrStillExecuting = 0xe7f;
-var adErrOperationCancelled = 0xe80;
-var adErrStillConnecting = 0xe81;
-var adErrNotExecuting = 0xe83;
-var adErrUnsafeOperation = 0xe84;
+adErrInvalidArgument = 0xbb9;
+adErrNoCurrentRecord = 0xbcd;
+adErrIllegalOperation = 0xc93;
+adErrInTransaction = 0xcae;
+adErrFeatureNotAvailable = 0xcb3;
+adErrItemNotFound = 0xcc1;
+adErrObjectInCollection = 0xd27;
+adErrObjectNotSet = 0xd5c;
+adErrDataConversion = 0xd5d;
+adErrObjectClosed = 0xe78;
+adErrObjectOpen = 0xe79;
+adErrProviderNotFound = 0xe7a;
+adErrBoundToCommand = 0xe7b;
+adErrInvalidParamInfo = 0xe7c;
+adErrInvalidConnection = 0xe7d;
+adErrNotReentrant = 0xe7e;
+adErrStillExecuting = 0xe7f;
+adErrOperationCancelled = 0xe80;
+adErrStillConnecting = 0xe81;
+adErrNotExecuting = 0xe83;
+adErrUnsafeOperation = 0xe84;
 
 //---- ParameterAttributesEnum Values ----
-var adParamSigned = 0x0010;
-var adParamNullable = 0x0040;
-var adParamLong = 0x0080;
+adParamSigned = 0x0010;
+adParamNullable = 0x0040;
+adParamLong = 0x0080;
 
 //---- ParameterDirectionEnum Values ----
-var adParamUnknown = 0x0000;
-var adParamInput = 0x0001;
-var adParamOutput = 0x0002;
-var adParamInputOutput = 0x0003;
-var adParamReturnValue = 0x0004;
+adParamUnknown = 0x0000;
+adParamInput = 0x0001;
+adParamOutput = 0x0002;
+adParamInputOutput = 0x0003;
+adParamReturnValue = 0x0004;
 
 //---- CommandTypeEnum Values ----
-var adCmdUnknown = 0x0008;
-var adCmdText = 0x0001;
-var adCmdTable = 0x0002;
-var adCmdStoredProc = 0x0004;
-var adCmdFile = 0x0100;
-var adCmdTableDirect = 0x0200;
+adCmdUnknown = 0x0008;
+adCmdText = 0x0001;
+adCmdTable = 0x0002;
+adCmdStoredProc = 0x0004;
+adCmdFile = 0x0100;
+adCmdTableDirect = 0x0200;
 
 //---- EventStatusEnum Values ----
-var adStatusOK = 0x0000001;
-var adStatusErrorsOccurred = 0x0000002;
-var adStatusCantDeny = 0x0000003;
-var adStatusCancel = 0x0000004;
-var adStatusUnwantedEvent = 0x0000005;
+adStatusOK = 0x0000001;
+adStatusErrorsOccurred = 0x0000002;
+adStatusCantDeny = 0x0000003;
+adStatusCancel = 0x0000004;
+adStatusUnwantedEvent = 0x0000005;
 
 //---- EventReasonEnum Values ----
-var adRsnAddNew = 1;
-var adRsnDelete = 2;
-var adRsnUpdate = 3;
-var adRsnUndoUpdate = 4;
-var adRsnUndoAddNew = 5;
-var adRsnUndoDelete = 6;
-var adRsnRequery = 7;
-var adRsnResynch = 8;
-var adRsnClose = 9;
-var adRsnMove = 10;
-var adRsnFirstChange = 11;
-var adRsnMoveFirst = 12;
-var adRsnMoveNext = 13;
-var adRsnMovePrevious = 14;
-var adRsnMoveLast = 15;
+adRsnAddNew = 1;
+adRsnDelete = 2;
+adRsnUpdate = 3;
+adRsnUndoUpdate = 4;
+adRsnUndoAddNew = 5;
+adRsnUndoDelete = 6;
+adRsnRequery = 7;
+adRsnResynch = 8;
+adRsnClose = 9;
+adRsnMove = 10;
+adRsnFirstChange = 11;
+adRsnMoveFirst = 12;
+adRsnMoveNext = 13;
+adRsnMovePrevious = 14;
+adRsnMoveLast = 15;
 
 //---- SchemaEnum Values ----
-var adSchemaProviderSpecific = -1;
-var adSchemaAsserts = 0;
-var adSchemaCatalogs = 1;
-var adSchemaCharacterSets = 2;
-var adSchemaCollations = 3;
-var adSchemaColumns = 4;
-var adSchemaCheckConstraints = 5;
-var adSchemaConstraintColumnUsage = 6;
-var adSchemaConstraintTableUsage = 7;
-var adSchemaKeyColumnUsage = 8;
-var adSchemaReferentialConstraints = 9;
-var adSchemaTableConstraints = 10;
-var adSchemaColumnsDomainUsage = 11;
-var adSchemaIndexes = 12;
-var adSchemaColumnPrivileges = 13;
-var adSchemaTablePrivileges = 14;
-var adSchemaUsagePrivileges = 15;
-var adSchemaProcedures = 16;
-var adSchemaSchemata = 17;
-var adSchemaSQLLanguages = 18;
-var adSchemaStatistics = 19;
-var adSchemaTables = 20;
-var adSchemaTranslations = 21;
-var adSchemaProviderTypes = 22;
-var adSchemaViews = 23;
-var adSchemaViewColumnUsage = 24;
-var adSchemaViewTableUsage = 25;
-var adSchemaProcedureParameters = 26;
-var adSchemaForeignKeys = 27;
-var adSchemaPrimaryKeys = 28;
-var adSchemaProcedureColumns = 29;
-var adSchemaDBInfoKeywords = 30;
-var adSchemaDBInfoLiterals = 31;
-var adSchemaCubes = 32;
-var adSchemaDimensions = 33;
-var adSchemaHierarchies = 34;
-var adSchemaLevels = 35;
-var adSchemaMeasures = 36;
-var adSchemaProperties = 37;
-var adSchemaMembers = 38;
+adSchemaProviderSpecific = -1;
+adSchemaAsserts = 0;
+adSchemaCatalogs = 1;
+adSchemaCharacterSets = 2;
+adSchemaCollations = 3;
+adSchemaColumns = 4;
+adSchemaCheckConstraints = 5;
+adSchemaConstraintColumnUsage = 6;
+adSchemaConstraintTableUsage = 7;
+adSchemaKeyColumnUsage = 8;
+adSchemaReferentialConstraints = 9;
+adSchemaTableConstraints = 10;
+adSchemaColumnsDomainUsage = 11;
+adSchemaIndexes = 12;
+adSchemaColumnPrivileges = 13;
+adSchemaTablePrivileges = 14;
+adSchemaUsagePrivileges = 15;
+adSchemaProcedures = 16;
+adSchemaSchemata = 17;
+adSchemaSQLLanguages = 18;
+adSchemaStatistics = 19;
+adSchemaTables = 20;
+adSchemaTranslations = 21;
+adSchemaProviderTypes = 22;
+adSchemaViews = 23;
+adSchemaViewColumnUsage = 24;
+adSchemaViewTableUsage = 25;
+adSchemaProcedureParameters = 26;
+adSchemaForeignKeys = 27;
+adSchemaPrimaryKeys = 28;
+adSchemaProcedureColumns = 29;
+adSchemaDBInfoKeywords = 30;
+adSchemaDBInfoLiterals = 31;
+adSchemaCubes = 32;
+adSchemaDimensions = 33;
+adSchemaHierarchies = 34;
+adSchemaLevels = 35;
+adSchemaMeasures = 36;
+adSchemaProperties = 37;
+adSchemaMembers = 38;
 
 //---- SeekEnum Values ----
-var adSeekFirstEQ = 0x1;
-var adSeekLastEQ = 0x2;
-var adSeekAfterEQ = 0x4;
-var adSeekAfter = 0x8;
-var adSeekBeforeEQ = 0x10;
-var adSeekBefore = 0x20;
+adSeekFirstEQ = 0x1;
+adSeekLastEQ = 0x2;
+adSeekAfterEQ = 0x4;
+adSeekAfter = 0x8;
+adSeekBeforeEQ = 0x10;
+adSeekBefore = 0x20;
 
 //---- ADCPROP_UPDATECRITERIA_ENUM Values ----
-var adCriteriaKey = 0;
-var adCriteriaAllCols = 1;
-var adCriteriaUpdCols = 2;
-var adCriteriaTimeStamp = 3;
+adCriteriaKey = 0;
+adCriteriaAllCols = 1;
+adCriteriaUpdCols = 2;
+adCriteriaTimeStamp = 3;
 
 //---- ADCPROP_ASYNCTHREADPRIORITY_ENUM Values ----
-var adPriorityLowest = 1;
-var adPriorityBelowNormal = 2;
-var adPriorityNormal = 3;
-var adPriorityAboveNormal = 4;
-var adPriorityHighest = 5;
+adPriorityLowest = 1;
+adPriorityBelowNormal = 2;
+adPriorityNormal = 3;
+adPriorityAboveNormal = 4;
+adPriorityHighest = 5;
 
 //---- CEResyncEnum Values ----
-var adResyncNone = 0;
-var adResyncAutoIncrement = 1;
-var adResyncConflicts = 2;
-var adResyncUpdates = 4;
-var adResyncInserts = 8;
-var adResyncAll = 15;
+adResyncNone = 0;
+adResyncAutoIncrement = 1;
+adResyncConflicts = 2;
+adResyncUpdates = 4;
+adResyncInserts = 8;
+adResyncAll = 15;
 
 //---- ADCPROP_AUTORECALC_ENUM Values ----
-var adRecalcUpFront = 0;
-var adRecalcAlways = 1;
+adRecalcUpFront = 0;
+adRecalcAlways = 1;
 %>
