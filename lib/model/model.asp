@@ -74,7 +74,7 @@ $.Model = function(base) {
     }
     path += this.table + ".asp";
     if ($.File.isFile(path)) {
-      eval(include(path));
+      eval($.File.readFile(path));
     } else {
       var sql = "";
       var rs, field;
@@ -99,7 +99,7 @@ $.Model = function(base) {
             } else if(rs("CHARACTER_MAXIMUM_LENGTH").Value != null) {
               size = rs("CHARACTER_MAXIMUM_LENGTH").Value;
               if (size > 255) {
-                type = "memo"
+                type = "memo";
                 size = "";
               }
             }
@@ -536,6 +536,26 @@ $.Model = function(base) {
    */
   this.query = function(cmdText, cmdType, params) {
     return $.DB.query(this.db, cmdText, cmdType, params);
+  };
+
+  /**
+   * Execute procedure and return no result
+   * @param  cmdText  the procedure name
+   * @param  params   [optional]the parameters to bind
+   * @return boolean
+   */
+  this.executeSP = function(cmdText, params) {
+    return this.execute(cmdText, adCmdStoredProc, params);
+  };
+
+  /**
+   * Execute procedure and return data as recordset
+   * @param  cmdText  the procedure name
+   * @param  params   [optional]the parameters to bind
+   * @return recordset
+   */
+  this.querySP = function(cmdText, params) {
+    return this.query(cmdText, adCmdStoredProc, params);
   };
 
   /**

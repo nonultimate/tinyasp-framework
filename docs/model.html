@@ -166,6 +166,20 @@
             </p>
             <hr />
             <p>
+              <a name="executeSP" class="keyword">executeSP</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">Array</span> params])
+            </p>
+            <p class="description">
+              Execute procedure and return no result.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cmdText</span> The procedure name.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
               <a name="fetch" class="keyword">fetch</a>([<span class="type rightspan">String</span> fields [, <span class="type rightspan">String</span> conditions [, <span class="type rightspan">String</span> orders ]]])
             </p>
             <p class="description">
@@ -218,6 +232,20 @@
               <b>Parameter</b><br />
               <span class="param">cmdText</span> The command text or procedure name.<br />
               <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">RecordSet</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="querySP" class="keyword">querySP</a>(<span class="type rightspan">String</span> cmdText [, <span class="type rightspan">Array</span> params])
+            </p>
+            <p class="description">
+              Execute procedure and return data as recordset.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">cmdText</span> The procedure name.<br />
               <span class="param">params</span> [Optional]The parameters to bind.<br />
               <b>Return</b>
               <span class="type leftspan">RecordSet</span><br />

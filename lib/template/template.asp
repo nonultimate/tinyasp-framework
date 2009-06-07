@@ -68,6 +68,7 @@ Template.prototype = {
       this.execute();
     }
     // Add filters
+    this.addIncludeFilter();
     this.addIfFilter();
     this.addListFilter();
     var data = this.eval(this.content);
@@ -243,6 +244,35 @@ Template.prototype = {
         data = data.replace(m[0], "");
       } else {
         data = data.replace(m[0], a[m[1]]);
+      }
+    }
+    this.content = data;
+  },
+
+  /**
+   * Filter for asp:include tag
+   * @return void
+   */
+  addIncludeFilter: function() {
+    var tagStart = this.content.indexOf("<asp:include ");
+    var tagEnd = 0;
+    if (tagStart == -1) {
+      return;
+    }
+    var data = this.content.substring(0, tagStart);
+    var str, m;
+    while (tagStart > -1) {
+      tagEnd = this.content.indexOf("/>", tagStart) + 2;
+      var str = this.content.substring(tagStart, tagEnd);
+      m = str.match(/ file="([^"]+)"/);
+      if (m) {
+        data += $.File.readFile(m[1]);
+      }
+      tagStart = this.content.indexOf("<asp:include ");
+      if (tagStart > -1) {
+        data += this.content.substring(tagEnd, tagStart);
+      } else {
+        data += this.content.substr(tagEnd);
       }
     }
     this.content = data;

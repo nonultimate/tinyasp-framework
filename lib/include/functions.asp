@@ -323,11 +323,11 @@ function include(filename, once) {
 }
 
 /**
- * Import a library
+ * Import library files
  * @param  string  the library string
  * @return void
  */
-function require(lib) {
+function use(lib) {
   var a = lib.split(".");
   var path = (a[0] == '$') ? APPLIB : APPPATH + "lib\\";
   var len = a.length;
@@ -484,7 +484,7 @@ function extend(obj, base) {
  */
 function serialize(obj, name, isvar) {
   var s = "";
-  if (!defined(isvar) || isvar == true) {
+  if (defined(isvar) && isvar == true) {
     s += "var ";
   }
   if (defined(name)) {

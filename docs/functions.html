@@ -384,28 +384,6 @@
             </p>
             <hr />
             <p>
-              <a name="require" class="keyword">require</a>(<span class="type rightspan">String</span> lib)
-            </p>
-            <p class="description">
-              Import a library.
-            </p>
-            <p class="note">
-              <b>Parameter</b><br />
-              <span class="param">lib</span> The library string.<br />
-              <b>Return</b>
-              <span class="type leftspan">void</span><br />
-              <b>Example</b>
-              <code>
-                // Import file lib/mail/mail.asp<br />
-                require("$.Mail");<br />
-                // Import file lib/text/utf16.asp<br />
-                require("$.Text.UTF16");<br />
-                // Require app/lib/test.asp<br />
-                require("Test");<br />
-              </code>
-            </p>
-            <hr />
-            <p>
               <a name="runtime" class="keyword">runtime</a>()
             </p>
             <p class="description">
@@ -558,6 +536,28 @@
               <span class="param">str</span> The string to format.<br />
               <b>Return</b>
               <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="use" class="keyword">use</a>(<span class="type rightspan">String</span> lib)
+            </p>
+            <p class="description">
+              Import library files.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">lib</span> The library string.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b>
+              <code>
+                // Import file lib/mail/mail.asp<br />
+                use("$.Mail");<br />
+                // Import file lib/text/utf16.asp<br />
+                use("$.Text.UTF16");<br />
+                // Require app/lib/test.asp<br />
+                use("Test");<br />
+              </code>
             </p>
             <br />
             <div class="menu">Date Object</div>
