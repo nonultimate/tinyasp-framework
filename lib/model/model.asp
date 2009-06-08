@@ -49,6 +49,11 @@ $.Model = function(base) {
    * The fields of the table
    */
   this.fields = new Array();
+  
+  /**
+   * The parameters for stored procudures
+   */
+  this.params = "";
 
   /**
    * Left quote for table or column name
@@ -517,7 +522,21 @@ $.Model = function(base) {
    * @return boolean
    */
   this.execute = function(cmdText, cmdType, params) {
-    var ret = $.DB.execute(this.db, cmdText, cmdType, params);
+    var p;
+    if (this.params == "" || isArray(params)) {
+      p = params;
+    } else {
+      var a;
+      p = new Array();
+      for (var item in params) {
+        if (this.params[item].length > 3 && this.params[item][3] == false) {
+          a = $.DB.makeOutParam(this.params[item][0], this.params[item][1], this.params[item][2], params[item]);
+        } else {
+          a = $.DB.makeInParam(this.params[item][0], this.params[item][1], this.params[item][2], params[item]);
+        }
+        p.push(a);
+    }
+    var ret = $.DB.execute(this.db, cmdText, cmdType, p);
     if (ret && this.table != "") {
       var file = (this.db != "") ? this.db + "_" + this.table : this.table;
       file = file.toLowerCase();
@@ -535,7 +554,21 @@ $.Model = function(base) {
    * @return recordset
    */
   this.query = function(cmdText, cmdType, params) {
-    return $.DB.query(this.db, cmdText, cmdType, params);
+    var p;
+    if (this.params == "" || isArray(params)) {
+      p = params;
+    } else {
+      var a;
+      p = new Array();
+      for (var item in params) {
+        if (this.params[item].length > 3 && this.params[item][3] == false) {
+          a = $.DB.makeOutParam(this.params[item][0], this.params[item][1], this.params[item][2], params[item]);
+        } else {
+          a = $.DB.makeInParam(this.params[item][0], this.params[item][1], this.params[item][2], params[item]);
+        }
+        p.push(a);
+    }
+    return $.DB.query(this.db, cmdText, cmdType, p);
   };
 
   /**

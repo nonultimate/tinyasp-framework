@@ -16,6 +16,9 @@
  * @license   New BSD License, see LICENSE.txt
  */
 
+//eval(include(APPLIB + "security\\md5.asp"));
+//eval(include(APPLIB + "security\\sha1.asp"));
+
 $.Security = {
 
   /**
@@ -24,8 +27,7 @@ $.Security = {
    * @return string
    */
   MD5: function(text) {
-    eval(include(APPLIB + "security\\md5.asp"));
-    return str_md5(text);
+    return hex_md5(text);
   },
 
   /**
@@ -34,7 +36,6 @@ $.Security = {
    * @return string
    */
   SHA1: function(text) {
-    eval(include(APPLIB + "security\\sha1.asp"));
     return calcSHA1(text);
   }
 

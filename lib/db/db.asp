@@ -231,7 +231,7 @@ DB.prototype = {
       error("Error occured while executing the statement");
     }
 
-    return affected > 0 ? true : false;
+    return true;
   },
 
   /**

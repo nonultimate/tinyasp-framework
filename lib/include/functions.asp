@@ -331,19 +331,34 @@ function use(lib) {
   var a = lib.split(".");
   var path = (a[0] == '$') ? APPLIB : APPPATH + "lib\\";
   var len = a.length;
+  if (a[0] == '$' && len > 2) {
+    eval(include(path + a[1].toLowerCase() + "\\" + a[1].toLowerCase() + ".asp"));
+  }
   for (var i = 0; i < len; i++) {
     if (i > 0) {
       path += "\\";
     }
-    if (a[i] != '$') {
+    if (a[i] != '$' && a[i] != '*') {
       path += a[i].toLowerCase();
     }
   }
   if (a[0] == '$' && len == 2) {
-    path += "\\" + a[1];
+    path += "\\" + a[1].toLowerCase();
   }
-  path += ".asp";
-  eval(include(path));
+  if (a[len - 1] == '*') {
+    if (defined($) && defined($.File)) {
+      var files = $.File.getFiles(path);
+      var file;
+      while (!files.atEnd()) {
+        file = files.item();
+        eval(include(file.Path));
+        files.moveNext();
+      }
+    }
+  } else {
+    path += ".asp";
+    eval(include(path));
+  }
 }
 
 /**
