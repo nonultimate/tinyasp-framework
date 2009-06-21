@@ -22,6 +22,7 @@
               <li><a href="variables.html">Variables</a></li>
               <li><a href="functions.html">Functions</a></li>
               <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li><a href="utils.html">Utils</a></li>
               <li class="title">Packages</li>
               <li><a href="controller.html">Controller</a></li>
               <li><a href="cookie.html">Cookie</a></li>
@@ -84,7 +85,7 @@
               <b>Parameter</b><br />
               <span class="param">data</span> The string to add.<br />
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <hr />
             <p>
@@ -98,7 +99,7 @@
               <span class="param">path</span> The view template path.<br />
               <span class="param">layout_path</span> The view layout path.<br />
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <hr />
             <p>
@@ -111,7 +112,7 @@
               <b>Parameter</b><br />
               <span class="param">path</span> The file to add.<br />
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <hr />
             <p>
@@ -122,7 +123,23 @@
             </p>
             <p class="note">
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b><br />
+              <code>
+              &lt;asp:if condition="statement"&gt;<br />
+              It's true.<br />
+              &lt;/asp:if&gt;
+              </code>
+              <br />
+              <code>
+              &lt;asp:if condition="statement"&gt;<br />
+              It's true.<br />
+              &lt;asp:else/&gt;<br />
+              It's false.<br />
+              &lt;/asp:if&gt;
+              </code>
+              <br />
+              "statement" is a statement that returns boolean.
             </p>
             <hr />
             <p>
@@ -133,7 +150,13 @@
             </p>
             <p class="note">
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b><br />
+              <code>
+              &lt;asp:include file="path" /&gt;
+              </code>
+              <br />
+              "path" is the file path at folder app/views/html.
             </p>
             <hr />
             <p>
@@ -144,7 +167,34 @@
             </p>
             <p class="note">
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b><br />
+              <code>
+              &lt;asp:list var="object" item="item" value="value"&gt;<br />
+              {item} => {value}&lt;br /&gt;<br />
+              &lt/asp:list&gt;<br />
+              </code>
+              <br />
+              "object" is a list object.<br />
+              "item" is the index of the list.<br />
+              "value" is the value in the list.<br />
+            </p>
+            <hr />
+            <p>
+              <a name="addPagerFilter" class="keyword">addPagerFilter</a>()
+            </p>
+            <p class="description">
+              Filter for tag asp:pager.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+              <b>Example</b><br />
+              <code>
+              &lt;asp:pager var="pager" function="function" /&gt;<br />
+              </code>
+              <br />
+              "function" is a custom pager function, see <a href="view.html#pager">$.View.Helper.pager()</a>.
             </p>
             <hr />
             <p>
@@ -158,7 +208,7 @@
               <span class="param">name</span> The variable name.<br />
               <span class="param">value</span> The variable value.<br />
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <hr />
             <p>
@@ -169,7 +219,7 @@
             </p>
             <p class="note">
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <hr />
             <p>
@@ -183,7 +233,7 @@
               <span class="param">data</span> The data to replace.<br />
               <span class="param">arr</span> [Optional]The array variables for replacement.<br />
               <b>Return</b>
-              <span class="type">String</span>
+              <span class="type leftspan">String</span>
             </p>
             <hr />
             <p>
@@ -194,7 +244,7 @@
             </p>
             <p class="note">
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <hr />
             <p>
@@ -207,7 +257,7 @@
               <b>Parameter</b><br />
               <span class="param">path</span> The path of the file.<br />
               <b>Return</b>
-              <span class="type">void</span>
+              <span class="type leftspan">void</span>
             </p>
             <br />
           </td>

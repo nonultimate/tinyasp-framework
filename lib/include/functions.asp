@@ -145,8 +145,12 @@ function redirect(url) {
   if (isNumber(url)) {
     var page = "/errors/error.html";
     switch(url) {
-      case 403: page = "/errors/403.html";
-      case 404: page = "/errors/404.html";
+      case 403:
+        page = "/errors/403.html";
+        break;
+      case 404:
+        page = "/errors/404.html";
+        break;
     }
     transfer(page);
   } else {
@@ -465,7 +469,8 @@ function isString(v) {
  */
 function objectExists(str) {
   try {
-    Server.CreateObject(str);
+    var o = Server.CreateObject(str);
+    delete o;
     return true;
   } catch (e) {
     return false;
@@ -650,7 +655,7 @@ String.prototype.rtrim = function() {
  */
 Date.prototype.format = function(str) {
   var year = this.getYear();
-  var month = this.getMonth();
+  var month = this.getMonth() + 1;
   var day = this.getDate();
   var hour = this.getHours();
   var minute = this.getMinutes();

@@ -22,6 +22,7 @@
               <li><a href="variables.html">Variables</a></li>
               <li><a href="functions.html">Functions</a></li>
               <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li><a href="utils.html">Utils</a></li>
               <li class="title">Packages</li>
               <li><a href="controller.html">Controller</a></li>
               <li><a href="cookie.html">Cookie</a></li>
@@ -46,7 +47,7 @@
             </div>
             <div class="menu">$.Text</div>
             <p>
-              &nbsp;&nbsp;&nbsp;&nbsp;Text handling, such as CRC32, BASE64, UTF8, UTF16.
+              &nbsp;&nbsp;&nbsp;&nbsp;Text handling, such as crc32, deflate, inflate, BASE64, UTF8, UTF16.
             </p>
             <br />
             <b>Methods</b><br />
@@ -55,7 +56,7 @@
               <a name="crc32" class="keyword">crc32</a>(<span class="type rightspan">String</span> str)
             </p>
             <p class="description">
-              Calculate crc32 value crc32 value.
+              Calculate crc32 value.
             </p>
             <p class="param">
               <b>Parameter</b><br />
@@ -65,32 +66,32 @@
             </p>
             <hr />
             <p>
-              <a name="deflate" class="keyword">deflate</a>(<span class="type rightspan">String</span> str)
+              <a name="deflate" class="keyword">deflate</a>(<span class="type rightspan">String</span> data)
             </p>
             <p class="description">
-              Calculate the deflate data.
+              Compress the data using deflate.
             </p>
             <p class="param">
               <b>Parameter</b><br />
-              <span class="param">str</span> The string to calculate.<br />
+              <span class="param">data</span> The data to compress.<br />
               <b>Return</b>
               <span class="type leftspan">String</span><br />
             </p>
             <hr />
             <p>
-              <a name="inflate" class="keyword">inflate</a>(<span class="type rightspan">String</span> str)
+              <a name="inflate" class="keyword">inflate</a>(<span class="type rightspan">String</span> data)
             </p>
             <p class="description">
-              Calculate the inflate data.
+              Decompress the data using inflate.
             </p>
             <p class="param">
               <b>Parameter</b><br />
-              <span class="param">str</span> The string to calculate.<br />
+              <span class="param">data</span> The data to decompress.<br />
               <b>Return</b>
               <span class="type leftspan">String</span><br />
             </p>
             <br />
-            <div class="menu">$.Text.Base64</div>
+            <div class="menu"><a name="Base64"></a>$.Text.Base64</div>
             <br />
             <b>Properties</b><br />
             <hr />
@@ -136,7 +137,7 @@
               <span class="type leftspan">String</span><br />
             </p>
             <br />
-            <div class="menu">$.Text.UTF8</div>
+            <div class="menu"><a name="UTF8"></a>$.Text.UTF8</div>
             <br />
             <b>Methods</b><br />
             <hr />
@@ -179,7 +180,7 @@
               <span class="type leftspan">String</span><br />
             </p>
             <br />
-            <div class="menu">$.Text.UTF16</div>
+            <div class="menu"><a name="UTF16"></a>$.Text.UTF16</div>
             <br />
             <b>Methods</b><br />
             <hr />

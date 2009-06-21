@@ -63,9 +63,10 @@ Router.prototype = {
         redirect(404);
       }
       try {
-        var cache = $.isGet ? true : false;
+        var cache = false;
         var str = TServer("QUERY_STRING").replace(/^q=[^&]*/i, "");
         if (CONFIG["cache_view"] && $.isGet && str == "") {
+          cache = true;
           var url = $.controller + "/" + $.action;
           if ($.param.length > 0) {
             url += "/" + $.param.join("/");
@@ -87,7 +88,7 @@ Router.prototype = {
                 cache = false;
               }
             }
-            if (cache == false && defined(obj.models)) {
+            if (cache == true && defined(obj.models)) {
               var len = obj.models.length;
               var model_path;
               for (var i = 0; i < len; i++) {
@@ -98,7 +99,7 @@ Router.prototype = {
                 }
               }
             }
-            if (cache == false && defined(obj.tables)) {
+            if (cache == true && defined(obj.tables)) {
               var len = obj.tables.length;
               var table_path;
               for (var i = 0; i < len; i++) {

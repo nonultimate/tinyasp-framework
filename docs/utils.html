@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title> Utils - Tinyasp Framework Documentation </title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" media="screen" />
+    <!--[if lte IE 6]>
+    <link href="css/ie.css" type="text/css" rel="stylesheet" media="screen" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div class="nav">
+          <a href="tinyasp.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="controller.html">Next</a>
+        </div>
+      </div>
+      <table id="content" cellpadding="0" cellspacing="0">
+        <tr>
+          <td id="left">
+            <ul>
+              <li class="title">Core</li>
+              <li><a href="variables.html">Variables</a></li>
+              <li><a href="functions.html">Functions</a></li>
+              <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li><a href="utils.html">Utils</a></li>
+              <li class="title">Packages</li>
+              <li><a href="controller.html">Controller</a></li>
+              <li><a href="cookie.html">Cookie</a></li>
+              <li><a href="db.html">DB</a></li>
+              <li><a href="file.html">File</a></li>
+              <li><a href="image.html">Image</a></li>
+              <li><a href="mail.html">Mail</a></li>
+              <li><a href="model.html">Model</a></li>
+              <li><a href="net.html">Net</a></li>
+              <li><a href="router.html">Router</a></li>
+              <li><a href="security.html">Security</a></li>
+              <li><a href="session.html">Session</a></li>
+              <li><a href="template.html">Template</a></li>
+              <li><a href="text.html">Text</a></li>
+              <li><a href="view.html">View</a></li>
+              <li><a href="zip.html">Zip</a></li>
+            </ul>
+          </td>
+          <td id="right">
+            <div class="center">
+              <img src="images/logo.gif" alt="LOGO" title="Tinyasp Framework" /><br />
+            </div>
+            <div class="menu">Pager(<span class="type rightspan">Integer</span> total, <span class="type rightspan">Integer</span> size, <span class="type rightspan">String</span> query)</div>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;Pager class.</p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">total</span> The total number of records.<br />
+              <span class="param">size</span> The size of records to display per page.<br />
+              <span class="param">query</span> The query string for the current page or records offset.<br />
+              <b>Example</b><br />
+              Controller code<br />
+              <code>
+              var total = model.count();<br />
+              var pagesize = 10;<br />
+              var pager = new Pager(total, pagesize, "page");<br />
+              $.view.assign("pager", pager);<br />
+              </code>
+              View code<br />
+              <code>
+              &lt;asp:pager var="pager" /&gt;
+              </code>
+            </p>
+            <br />
+            <b>Properties</b><br />
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span> <a name="current" class="keyword">current</a>
+            </p>
+            <p class="description">
+              The current page.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span> <a name="offset" class="keyword">offset</a>
+            </p>
+            <p class="description">
+              The offset in the records.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span> <a name="page" class="keyword">page</a>
+            </p>
+            <p class="description">
+              The total number of pages.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span> <a name="size" class="keyword">size</a>
+            </p>
+            <p class="description">
+              The size of records to display per page.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span> <a name="total" class="keyword">total</a>
+            </p>
+            <p class="description">
+              The total number of records.
+            </p>
+            <hr />
+            <p>
+              <span class="type rightspan">Integer</span> <a name="type" class="keyword">type</a>
+            </p>
+            <p class="description">
+              The link string type.
+            </p>
+            <br />
+            <b>Methods</b><br />
+            <hr />
+            <p>
+              <a name="firstLink" class="keyword">firstLink</a>([<span class="type rightspan">Integer</span> type])
+            </p>
+            <p class="description">
+              Get the first link.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> [Optional]The link string type, 1 or 2, default is 1.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="getLinkStr" class="keyword">getLinkStr</a>([<span class="type rightspan">Integer</span> type])
+            </p>
+            <p class="description">
+              Get the link string.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> [Optional]The link string type, 1 or 2, default is 1.<br />
+              1 means the link string "/page/1".<br />
+              2 means the link string "?page=1".<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="hasNext" class="keyword">hasNext</a>()
+            </p>
+            <p class="description">
+              Ensure the page has a next page.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="hasPrev" class="keyword">hasPrev</a>()
+            </p>
+            <p class="description">
+              Ensure the page has a previous page.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="isFirst" class="keyword">isFirst</a>()
+            </p>
+            <p class="description">
+              Ensure the page is the first page.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="isLast" class="keyword">isLast</a>()
+            </p>
+            <p class="description">
+              Ensure the page is the last page.
+            </p>
+            <p class="note">
+              <b>Return</b>
+              <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="lastLink" class="keyword">lastLink</a>([<span class="type rightspan">Integer</span> type])
+            </p>
+            <p class="description">
+              Get the last link.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> [Optional]The link string type, 1 or 2, default is 1.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="nextLink" class="keyword">nextLink</a>([<span class="type rightspan">Integer</span> type])
+            </p>
+            <p class="description">
+              Get the next link.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> [Optional]The link string type, 1 or 2, default is 1.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="prevLink" class="keyword">prevLink</a>([<span class="type rightspan">Integer</span> type])
+            </p>
+            <p class="description">
+              Get the previous link.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> [Optional]The link string type, 1 or 2, default is 1.<br />
+              <b>Return</b>
+              <span class="type leftspan">String</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setLinkType" class="keyword">setLinkType</a>(<span class="type rightspan">Integer</span> type)
+            </p>
+            <p class="description">
+              Set the link stirng type.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">type</span> The link string type, 1 or 2.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="setPage" class="keyword">setPage</a>(<span class="type rightspan">Integer</span> p)
+            </p>
+            <p class="description">
+              Set the current page.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">p</span> The current page number.<br />
+              <b>Return</b>
+              <span class="type leftspan">void</span><br />
+            </p>
+            <br />
+          </td>
+        </tr>
+      </table>
+      <div id="footer">
+        <div class="nav">
+          <a href="tinyasp.html">Previous</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.html">Index</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="controller.html">Next</a>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2008-2009, Tinyasp Framework.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

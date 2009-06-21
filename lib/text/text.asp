@@ -22,21 +22,21 @@
 $.Text = {
 
   /**
-   * Calculate the deflate data
-   * @param  str  the string to calculate
+   * Compress the data using deflate
+   * @param  data  the data to compress
    * @return string
    */
-  deflate: function(str) {
-     return zip_deflate(str);
+  deflate: function(data) {
+     return zip_deflate(data);
   },
 
   /**
-   * Calculate the inflate data
-   * @param  str  the string to calculate
+   * Decompress the data using inflate
+   * @param  data  the data to decompress
    * @return string
    */
-  inflate: function(str) {
-    return zip_inflate(str);
+  inflate: function(data) {
+    return zip_inflate(data);
   }
 
 }

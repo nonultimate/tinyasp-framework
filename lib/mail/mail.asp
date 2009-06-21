@@ -157,7 +157,7 @@ Mail.prototype = {
    * Send the mail
    * @param  subject the subject of the mail
    * @param  body    the content of the mail
-   * @param  isHTML  plain text or HTML
+   * @param  isHTML  [optional]plain text or HTML
    * @return boolean
    */
   send: function(subject, body, isHTML) {
@@ -184,7 +184,7 @@ Mail.prototype = {
    * @param  to      the one you send to
    * @param  subject the subject of the mail
    * @param  body    the content of the mail
-   * @param  isHTML  plain text or HTML
+   * @param  isHTML  [optional]plain text or HTML
    * @return boolean
    */
   mail: function(from, to, subject, body, isHTML) {

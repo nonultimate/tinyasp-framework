@@ -21,6 +21,7 @@ if ($.File.isFile(APPPATH + "config\\database.asp")) {
   eval(include(APPPATH + "config\\database.asp"));
 }
 eval(include(APPLIB + "include\\ado.asp"));
+eval(include(APPLIB + "include\\pager.asp"));
 
 /**
  * Class DB
@@ -268,6 +269,22 @@ DB.prototype = {
     }
 
     return rs;
+  },
+
+  /**
+   * Execute SQL statement or procedure and return the first value of the row
+   * @param  name     the database configuration name to use
+   * @param  cmdText  the command text or procedure name
+   * @param  cmdType  [optional]the command type, default is adCmdText
+   * @param  params   [optional]the parameters to bind
+   * @return var
+   */
+  executeScalar: function(name, cmdText, cmdType, params) {
+    var rs = this.query(name, cmdText, cmdType, params);
+    var v = rs.Fields.Item(0).Value;
+    rs.Close();
+
+    return v;
   },
 
   /**

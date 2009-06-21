@@ -75,8 +75,10 @@ FormHelper.prototype.read = function() {
         if (m) {
           filetype = m[1];
         }
-        a = new Array(3);
+        a = new Array(5);
         a["name"] = filename;
+        var offset = filename.lastIndexOf(".");
+        a["ext"]  = (offset > -1) ? filename.substr(offset + 1).toLowerCase() : "";
         a["type"] = filetype;
         a["size"] = data.length;
         a["path"] = APPPATH + "tmp\\" + timer() + Math.random().toString().substr(2);

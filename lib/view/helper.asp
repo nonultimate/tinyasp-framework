@@ -39,6 +39,31 @@ $.View.Helper = {
    */
   validate: function(v) {
     return $.isPost && empty(v);
+  },
+
+  /**
+   * Pager view helper
+   * @param  obj  the pager object
+   * @return string
+   */
+  pager: function(obj) {
+    if (obj.page == 1) {
+      return "";
+    }
+    var str = '<div class="pager">';
+    var linkStr = obj.getLinkStr();
+    var start = (obj.current - 5 > 0) ? (obj.current - 5) : 1;
+    var end = ((obj.current + 4) < obj.page) ? (obj.current + 4) : obj.page;
+    for (var i = start; i <= end; i++) {
+      if (i == obj.current) {
+        str += '<span>' + i + '</span>';
+      } else {
+        str += '<a href="' + linkStr.replace(/\{N\}/, i) + '">' + i + '</a>';
+      }
+    }
+    str += '</div>';
+
+    return str;
   }
 
 }

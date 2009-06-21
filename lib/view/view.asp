@@ -52,7 +52,13 @@ function View(file) {
    */
   this.display = function(view) {
     if (defined(view)) {
-      file = APPPATH + "views\\html\\" + view.replace("/", "\\") + "." + CONFIG["template_extension"];
+      file = APPPATH + "views\\html\\";
+      if (view.indexOf("/") == -1) {
+        file += $.controller + view;
+      } else {
+        file += view.replace("/", "\\");
+      }
+      file += "." + CONFIG["template_extension"];
     }
     if (!$.File.isFile(file)) {
       error("The view template " + file + " not found");

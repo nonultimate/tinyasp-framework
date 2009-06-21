@@ -22,6 +22,7 @@
               <li><a href="variables.html">Variables</a></li>
               <li><a href="functions.html">Functions</a></li>
               <li><a href="tinyasp.html">Tinyasp</a></li>
+              <li><a href="utils.html">Utils</a></li>
               <li class="title">Packages</li>
               <li><a href="controller.html">Controller</a></li>
               <li><a href="cookie.html">Cookie</a></li>
@@ -124,6 +125,22 @@
               <span class="param">params</span> [Optional]The parameters to bind.<br />
               <b>Return</b>
               <span class="type leftspan">Boolean</span><br />
+            </p>
+            <hr />
+            <p>
+              <a name="executeScalar" class="keyword">executeScalar</a>(<span class="type rightspan">String</span> name, <span class="type rightspan">String</span> cmdText [, <span class="type rightspan">Integer</span> cmdType [, <span class="type rightspan">Array</span> params]])
+            </p>
+            <p class="description">
+              Execute SQL statement or procedure and return the first value of the row.
+            </p>
+            <p class="note">
+              <b>Parameter</b><br />
+              <span class="param">name</span> The database configuration name to use.<br />
+              <span class="param">cmdText</span> The command text or procedure name.<br />
+              <span class="param">cmdType</span> [Optional]The command type, default is adCmdText.<br />
+              <span class="param">params</span> [Optional]The parameters to bind.<br />
+              <b>Return</b>
+              <span class="type leftspan">var</span><br />
             </p>
             <hr />
             <p>

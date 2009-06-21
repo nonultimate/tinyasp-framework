@@ -69,6 +69,7 @@ Template.prototype = {
     }
     // Add filters
     this.addIncludeFilter();
+    this.addPagerFilter();
     this.addIfFilter();
     this.addListFilter();
     var data = this.eval(this.content);
@@ -262,13 +263,13 @@ Template.prototype = {
     var data = this.content.substring(0, tagStart);
     var str, m;
     while (tagStart > -1) {
-      tagEnd = this.content.indexOf("/>", tagStart) + 2;
+      tagEnd = this.content.indexOf(">", tagStart) + 1;
       var str = this.content.substring(tagStart, tagEnd);
       m = str.match(/ file="([^"]+)"/);
       if (m) {
-        data += $.File.readFile(m[1]);
+        data += $.File.readFile(APPPATH + "views\\html\\" + m[1].replace(/\//g, "\\"));
       }
-      tagStart = this.content.indexOf("<asp:include ");
+      tagStart = this.content.indexOf("<asp:include ", tagEnd);
       if (tagStart > -1) {
         data += this.content.substring(tagEnd, tagStart);
       } else {
@@ -289,17 +290,35 @@ Template.prototype = {
       return;
     }
     var data = this.content.substring(0, tagStart);
-    var dataStart, str, content, m, result, code;
+    var dataStart, str, content, result, code, elTagStart, elTagEnd, m, m2, v, s;
     while (tagStart > -1) {
       tagEnd = this.content.indexOf("</asp:if>", tagStart);
+      elTagStart = this.content.substring(tagStart, tagEnd).indexOf("<asp:else");
+      if (elTagStart > -1) {
+        elTagStart += tagStart;
+        elTagEnd = this.content.indexOf(">", elTagStart) + 1;
+      }
       dataStart = this.content.indexOf(">", tagStart) + 1;
       str = this.content.substring(tagStart, dataStart);
       m = str.match(/ condition="([^"]+)"/);
       if (m) {
-        code = defined($.View) ? "with ($.View.Helper) {" + m[1] + "}" : m[1];
+        v = m[1];
+        m2 = v.match(/\$\([a-z0-9\$\._]+\)/ig);
+        if (m2) {
+          for (var i = 0; i < m2.length; i++) {
+            s = m2[i].substr(2, m2[i].length - 3);
+            if (defined(this.vList[s])) {
+              v = v.replace(m2[i], "this.vList[\"" + s + "\"]");
+            }
+          }
+        }
+        code = defined($.View) ? "with ($.View.Helper) {" + v + "}" : v;
         result = eval(code);
         if (result) {
-          result = this.eval(this.content.substring(dataStart, tagEnd));
+          result = this.eval(this.content.substring(dataStart, (elTagStart > -1) ? elTagStart : tagEnd));
+          data += result.replace(/\{/g, "LBrace").replace(/\}/g, "RBrace");
+        } else if(elTagStart > -1) {
+          result = this.eval(this.content.substring(elTagEnd, tagEnd));
           data += result.replace(/\{/g, "LBrace").replace(/\}/g, "RBrace");
         }
       }
@@ -365,6 +384,43 @@ Template.prototype = {
         data += this.content.substring(tagEnd + 11, tagStart);
       } else {
         data += this.content.substr(tagEnd + 11);
+      }
+    }
+    this.content = data;
+  },
+
+  /**
+   * Filter for asp:pager tag
+   * @return void
+   */
+  addPagerFilter: function() {
+    var tagStart = this.content.indexOf("<asp:pager ");
+    var tagEnd = 0;
+    if (tagStart == -1) {
+      return;
+    }
+    var data = this.content.substring(0, tagStart);
+    var str, m, pager, f;
+    while (tagStart > -1) {
+      tagEnd = this.content.indexOf(">", tagStart) + 1;
+      var str = this.content.substring(tagStart, tagEnd);
+      m = str.match(/ var="([^"]+)"/);
+      if (m) {
+        if (defined(this.vList[m[1]])) {
+          pager = this.vList[m[1]];
+          m = str.match(/ function="([^"]+)"/);
+          if (m) {
+            data += eval(m[1] + "(pager)");
+          } else {
+            data += $.View.Helper.pager(pager);
+          }
+        }
+      }
+      tagStart = this.content.indexOf("<asp:pager ", tagEnd);
+      if (tagStart > -1) {
+        data += this.content.substring(tagEnd, tagStart);
+      } else {
+        data += this.content.substr(tagEnd);
       }
     }
     this.content = data;

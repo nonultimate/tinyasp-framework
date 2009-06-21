@@ -279,7 +279,7 @@ $.Model = function(base) {
       if (conditions != "") {
         sql += " WHERE " + this.addQuote(conditions);
       }
-      if (order != "") {
+      if (orders != "") {
         sql += " ORDER BY " + this.addQuote(orders) + ") ORDER BY " + orders;
       } else {
         sql += ")";
@@ -307,8 +307,8 @@ $.Model = function(base) {
     var lq = this.lq;
     var rq = this.rq;
     if (/[a-z0-9_]+\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/i.test(str)) {
-      return str.replace(/([a-z0-9_]+)\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/ig, function() {
-        return lq + $1.replace(/\./g, rq + "." + lq) + rq;
+      return str.replace(/([a-z0-9_]+)\s*(<|>|=|<=|>=|<>|EXISTS|IN|LIKE|NOT)/ig, function($0, $1, $2) {
+        return lq + $1.replace(/\./g, rq + "." + lq) + rq + $2;
       });
     } else {
       var a = str.split(",");
@@ -523,7 +523,7 @@ $.Model = function(base) {
    */
   this.execute = function(cmdText, cmdType, params) {
     var p;
-    if (this.params == "" || isArray(params)) {
+    if (this.params == "" || !defined(params) || isArray(params)) {
       p = params;
     } else {
       var a;
@@ -535,6 +535,7 @@ $.Model = function(base) {
           a = $.DB.makeInParam(this.params[item][0], this.params[item][1], this.params[item][2], params[item]);
         }
         p.push(a);
+      }
     }
     var ret = $.DB.execute(this.db, cmdText, cmdType, p);
     if (ret && this.table != "") {
@@ -555,7 +556,7 @@ $.Model = function(base) {
    */
   this.query = function(cmdText, cmdType, params) {
     var p;
-    if (this.params == "" || isArray(params)) {
+    if (this.params == "" || !defined(params) || isArray(params)) {
       p = params;
     } else {
       var a;
@@ -567,8 +568,24 @@ $.Model = function(base) {
           a = $.DB.makeInParam(this.params[item][0], this.params[item][1], this.params[item][2], params[item]);
         }
         p.push(a);
+      }
     }
     return $.DB.query(this.db, cmdText, cmdType, p);
+  };
+
+  /**
+   * Execute SQL statement or procedure and return the first value of the row
+   * @param  cmdText  the command text or procedure name
+   * @param  cmdType  [optional]the command type, default is adCmdText
+   * @param  params   [optional]the parameters to bind
+   * @return var
+   */
+  this.executeScalar = function(cmdText, cmdType, params) {
+    var rs = this.query(cmdText, cmdType, params);
+    var v = rs.Fields.Item(0).Value;
+    rs.Close();
+
+    return v;
   };
 
   /**
@@ -593,7 +610,7 @@ $.Model = function(base) {
 
   /**
    * Get the id of the last inserted row
-   * @return Integer
+   * @return integer
    */
   this.inserted = function() {
     if (this.table == "") {
@@ -605,6 +622,20 @@ $.Model = function(base) {
 
     return id;
   }
+
+  /**
+   * Get the number of the records
+   * @param  conditions  [optional]the conditions to search
+   * @return integer
+   */
+  this.count = function(conditions) {
+    var sql = "SELECT COUNT(*) AS total FROM " + this.addQuote(this.table);
+    if (!empty(conditions)) {
+      sql += " WHERE " + this.addQuote(conditions);
+    }
+
+    return this.executeScalar(sql);
+  };
 
   // Initialize the model
   if (defined(base)) {
